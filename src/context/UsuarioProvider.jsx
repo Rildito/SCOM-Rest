@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react"
+import { createContext, useState, useEffect} from "react"
 import axios from 'axios';
 
 const UsuarioContext = createContext();
@@ -8,6 +8,8 @@ export const UsuarioProvider = ({ children }) => {
     const [usuarios, setUsuarios] = useState([]);
     const [usuario, setUsuario] = useState({});
     const [cargando, setCargando] = useState(false);
+
+
     useEffect(() => {
         const obtenerUsuarios = async () => {
             // const { data } = await axios.get("/usuarios"); //Url para obtenerUsuarios

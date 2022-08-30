@@ -10,23 +10,31 @@ import { AdministradorLayout } from './layouts/AdministradorLayout';
 import { Login, RegistrarUsuario, Restaurant, Usuarios, EditarUsuario } from './pages';
 
 import "./index.css";
+import { RestaurantLayout } from './layouts/RestaurantLayout';
+import { ProductosProvider } from './context/ProductosProvider';
 
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
         <UsuarioProvider>
-          <Routes>
-            <Route path='/' element={<AuthLayout />}>
-              <Route index element={<Login />} />
-              <Route path='registrar' element={<RegistrarUsuario />} />
-              <Route path='restaurant' element={<Restaurant/>} />
-            </Route>
-            <Route path='/administrador' element={<AdministradorLayout />}>
-              <Route index element={<Usuarios />} />
-              <Route path='editar/:ci' element={<EditarUsuario />} />
-            </Route>
-          </Routes>
+          <ProductosProvider>
+            <Routes>
+              <Route path='/' element={<RestaurantLayout />}>
+                <Route index element={< Restaurant />} />
+              </Route>
+
+              <Route path='/registrar' element={<AuthLayout />}>
+                <Route index element={<Login />} />
+                <Route path='registrarUsuario' element={<RegistrarUsuario />} />
+              </Route>
+
+              <Route path='/administrador' element={<AdministradorLayout />}>
+                <Route index element={<Usuarios />} />
+                <Route path='editar/:ci' element={<EditarUsuario />} />
+              </Route>
+            </Routes>
+          </ProductosProvider>
         </UsuarioProvider>
       </AuthProvider>
     </BrowserRouter>

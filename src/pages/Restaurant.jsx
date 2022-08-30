@@ -1,11 +1,15 @@
 import React from 'react'
-import { Header } from '../components'
+import { PreguntasFrecuentes, Productos, SobreNosotros } from '../components'
+import { Contactanos } from '../components/Contactanos'
 
 
 export const Restaurant = () => {
     return (
         <>
-            <Header />
+            <SobreNosotros />
+            <Productos />
+            <Contactanos />
+            <PreguntasFrecuentes />
         </>
     )
 }

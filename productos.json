@@ -1,0 +1,24 @@
+[
+    {
+        "nombre": "Enrique Luis",
+        "email": "barra.paredes.enrique.luis@gmail.com",
+        "ci": "8441659",
+        "nit": "0118441659",
+        "apellidoPaterno": "Barra",
+        "apellidoMaterno": "Paredes",
+        "password": "Rildito123",
+        "edad": "21",
+        "nombreUsuario": "Rildito"
+    },
+    {
+        "nombre": "Jorge",
+        "email": "jorge@gmail.com",
+        "ci": "12312321",
+        "nit": "011125152",
+        "apellidoPaterno": "Vargas",
+        "apellidoMaterno": "Perez",
+        "password": "jorge123",
+        "edad": "19",
+        "nombreUsuario": "j1asd"
+    }
+]

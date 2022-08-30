@@ -50,7 +50,7 @@ export const Login = () => {
             <nav className="d-flex flex-sm-row flex-column justify-content-between align-items-center w-md-50 w-75">
                 <Link
                     className="text-decoration-none text-dark"
-                    to="registrar"
+                    to="registrarusuario"
                 >¿No tienes una cuenta? Registrate</Link>
 
                 <Link

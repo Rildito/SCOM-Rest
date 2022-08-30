@@ -13,7 +13,7 @@ export const RegistrarUsuario = () => {
             <nav className="w-100 d-flex justify-content-center w-md-50 w-75">
                 <Link
                     className="text-decoration-none text-dark mb-4"
-                    to="/"
+                    to="/registrar"
                 >¿Ya tienes una cuenta? Inicia Sesion</Link>
             </nav>
         </>
