@@ -15,7 +15,7 @@ export const Login = () => {
     };
 
     return (
-        <div className='vh-100 w-100 d-flex justify-content-center align-items-center flex-column'>
+        <div className='vh-100 container d-flex justify-content-center align-items-center flex-column bg-white'>
             <img src={Imagen} className="img-fluid mb-5" />
             <div className='w-md-50 w-75 p-md-4 p-3 border shadow-lg bg-white rounded-3 mb-5'>
                 <h1 className='text-center fw-normal fs-3'>Inicia Sesión</h1>
@@ -52,12 +52,6 @@ export const Login = () => {
                     className="text-decoration-none text-dark"
                     to="registrarusuario"
                 >¿No tienes una cuenta? Registrate</Link>
-
-                <Link
-                    className="text-decoration-none text-dark mt-sm-0 mt-2"
-                    to="olvide-password"
-
-                >Olvide mi password</Link>
             </nav>
         </div>
     )

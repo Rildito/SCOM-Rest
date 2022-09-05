@@ -1,5 +1,5 @@
 import { Modal } from 'bootstrap';
-import { useState, useEffect, useRef, useContext } from 'react';
+import { useEffect, useRef, useContext } from 'react';
 import ProductosContext from '../context/ProductosProvider';
 
 export function ModalProducto() {

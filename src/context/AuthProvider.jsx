@@ -12,16 +12,6 @@ export const AuthProvider = ({ children }) => {
         const { data } = await axios.post("localhost:4000/usuarios", { email, password }); //URL para autenticar
         setAuth(data);
     };
-    // const [cargando, setCargando] = useState(true);
-    // useEffect(() => {
-    //     const autenticarUsuario = async () => {
-    //         try {
-    //             const {data} = axios.get()
-    //         } catch (error) {
-
-    //         }
-    //     };
-    // }, []);
 
     return (
         <AuthContext.Provider value={{
