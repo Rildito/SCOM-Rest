@@ -61,11 +61,11 @@ export const UsuarioProvider = ({ children }) => {
         }
 
         if (tipoUsuario === 'cliente') {
-            setClientes([...clientes, data]);
+            setUsuarios([...usuarios, data]);
         }
 
         if (tipoUsuario === 'cajero') {
-            setCajeros([...cajeros, data]);
+            setUsuarios([...usuarios, data]);
         }
 
         console.log(data);

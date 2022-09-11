@@ -1,4 +1,4 @@
-export { Ingredientes } from "./ingredientes";
+export { Ingredientes } from "./Ingredientes";
 
 export { Opciones } from "./Opciones";
 
