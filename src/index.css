@@ -108,6 +108,12 @@ background: radial-gradient(circle, rgba(255,0,0,1) 0%, rgba(247,56,74,1) 100%);
 }
 
 
+@media (max-width: 767px) {
+  .img-mw{
+    max-height: 13rem;
+  }
+}
+
 
 /*SPINER*/
 .lds-roller {

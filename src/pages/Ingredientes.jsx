@@ -1,11 +1,10 @@
-import { FormularioIngredientes } from "../components"
-import { Link } from 'react-router-dom';
-import { useContext } from "react";
-import IngredienteContext from "../context/IngredienteProvider";
+import { useNavigate, Link } from 'react-router-dom';
 
 export const Ingredientes = () => {
 
-    const { ingredientes, eliminarIngrediente } = useContext(IngredienteContext);
+    // const { ingredientes, eliminarIngrediente } = useContext(IngredienteContext);
+    const navigate = useNavigate();
+    const ingredientes = [];
 
     const registrarIngrediente = () => {
         navigate('/administrador/ingredientes/registrar')
@@ -13,7 +12,7 @@ export const Ingredientes = () => {
 
     return (
         <>
-            <h1 className='py-5 text-center fw-bold text-white bg-dark w-100 '>ADMINISTRAR INGREDIENTES</h1>
+            <h1 className='py-5 text-center fw-bold text-white bg-dark w-100 '>ADMINISTRA TUS INGREDIENTES</h1>
             <div className='w-100 container'>
                 <div className='mt-3 table-wrapper-scroll-y my-custom-scrollbar-usuario w-100'>
                     <table className="table bg-white border">

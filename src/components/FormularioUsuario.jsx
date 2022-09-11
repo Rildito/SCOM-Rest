@@ -26,7 +26,7 @@ export const FormularioUsuario = () => {
 
     const { ci: id, usuario: usuarioMostrar } = useParams();
 
-    const { submitUsuario, usuario, tipoUsuario } = useContext(UsuarioContext);
+    const { submitUsuario, usuario, tipoUsuario, errores } = useContext(UsuarioContext);
 
     useEffect(() => {
         if (id) {
@@ -48,7 +48,13 @@ export const FormularioUsuario = () => {
 
     const handleSubmit = async e => {
         e.preventDefault();
+
         await submitUsuario({ id, nombre, ci, apellidoMaterno, apellidoPaterno, contraseña, fechaContratacion, nombreUsuario, estado, nit, email, fechaNacimiento, salario, especialidad, ciCajeroAdiciona: "1000007" }, tipoUsuario);
+
+        if (!errores.length === 0) {
+
+            return;
+        } 
 
         setNombre('');
         setCi('');
@@ -64,7 +70,7 @@ export const FormularioUsuario = () => {
         setSalario('');
         setEspecialidad('');
 
-        navigate('/administrador');
+        navigate('/administrador/usuarios');
 
     };
     return (
@@ -212,7 +218,7 @@ export const FormularioUsuario = () => {
                                     value={salario}
                                     placeholder="0"
                                     min={"1"}
-                                    step={"1"}
+                                    step={"0.01"}
                                     onChange={e => setSalario(e.target.value)}
                                 />
 

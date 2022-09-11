@@ -1,4 +1,5 @@
-import { useEffect, useContext } from 'react';
+
+import { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Alerta, Cajeros, Camareros, Chefs, Clientes, Spinner } from '../components';
 import UsuarioContext from '../context/UsuarioProvider';
@@ -7,7 +8,7 @@ import { obtenerEdad } from '../helpers/formatearFecha';
 export const Usuarios = () => {
 
     const navigate = useNavigate();
-    const { usuarios, setTipoUsuario, tipoUsuario, eliminarUsuario, obtenerClientes, obtenerCajeros, obtenerChefs, cargando, alerta, mensaje: { mensaje, tipoAlerta } } = useContext(UsuarioContext);
+    const { usuarios, setTipoUsuario, tipoUsuario, cargando, alerta } = useContext(UsuarioContext);
 
     const elegirTipoUsuario = (e) => {
         e.preventDefault();
@@ -15,50 +16,41 @@ export const Usuarios = () => {
     };
 
     const registrarUsuario = () => {
-        setTipoUsuario('');
-        navigate('/administrador/registrar')
+        navigate(`/administrador/registrar/${tipoUsuario}`)
     };
 
-    useEffect(() => {
-
-        if (tipoUsuario === 'cliente') {
-            obtenerClientes();
-        }
-
-        if (tipoUsuario === 'cajero') {
-            obtenerCajeros();
-        }
-
-        if (tipoUsuario === 'chef') {
-            obtenerChefs();
-        }
-    }, [tipoUsuario]);
+    const { msg, tipoAlerta } = alerta
 
     return (
 
         <>
+            {msg && <Alerta mensaje={msg} tipoAlerta={tipoAlerta} />}
             <h1 className='py-5 text-center fw-bold text-white bg-dark w-100'>ADMINISTRA TUS USUARIOS</h1>
 
             <div className='w-100 container'>
                 <div className="enlaces mb-2 d-sm-flex justify-content-between mt-3 p-sm-0 px-1">
                     <div className='d-flex flex-sm-row flex-column gap-sm-0 gap-2'>
-                        <input type="button" name="cliente" href="usuarioLista.php?usuario=chef" className="btn btn-outline-primary me-sm-2 w-100 w-sm-auto" value="CLIENTES" onClick={elegirTipoUsuario} />
-                        <input type="button" name="chef" href="usuarioLista.php?usuario=chef" className="btn btn-outline-secondary me-sm-2 w-100 w-sm-auto" value="CHEFS" onClick={elegirTipoUsuario} />
-                        <input type="button" name="cajero" href="usuarioLista.php?usuario=chef" className="btn btn-outline-success me-sm-2 w-100 w-sm-auto" value="CAJEROS" onClick={elegirTipoUsuario} />
-                        <input type="button" name="camarero" href="usuarioLista.php?usuario=chef" className="btn btn-outline-warning w-100 w-sm-auto" value="CAMAREROS" onClick={elegirTipoUsuario} />
+                        
+                        <input type="button" name="cliente" href="usuarioLista.php?usuario=chef" className={`btn ${tipoUsuario === 'cliente' ? 'btn-primary' : 'btn-outline-primary'} me-sm-2 w-100 w-sm-auto`} value="CLIENTES" onClick={elegirTipoUsuario} />
+
+
+                        <input type="button" name="chef" href="usuarioLista.php?usuario=chef" className={`btn ${tipoUsuario === 'chef' ? 'btn-secondary' : 'btn-outline-secondary'} me-sm-2 w-100 w-sm-auto`} value="CHEFS" onClick={elegirTipoUsuario} />
+
+                        
+                        <input type="button" name="cajero" href="usuarioLista.php?usuario=chef" className={`btn ${tipoUsuario === 'cajero' ? 'btn-success' : 'btn-outline-success'} me-sm-2 w-100 w-sm-auto`} value="CAJEROS" onClick={elegirTipoUsuario} />
+
+
+                        <input type="button" name="camarero" href="usuarioLista.php?usuario=chef" className={`btn ${tipoUsuario === 'camarero' ? 'btn-warning' : 'btn-outline-warning'} me-sm-2 w-100 w-sm-auto`} value="CAMAREROS" onClick={elegirTipoUsuario} />
                     </div>
 
                     <div>
-                        <input type="button" href="usuarioLista.php" name="" className="btn btn-info w-100 w-sm-auto mt-sm-0 mt-2" value="TODOS LOS USUARIOS" onClick={elegirTipoUsuario} />
+                        <input type="button" href="usuarioLista.php" name="" className={`btn ${tipoUsuario === '' ? 'btn-info' : 'btn-outline-info'} w-100 w-sm-auto mt-sm-0 mt-2`} value="TODOS LOS USUARIOS" onClick={elegirTipoUsuario} />
                     </div>
                 </div>
 
                 {
                     cargando ? <Spinner /> : (
                         <>
-                            {
-                                (alerta && <Alerta mensaje={mensaje} tipoAlerta={tipoAlerta} />)
-                            }
                             <div className='mt-3 table-wrapper-scroll-y my-custom-scrollbar-usuario border'>
                                 <table className="table bg-white">
                                     <thead className='text-center table-dark'>
@@ -79,13 +71,13 @@ export const Usuarios = () => {
                                             }
 
                                             {
-                                                (tipoUsuario === 'chef' ? (
+                                                (tipoUsuario === 'chef' && (
                                                     <>
                                                         <th scope="col">FechaContratacion</th>
                                                         <th scope="col">Salario</th>
                                                         <th scope="col">Especialidad</th>
                                                     </>
-                                                ) : null)
+                                                ))
                                             }
 
                                             {
@@ -97,7 +89,10 @@ export const Usuarios = () => {
                                                 ) : null)
                                             }
 
-                                            <th scope="col">Operaciones</th>
+                                            {
+                                                (tipoUsuario !== '' && <th scope="col">Operaciones</th>)
+                                            }
+
                                         </tr>
                                     </thead>
                                     <tbody className='text-center'>
@@ -129,11 +124,6 @@ export const Usuarios = () => {
                                                     <td>{usuario.apellidoPaterno}</td>
                                                     <td>{usuario.apellidoMaterno}</td>
                                                     <td>{obtenerEdad(usuario.fechaNacimiento)}</td>
-                                                    <td className='d-flex gap-2 justify-content-center'>
-                                                        <Link to={`/administrador/editar/${usuario.ci}&`} className='btn btn-warning' >Editar</Link>
-                                                        <input type="button" name="eliminar" value="Eliminar" className='btn btn-danger' onClick={() => eliminarUsuario(usuario.ci)} />
-
-                                                    </td>
                                                 </tr>
                                             ))))
                                         }

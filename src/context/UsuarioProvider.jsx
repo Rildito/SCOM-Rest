@@ -10,11 +10,11 @@ export const UsuarioProvider = ({ children }) => {
 
     const [usuario, setUsuario] = useState({});
     const [cargando, setCargando] = useState(false);
-    const [tipoUsuario, setTipoUsuario] = useState('');
+    const [tipoUsuario, setTipoUsuario] = useState('cliente');
 
     //alerta
-    const [alerta, setAlerta] = useState(true);
-    const [mensaje, setMensaje] = useState({});
+    const [alerta, setAlerta] = useState({});
+    const [errores, setErrores] = useState([]);
 
     useEffect(() => {
 
@@ -23,39 +23,120 @@ export const UsuarioProvider = ({ children }) => {
         }
 
         if (tipoUsuario === 'cajero') {
-            obtenerClientes();
+            obtenerCajeros();
         }
 
         if (tipoUsuario === '') {
             obtenerUsuarios();
         }
 
+        //TODO:Aumentar si hay nuevos usuarios
+
     }, [tipoUsuario]);
 
     const obtenerUsuarios = async () => {
-        const { data } = await axios.get("https://scom-rest.herokuapp.com/api/usuarios");
+
+        setCargando(true);
+
+        const { data: { data, response } } = await axios.get("https://scom-rest.herokuapp.com/api/usuarios");
+
+        if (!response) {
+            setAlerta({
+                msg: 'Hubo un error',
+                tipoAlerta: 'danger'
+            });
+            setCargando(false);
+            return
+
+        }
         setUsuarios(data);
-    };
+        setCargando(false);
+
+    }
 
     const obtenerClientes = async () => {
         setCargando(true);
-        const { data } = await axios.get("https://scom-rest.herokuapp.com/api/clientes")
+        const { data: { data, response } } = await axios.get("https://scom-rest.herokuapp.com/api/clientes")
+
+        if (!response) {
+            setAlerta(!alerta, {
+                msg: 'Hubo un error',
+                tipoAlerta: 'danger'
+            });
+            setCargando(false);
+            return
+        }
+
         setUsuarios(data);
         setCargando(false);
     }
 
     const obtenerCajeros = async () => {
         setCargando(true);
-        const { data } = await axios.get("https://scom-rest.herokuapp.com/api/cajeros")
+        const { data: { data, response } } = await axios.get("https://scom-rest.herokuapp.com/api/cajeros")
+
+        if (!response) {
+            setAlerta(!alerta, {
+                msg: 'Hubo un error',
+                tipoAlerta: 'danger'
+            });
+            setCargando(false);
+            return
+        }
+
         setUsuarios(data);
         setCargando(false);
     }
 
+    const obtenerChefs = async () => {
+        setCargando(true);
+        const { data: { data, response } } = await axios.get("https://scom-rest.herokuapp.com/api/chefs")
+
+        if (!response) {
+            setAlerta(!alerta, {
+                msg: 'Hubo un error',
+                tipoAlerta: 'danger'
+            });
+            setCargando(false);
+            return
+        }
+        setUsuarios(data);
+        setCargando(false);
+    }
+
+    const obtenerCamareros = async () => {
+        setCargando(true);
+        const { data: { data, response } } = await axios.get("https://scom-rest.herokuapp.com/api/camareros")
+
+        if (!response) {
+            setAlerta({
+                msg: 'Hubo un error',
+                tipoAlerta: 'danger'
+            });
+            setCargando(false);
+            return
+        }
+        setUsuarios(data);
+        setCargando(false);
+    }
+
+
+
     const obtenerUsuario = async (ci, tipoUsuario) => {
         setCargando(true);
-        const { data } = await axios.get(`https://scom-rest.herokuapp.com/api/${tipoUsuario}/${ci}`);
+        const { data: { data, response } } = await axios.get(`https://scom-rest.herokuapp.com/api/${tipoUsuario}/${ci}`);
+
+        if (!response) {
+            setAlerta({
+                msg: 'Hubo un error',
+                tipoAlerta: 'danger'
+            });
+
+            setCargando(false);
+            return
+        }
+
         setUsuario(data);
-        console.log(data);
         setCargando(false);
     };
 
@@ -70,8 +151,14 @@ export const UsuarioProvider = ({ children }) => {
 
     const nuevoUsuario = async (usuario, tipoUsuario) => {
 
-        const { response, data, errores } = await axios.post(`https://scom-rest.herokuapp.com/api/${tipoUsuario}`, usuario);
-        // console.log(data);
+        setCargando(true);
+        const { data: { data, response, error } } = await axios.post(`https://scom-rest.herokuapp.com/api/${tipoUsuario}`, usuario);
+
+        if (!response) {
+            error.map(err => setErrores([...errores, err]))
+            setCargando(false);
+            return
+        }
 
         if (tipoUsuario === '') {
             setUsuarios([...usuarios, data]);
@@ -84,43 +171,60 @@ export const UsuarioProvider = ({ children }) => {
         if (tipoUsuario === 'cajero') {
             setUsuarios([...usuarios, data]);
         }
-
-        setAlerta({
-            mensaje:'Se creo el usuario correctamente',
-            tipoAlerta:'primary'
-        })
+        setCargando(false);
+        mostrarAlerta('Se creo el usuario correctamente', 'primary');
 
     };
 
     const editarUsuario = async (usuario, tipoUsuario) => {
 
-        console
-        const { data } = await axios.put(`https://scom-rest.herokuapp.com/api/${tipoUsuario}/${usuario.ci}`, usuario); //URL para editar
+        setCargando(true);
+        const { data: { data, response, error } } = await axios.put(`https://scom-rest.herokuapp.com/api/${tipoUsuario}/${usuario.ci}`, usuario); //URL para editar
+
+        // console.log("EDITAR USUARIO")
+        //console.log(data);
+
+        if (!response) {
+            error.map(err => setErrores([...errores, err]))
+            setCargando(false);
+            return
+        }
+
 
         let usuariosActualizados;
+
         if (tipoUsuario === '') {
-            usuariosActualizados = usuarios.filter(usuario => usuario.ci !== ci ? usuario : data);
+            usuariosActualizados = usuarios.map(us => us.ci !== data.ci ? us : data);
         }
 
         if (tipoUsuario === 'cliente') {
-            usuariosActualizados = usuarios.filter(usuario => usuario.ci !== ci ? usuario : data);
+            usuariosActualizados = usuarios.map(us => us.ci !== data.ci ? us : data);
 
         }
 
         if (tipoUsuario === 'cajero') {
-            usuariosActualizados = usuarios.filter(usuario => usuario.ci !== ci ? usuario : data);
+            usuariosActualizados = usuarios.map(us => us.ci !== data.ci ? us : data);
         }
 
         setUsuarios(usuariosActualizados);
+        setCargando(false);
+        mostrarAlerta('Se modifico el usuario correctamente', 'primary');
 
     };
 
 
     const eliminarUsuario = async (ci, tipoUsuario) => {
 
-        const { data } = await axios.delete(`https://scom-rest.herokuapp.com/api/${tipoUsuario}/${usuario.ci}`); //URL para editar
+        const { data: { data, response, error } } = await axios.delete(`https://scom-rest.herokuapp.com/api/${tipoUsuario}/${ci}`); //URL para editar
+
+        if (!response) {
+            error.map(err => setErrores([...errores, err]))
+            setCargando(false);
+            return
+        }
+
+
         let usuariosActualizados;
-        console.log(data);
         if (tipoUsuario === '') {
             usuariosActualizados = usuarios.filter(usuario => usuario.ci !== ci);
         }
@@ -132,11 +236,24 @@ export const UsuarioProvider = ({ children }) => {
         if (tipoUsuario === 'cajero') {
             usuariosActualizados = usuarios.filter(usuario => usuario.ci !== ci);
         }
-        setUsuario(usuariosActualizados);
+
+        setUsuarios(usuariosActualizados);
+        mostrarAlerta('Se elimino el usuario correctamente', 'danger');
+
+
 
     };
 
+    const mostrarAlerta = (mensaje, tipoAlerta) => {
+        setAlerta({
+            msg: mensaje,
+            tipoAlerta
+        })
 
+        setTimeout(() => {
+            setAlerta({});
+        }, 3000)
+    }
     return (
         <UsuarioContext.Provider value={{
             //Variables
@@ -145,7 +262,7 @@ export const UsuarioProvider = ({ children }) => {
             cargando,
             tipoUsuario,
             alerta,
-
+            errores,
             //Functions
             eliminarUsuario,
             submitUsuario,
@@ -154,12 +271,14 @@ export const UsuarioProvider = ({ children }) => {
             setAlerta,
             //FuncionesParallamarusuarios
             obtenerClientes,
-            obtenerCajeros
+            obtenerCajeros,
+            obtenerChefs
 
         }}>
             {children}
         </UsuarioContext.Provider>
     )
 }
+
 
 export default UsuarioContext;

@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import UsuarioContext from '../context/UsuarioProvider'
+import { obtenerEdad } from '../helpers/formatearFecha';
 
 export const Clientes = () => {
 
@@ -17,7 +18,7 @@ export const Clientes = () => {
                         <td>{usuario.nombre}</td>
                         <td>{usuario.apellidoPaterno}</td>
                         <td>{usuario.apellidoMaterno}</td>
-                        <td>{usuario.edad}</td>
+                        <td>{obtenerEdad(usuario.fechaNacimiento)}</td>
                         <td>{usuario.nit}</td>
                         <td>{usuario.email}</td>
                         <td className='d-flex gap-2'>
