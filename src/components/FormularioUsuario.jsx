@@ -12,7 +12,7 @@ export const FormularioUsuario = () => {
     const [contraseña, setContraseña] = useState('');
     const [fechaNacimiento, setFechaNacimiento] = useState('');
     const [nombreUsuario, setNombreUsuario] = useState('');
-    const [estado, setEstado] = useState('');
+    const [estado, setEstado] = useState('habilitado');
 
     //CLIENTE
     const [nit, setNit] = useState('');
@@ -38,7 +38,7 @@ export const FormularioUsuario = () => {
             setFechaNacimiento(usuario.fechaNacimiento);
             setNombreUsuario(usuario.nombreUsuario);
             setEstado(usuario.estado);
-            setNit(usuario.nit);
+            setNit(usuario.NIT);
             setEmail(usuario.email);
             setFechaContratacion(usuario.fechaContratacion);
             setSalario(usuario.salario);
@@ -48,29 +48,29 @@ export const FormularioUsuario = () => {
 
     const handleSubmit = async e => {
         e.preventDefault();
-        await submitUsuario({ id, nombre, ci, apellidoMaterno, apellidoPaterno, contraseña, fechaContratacion, nombreUsuario, estado, nit, email, fechaNacimiento, salario, especialidad }, tipoUsuario);
+        await submitUsuario({ id, nombre, ci, apellidoMaterno, apellidoPaterno, contraseña, fechaContratacion, nombreUsuario, estado, nit, email, fechaNacimiento, salario, especialidad, ciCajeroAdiciona: "1000007" }, tipoUsuario);
 
-        // setNombre('');
-        // setCi('');
-        // setApellidoMaterno('');
-        // setApellidoPaterno('');
-        // setContraseña('');
-        // setFechaNacimiento('');
-        // setNombreUsuario('');
-        // setEstado('');
-        // setNit('');
-        // setEmail('');
-        // setFechaContratacion('');
-        // setSalario('');
-        // setEspecialidad('');
-        // navigate('/administrador');
+        setNombre('');
+        setCi('');
+        setApellidoMaterno('');
+        setApellidoPaterno('');
+        setContraseña('');
+        setFechaNacimiento('');
+        setNombreUsuario('');
+        setEstado('');
+        setNit('');
+        setEmail('');
+        setFechaContratacion('');
+        setSalario('');
+        setEspecialidad('');
+
+        navigate('/administrador');
 
     };
     return (
         <>
             <div className='container h-100 p-3 pb-0 table-responsive rounded-2'>
                 <form onSubmit={handleSubmit} className="row d-flex justify-content-center align-items-center">
-                    {/* row d-flex flex-column gap-2 aling-items-center */}
                     <div className="col-md-6 col-12">
                         <label htmlFor="nombre" className='form-label fw-bold'>Nombre</label>
                         <input

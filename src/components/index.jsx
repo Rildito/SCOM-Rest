@@ -1,3 +1,5 @@
+export { Alerta } from "./Alerta";
+
 export { FormularioIngredientes } from "./FormularioIngredientes";
 
 export { Cajeros } from "./Cajeros";

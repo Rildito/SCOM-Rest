@@ -23,7 +23,7 @@ export const RegistrarCliente = () => {
 
     const handleSubmit = async e => {
         e.preventDefault();
-        await submitUsuario({ nombre, ci, apellidoPat, apellidoMat, password, edad, nombreUsuario, nit, email }, tipoUsuario);
+        await submitUsuario({ nombre, ci: parseInt(ci, 10), apellidoPat, apellidoMat, password, edad, nombreUsuario, nit, email, ciCajeroAdiciona: 111111 }, tipoUsuario);
 
     };
 

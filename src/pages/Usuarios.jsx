@@ -1,13 +1,13 @@
 import { useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Cajeros, Camareros, Chefs, Clientes, Spinner } from '../components';
+import { Alerta, Cajeros, Camareros, Chefs, Clientes, Spinner } from '../components';
 import UsuarioContext from '../context/UsuarioProvider';
 import { obtenerEdad } from '../helpers/formatearFecha';
 
 export const Usuarios = () => {
 
     const navigate = useNavigate();
-    const { usuarios, setTipoUsuario, tipoUsuario, eliminarUsuario, obtenerClientes, obtenerCajeros, obtenerChefs, cargando } = useContext(UsuarioContext);
+    const { usuarios, setTipoUsuario, tipoUsuario, eliminarUsuario, obtenerClientes, obtenerCajeros, obtenerChefs, cargando, alerta, mensaje: { mensaje, tipoAlerta } } = useContext(UsuarioContext);
 
     const elegirTipoUsuario = (e) => {
         e.preventDefault();
@@ -56,6 +56,9 @@ export const Usuarios = () => {
                 {
                     cargando ? <Spinner /> : (
                         <>
+                            {
+                                (alerta && <Alerta mensaje={mensaje} tipoAlerta={tipoAlerta} />)
+                            }
                             <div className='mt-3 table-wrapper-scroll-y my-custom-scrollbar-usuario border'>
                                 <table className="table bg-white">
                                     <thead className='text-center table-dark'>
