@@ -10,8 +10,18 @@ export const EditarUsuario = () => {
     const { obtenerUsuario, cargando } = useContext(UsuarioContext);
 
     useEffect(() => {
-        obtenerUsuario(ci);
-    }, []);
+        if (usuario === '') {
+            obtenerUsuario(ci, 'usuario');
+        }
+
+        if (usuario === 'cliente') {
+            obtenerUsuario(ci,'cliente')
+        }
+
+        if (usuario === 'cajero') {
+            obtenerUsuario(ci, 'cajero')
+        }
+    }, [usuario]);
 
     if (cargando) return <Spinner />;
 

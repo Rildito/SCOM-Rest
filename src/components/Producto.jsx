@@ -1,10 +1,19 @@
 import React, { useContext } from 'react'
 import Imagen from '../assets/img/bg.jpg';
+import AuthContext from '../context/AuthProvider';
 import ProductosContext from '../context/ProductosProvider';
 
 export const Producto = () => {
 
+    const { auth } = useContext(AuthContext)
     const { modal } = useContext(ProductosContext);
+
+    const handleClick = () => {
+        if (Object.entries(auth).length === 0) {
+            modal.show();
+            return
+        }
+    };
 
 
     return (
@@ -19,7 +28,7 @@ export const Producto = () => {
                         the card's content.
                     </p>
                 </div>
-                <input type="button" className='btn btn-danger text-uppercase fw-bolder' onClick={() => modal.show()} value="pedir" />
+                <input type="button" className='btn btn-danger text-uppercase fw-bolder' onClick={handleClick} value="pedir" />
             </div>
 
 

@@ -10,3 +10,8 @@ export const formatearFecha = fecha => {
 
     return nuevaFecha.toLocaleDateString('es-ES', options)
 };
+
+export const obtenerEdad = fecha => {
+    const ageInMilliseconds = new Date() - new Date(fecha);
+    return Math.floor(ageInMilliseconds / 1000 / 60 / 60 / 24 / 365); 
+}

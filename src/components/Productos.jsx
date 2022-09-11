@@ -4,13 +4,13 @@ import ProductosContext from '../context/ProductosProvider';
 import { Producto, ModalProducto } from './';
 
 
-export const Productos = () => {
+export const Productos = ({enlace}) => {
 
     const { productos } = useContext(ProductosContext);
 
     return (
         <>
-            <h1 className='text-primary fw-semibold text-center mb-5'>NUESTROS PRODUCTOS</h1>
+            <h1 className='text-primary fw-semibold text-center mb-5' ref={enlace}>NUESTROS PRODUCTOS</h1>
             <div className='row d-flex justify-content-center gap-4 w-100'>
                 <Producto />
                 <Producto />

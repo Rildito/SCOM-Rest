@@ -1,8 +1,8 @@
 import React from 'react'
 
-export const Contactanos = () => {
+export const Contactanos = ({ enlace }) => {
     return (
-        <div className='w-75 mt-5'>
+        <div className='w-75 mt-5' ref={enlace}>
             <h1 className='text-center text-primary'>CONTACTANOS</h1>
             <div className="mb-3 mt-5 border shadow p-sm-5 p-0">
                 <div className="row d-flex justify-content-center">

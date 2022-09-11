@@ -1,8 +1,8 @@
 
 
-export const PreguntasFrecuentes = () => {
+export const PreguntasFrecuentes = ({enlace}) => {
     return (
-        <div className="mt-5">
+        <div className="my-5" ref={enlace}>
             <h1 className="text-primary text-center mb-4">PREGUNTAS FRECUENTES</h1>
             <div className="px-5 mb-4">
                 <h2>Lorem ipsum dolor sit amet.</h2>

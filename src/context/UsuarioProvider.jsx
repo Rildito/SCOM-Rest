@@ -7,59 +7,114 @@ export const UsuarioProvider = ({ children }) => {
 
     //USUARIOS
     const [usuarios, setUsuarios] = useState([]);
+
     const [usuario, setUsuario] = useState({});
     const [cargando, setCargando] = useState(false);
     const [tipoUsuario, setTipoUsuario] = useState('');
 
 
+
     useEffect(() => {
         const obtenerUsuarios = async () => {
-            // const { data } = await axios.get("/usuarios/tipoUsuario"); //Url para obtenerUsuarios
-            const { data } = await axios.get("../../db.json");
+            const { data } = await axios.get("https://scom-rest.herokuapp.com/api/usuarios");
             setUsuarios(data);
         };
         obtenerUsuarios();
     }, []);
 
-    const obtenerUsuario = async id => {
-        // const { data } = await axios.get(`/usuarios/${id}&${tipoUsuario}`);
+    const obtenerClientes = async () => {
         setCargando(true);
-        const { data } = await axios.get(`../../usuario.json`);
+        const { data } = await axios.get("https://scom-rest.herokuapp.com/api/clientes")
+        setUsuarios(data);
+        setCargando(false);
+    }
+
+    const obtenerCajeros = async () => {
+        setCargando(true);
+        const { data } = await axios.get("https://scom-rest.herokuapp.com/api/cajeros")
+        setUsuarios(data);
+        setCargando(false);
+    }
+
+    const obtenerUsuario = async (ci, tipoUsuario) => {
+        setCargando(true);
+        const { data } = await axios.get(`https://scom-rest.herokuapp.com/api/${tipoUsuario}/${ci}`);
         setUsuario(data);
         setCargando(false);
     };
 
-    const submitUsuario = usuario => {
+    const submitUsuario = (usuario, tipoUsuario) => {
 
         if (usuario.id) {
-            editarUsuario(usuario);
+            editarUsuario(usuario, tipoUsuario);
         } else {
-            nuevoUsuario(usuario);
+            nuevoUsuario(usuario, tipoUsuario);
         }
     };
 
-    const nuevoUsuario = async usuario => {
-        //const { data } = await axios.post('/usuarios', usuario); //URL para crear tipoUsuario
-        // setUsuarios([...usuarios, data])
+    const nuevoUsuario = async (usuario, tipoUsuario) => {
+
+        const { data } = await axios.post(`https://scom-rest.herokuapp.com/api/${tipoUsuario}`, usuario); //URL para crear tipoUsuario
+
+        if (tipoUsuario === '') {
+            setUsuarios([...usuarios, data]);
+        }
+
+        if (tipoUsuario === 'cliente') {
+            setClientes([...clientes, data]);
+        }
+
+        if (tipoUsuario === 'cajero') {
+            setCajeros([...cajeros, data]);
+        }
+
+        console.log(data);
+
     };
 
-    const editarUsuario = async usuario => {
-        // const { data } = await axios.post(`/usuarios/usuarios/${usuario.ci}&${tipoUsuario},usuario`); //URL para editar
-        const usuariosActualizados = usuarios.filter(usuario => usuario.ci !== ci ? usuario : data);
+    const editarUsuario = async (usuario, tipoUsuario) => {
+
+        const { data } = await axios.put(`https://scom-rest.herokuapp.com/api/${tipoUsuario}/${usuario.ci}`); //URL para editar
+
+        let usuariosActualizados;
+        if (tipoUsuario === '') {
+            usuariosActualizados = usuarios.filter(usuario => usuario.ci !== ci ? usuario : data);
+        }
+
+        if (tipoUsuario === 'cliente') {
+            usuariosActualizados = clientes.filter(usuario => usuario.ci !== ci ? usuario : data);
+
+        }
+
+        if (tipoUsuario === 'cajero') {
+            usuariosActualizados = cajeros.filter(usuario => usuario.ci !== ci ? usuario : data);
+        }
+
         setUsuarios(usuariosActualizados);
+        console.log(data);
     };
 
 
-    const eliminarUsuario = async ci => {
-        // const { data } = await axios.delete(`/usuarios/${usuario.ci}&tipoUsuario`); //URL para editar
-        const usuariosActualizados = usuarios.filter(usuario => usuario.ci !== ci);
-        setUsuarios(usuariosActualizados);
+    const eliminarUsuario = async (ci, tipoUsuario) => {
+
+        const { data } = await axios.delete(`https://scom-rest.herokuapp.com/api/${tipoUsuario}/${usuario.ci}`); //URL para editar
+        let usuariosActualizados;
+        console.log(data);
+        if (tipoUsuario === '') {
+            usuariosActualizados = usuarios.filter(usuario => usuario.ci !== ci);
+        }
+
+        if (tipoUsuario === 'cliente') {
+            usuariosActualizados = usuarios.filter(usuario => usuario.ci !== ci);
+        }
+
+        if (tipoUsuario === 'cajero') {
+            usuariosActualizados = usuarios.filter(usuario => usuario.ci !== ci);
+        }
+        setUsuario(usuariosActualizados);
+
     };
 
-    const obtenerUsuarioGeneral = async (tipoUsuario) => {
-        //const { data } = await axios.get(`/usuarios`, tipoUsuario);
-        //setUsuarios(data);
-    };
 
     return (
         <UsuarioContext.Provider value={{
@@ -74,7 +129,10 @@ export const UsuarioProvider = ({ children }) => {
             submitUsuario,
             obtenerUsuario,
             setTipoUsuario,
-            obtenerUsuarioGeneral
+
+            //FuncionesParallamarusuarios
+            obtenerClientes,
+            obtenerCajeros
 
         }}>
             {children}

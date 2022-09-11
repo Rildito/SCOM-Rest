@@ -34,11 +34,11 @@ export const Registrar = () => {
               <input className='w-100' type="image" src={Chef} value="chef" onClick={e => mandarUsuario(e)} />
               <h5 className="card-title text-center fs-3 fw-bolder text-danger my-3">CHEFS</h5>
             </div>
-            <div className="col-md-3 col-sm-6 col-12 shadow d-flex justify-content-center flex-column align-items-center myborder">
+            <div className="col-md-3 col-sm-6 col-12 shadow d-flex justify-content-center flex-column align-items-center myborder mt-md-0 mt-sm-3">
               <input className='w-100' type="image" src={Camarero} value="camarero" onClick={e => mandarUsuario(e)} />
               <h5 className="card-title text-center fs-3 fw-bolder text-danger my-3">CAMAREROS</h5>
             </div>
-            <div className="col-md-3 col-sm-6 col-12 shadow d-flex justify-content-center flex-column align-items-center myborder">
+            <div className="col-md-3 col-sm-6 col-12 shadow d-flex justify-content-center flex-column align-items-center myborder mt-md-0 mt-sm-3">
               <input className='w-100' type="image" src={Cajero} value="cajero" onClick={e => mandarUsuario(e)} />
               <h5 className="card-title text-center fs-3 fw-bolder text-danger my-3">CAJEROS</h5>
             </div>

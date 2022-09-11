@@ -1,15 +1,16 @@
 import { useEffect, useState, useContext } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import UsuarioContext from "../context/UsuarioProvider";
 
 export const FormularioUsuario = () => {
 
+    const navigate = useNavigate();
     const [nombre, setNombre] = useState('');
     const [ci, setCi] = useState('');
-    const [apellidoPat, setApellidoPat] = useState('');
-    const [apellidoMat, setApellidoMat] = useState('');
-    const [password, setPassword] = useState('');
-    const [edad, setEdad] = useState('');
+    const [apellidoPaterno, setApellidoPaterno] = useState('');
+    const [apellidoMaterno, setApellidoMaterno] = useState('');
+    const [contraseña, setContraseña] = useState('');
+    const [fechaNacimiento, setFechaNacimiento] = useState('');
     const [nombreUsuario, setNombreUsuario] = useState('');
     const [estado, setEstado] = useState('');
 
@@ -17,7 +18,7 @@ export const FormularioUsuario = () => {
     const [nit, setNit] = useState('');
     const [email, setEmail] = useState('');
 
-    //CHEF y //CAMARERO
+    //CHEF //CAMARERO
     const [fechaContratacion, setFechaContratacion] = useState('');
     const [salario, setSalario] = useState('');
     const [especialidad, setEspecialidad] = useState('');
@@ -31,10 +32,10 @@ export const FormularioUsuario = () => {
         if (id) {
             setNombre(usuario.nombre);
             setCi(usuario.ci);
-            setApellidoPat(usuario.apellidoPaterno);
-            setApellidoMat(usuario.apellidoMaterno);
-            setPassword(usuario.password);
-            setEdad(usuario.edad);
+            setApellidoPaterno(usuario.apellidoPaterno);
+            setApellidoMaterno(usuario.apellidoMaterno);
+            setContraseña(usuario.contraseña);
+            setFechaNacimiento(usuario.fechaNacimiento);
             setNombreUsuario(usuario.nombreUsuario);
             setEstado(usuario.estado);
             setNit(usuario.nit);
@@ -47,7 +48,23 @@ export const FormularioUsuario = () => {
 
     const handleSubmit = async e => {
         e.preventDefault();
-        await submitUsuario({ id, nombre, ci, apellidoMat, apellidoMat, password, edad, nombreUsuario, estado, nit, email, fechaContratacion, salario, especialidad, tipoUsuario });
+        await submitUsuario({ id, nombre, ci, apellidoMaterno, apellidoPaterno, contraseña, fechaContratacion, nombreUsuario, estado, nit, email, fechaNacimiento, salario, especialidad }, tipoUsuario);
+
+        setNombre('');
+        setCi('');
+        setApellidoMaterno('');
+        setApellidoPaterno('');
+        setContraseña('');
+        setFechaNacimiento('');
+        setNombreUsuario('');
+        setEstado('');
+        setNit('');
+        setEmail('');
+        setFechaContratacion('');
+        setSalario('');
+        setEspecialidad('');
+        navigate('/administrador');
+
     };
     return (
         <>
@@ -66,27 +83,27 @@ export const FormularioUsuario = () => {
                             onChange={e => setNombre(e.target.value)}
                         />
 
-                        <label htmlFor="apellidoPat" className='form-label fw-bold'>Apellido Paterno</label>
+                        <label htmlFor="apellidoPaterno" className='form-label fw-bold'>Apellido Paterno</label>
                         <input
                             type="text"
-                            id="apellidoPat"
-                            name="apellidoPat"
+                            id="apellidoPaterno"
+                            name="apellidoPaterno"
                             className='form-control my-1'
-                            value={apellidoPat}
+                            value={apellidoPaterno}
                             placeholder="Ej. Perez"
-                            onChange={e => setApellidoPat(e.target.value)}
+                            onChange={e => setApellidoPaterno(e.target.value)}
                         />
 
 
-                        <label htmlFor="apellidoMat" className='form-label fw-bold'>Apellido Materno</label>
+                        <label htmlFor="apellidoMaterno" className='form-label fw-bold'>Apellido Materno</label>
                         <input
                             type="text"
-                            id="apellidoMat"
-                            name="apellidoMat"
+                            id="apellidoMaterno"
+                            name="apellidoMaterno"
                             className='form-control my-1'
-                            value={apellidoMat}
+                            value={apellidoMaterno}
                             placeholder="Ej. Arcani"
-                            onChange={e => setApellidoMat(e.target.value)}
+                            onChange={e => setApellidoMaterno(e.target.value)}
 
                         />
 
@@ -104,26 +121,26 @@ export const FormularioUsuario = () => {
 
                     <div className="col-md-6 col-12">
 
-                        <label htmlFor="password" className='form-label fw-bold'>Contraseña</label>
+                        <label htmlFor="contraseña" className='form-label fw-bold'>Contraseña</label>
                         <input
                             type="password"
-                            id="password"
-                            name="password"
+                            id="contraseña"
+                            name="contraseña"
                             className='form-control my-1'
-                            value={password}
+                            value={contraseña}
                             placeholder="*********"
                             autoComplete='on'
-                            onChange={e => setPassword(e.target.value)}
+                            onChange={e => setContraseña(e.target.value)}
                         />
 
-                        <label htmlFor="fechanac" className='form-label fw-bold'>Fecha Nacimiento</label>
+                        <label htmlFor="fechaNacimiento" className='form-label fw-bold'>Fecha Nacimiento</label>
                         <input
                             type="date"
-                            id="fechanac"
-                            name="fechanac"
+                            id="fechaNacimiento"
+                            name="fechaNacimiento"
                             className='form-control my-1'
-                            value={edad}
-                            onChange={e => setEdad(e.target.value)}
+                            value={fechaNacimiento}
+                            onChange={e => setFechaNacimiento(e.target.value)}
                         />
 
                         <label htmlFor="ci" className='form-label fw-bold'>CI</label>
@@ -138,15 +155,11 @@ export const FormularioUsuario = () => {
                         />
 
                         <label htmlFor="estado" className='form-label fw-bold'>Estado</label>
-                        <input
-                            type="text"
-                            id="estado"
-                            name="estado"
-                            className='form-control my-1'
-                            value={estado}
-                            placeholder="Ej. estado"
-                            onChange={e => setEstado(e.target.value)}
-                        />
+                        <select value={estado} onChange={e => setEstado(e.target.value)} className='form-select'>
+                            <option >--Seleccione--</option>
+                            <option value="habilitado">Habilitado</option>
+                            <option value="deshabilitado">Deshabilitado</option>
+                        </select>
                     </div>
 
                     {
@@ -200,11 +213,12 @@ export const FormularioUsuario = () => {
                                     value={salario}
                                     placeholder="0"
                                     min={"1"}
+                                    step={"1"}
                                     onChange={e => setSalario(e.target.value)}
                                 />
 
                                 <label htmlFor="salario" className='form-label fw-bold '>Especialidad</label>
-                                <select value={especialidad} onChange={e => setEspecialidad(e.target.value)}className='form-select'>
+                                <select value={especialidad} onChange={e => setEspecialidad(e.target.value)} className='form-select'>
                                     <option >--Seleccione--</option>
                                     <option value="chefSaucier">Chef Saucier o de salsas</option>
                                     <option value="chefPoissonnier">Chef Poissonnier o de pescados</option>
@@ -249,9 +263,9 @@ export const FormularioUsuario = () => {
                         ) : null)
                     }
 
-                    <input type="submit" value={ (id) ? `Actualizar Usuario` : `Registrar Usuario`} className='btn btn-warning text-black mt-3 text-uppercase fw-bolder mx-md-auto w-auto' />
+                    <input type="submit" value={(id) ? `Actualizar Usuario` : `Registrar Usuario`} className='btn btn-warning text-black mt-3 text-uppercase fw-bolder mx-md-auto w-auto' />
                 </form>
-            </div>
+            </div >
         </>
     )
 }
