@@ -50,20 +50,20 @@ export const FormularioUsuario = () => {
         e.preventDefault();
         await submitUsuario({ id, nombre, ci, apellidoMaterno, apellidoPaterno, contraseña, fechaContratacion, nombreUsuario, estado, nit, email, fechaNacimiento, salario, especialidad }, tipoUsuario);
 
-        setNombre('');
-        setCi('');
-        setApellidoMaterno('');
-        setApellidoPaterno('');
-        setContraseña('');
-        setFechaNacimiento('');
-        setNombreUsuario('');
-        setEstado('');
-        setNit('');
-        setEmail('');
-        setFechaContratacion('');
-        setSalario('');
-        setEspecialidad('');
-        navigate('/administrador');
+        // setNombre('');
+        // setCi('');
+        // setApellidoMaterno('');
+        // setApellidoPaterno('');
+        // setContraseña('');
+        // setFechaNacimiento('');
+        // setNombreUsuario('');
+        // setEstado('');
+        // setNit('');
+        // setEmail('');
+        // setFechaContratacion('');
+        // setSalario('');
+        // setEspecialidad('');
+        // navigate('/administrador');
 
     };
     return (
@@ -156,7 +156,6 @@ export const FormularioUsuario = () => {
 
                         <label htmlFor="estado" className='form-label fw-bold'>Estado</label>
                         <select value={estado} onChange={e => setEstado(e.target.value)} className='form-select'>
-                            <option >--Seleccione--</option>
                             <option value="habilitado">Habilitado</option>
                             <option value="deshabilitado">Deshabilitado</option>
                         </select>

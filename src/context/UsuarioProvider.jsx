@@ -54,7 +54,13 @@ export const UsuarioProvider = ({ children }) => {
 
     const nuevoUsuario = async (usuario, tipoUsuario) => {
 
-        const { data } = await axios.post(`https://scom-rest.herokuapp.com/api/${tipoUsuario}`, usuario); //URL para crear tipoUsuario
+        // const { data } = await axios.post(`https://scom-rest.herokuapp.com/api/${tipoUsuario}`, usuario); //URL para crear tipoUsuario
+        console.log(usuario);
+        const { data } = await axios.post(`https://scom-rest.herokuapp.com/api/cliente`, {
+            "ci":8441659,
+            "nombre":""
+            
+        }); //URL para crear tipoUsuario
 
         if (tipoUsuario === '') {
             setUsuarios([...usuarios, data]);
