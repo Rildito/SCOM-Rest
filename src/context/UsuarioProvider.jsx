@@ -12,8 +12,6 @@ export const UsuarioProvider = ({ children }) => {
     const [cargando, setCargando] = useState(false);
     const [tipoUsuario, setTipoUsuario] = useState('');
 
-
-
     useEffect(() => {
         const obtenerUsuarios = async () => {
             const { data } = await axios.get("https://scom-rest.herokuapp.com/api/usuarios");
@@ -56,94 +54,105 @@ export const UsuarioProvider = ({ children }) => {
 
         // const { data } = await axios.post(`https://scom-rest.herokuapp.com/api/${tipoUsuario}`, usuario); //URL para crear tipoUsuario
         console.log(usuario);
-        const { data } = await axios.post(`https://scom-rest.herokuapp.com/api/cliente`, {
-            "ci":8441659,
-            "nombre":""
+        await axios.post(`https://scom-rest.herokuapp.com/api/cliente`, 
+            {
+                "ci": 12412,
+                "nombreUsuario": "enrique",
+                "contraseña": "12345",
+                "fechaNacimiento": "2000-02-24",
+                "nombre": "jose",
+                "apellidoPaterno": "flores",
+                "apellidoMaterno": "quisbert",
+                "estado": "habilitado",
+                "nit": "123456",
+                "email": "jiucp@gmail.com"
+            }
             
-        }); //URL para crear tipoUsuario
+        ); //URL para crear tipoUsuario
+        console.log("ENVIO CORRECTAMENTE");
+        // console.log(data);
+    if (tipoUsuario === '') {
+        setUsuarios([...usuarios, data]);
+    }
 
-        if (tipoUsuario === '') {
-            setUsuarios([...usuarios, data]);
-        }
+    if (tipoUsuario === 'cliente') {
+        setUsuarios([...usuarios, data]);
+    }
 
-        if (tipoUsuario === 'cliente') {
-            setUsuarios([...usuarios, data]);
-        }
+    if (tipoUsuario === 'cajero') {
+        setUsuarios([...usuarios, data]);
+    }
 
-        if (tipoUsuario === 'cajero') {
-            setUsuarios([...usuarios, data]);
-        }
+    console.log(data);
 
-        console.log(data);
+};
 
-    };
+const editarUsuario = async (usuario, tipoUsuario) => {
 
-    const editarUsuario = async (usuario, tipoUsuario) => {
+    const { data } = await axios.put(`https://scom-rest.herokuapp.com/api/${tipoUsuario}/${usuario.ci}`); //URL para editar
 
-        const { data } = await axios.put(`https://scom-rest.herokuapp.com/api/${tipoUsuario}/${usuario.ci}`); //URL para editar
+    let usuariosActualizados;
+    if (tipoUsuario === '') {
+        usuariosActualizados = usuarios.filter(usuario => usuario.ci !== ci ? usuario : data);
+    }
 
-        let usuariosActualizados;
-        if (tipoUsuario === '') {
-            usuariosActualizados = usuarios.filter(usuario => usuario.ci !== ci ? usuario : data);
-        }
+    if (tipoUsuario === 'cliente') {
+        usuariosActualizados = clientes.filter(usuario => usuario.ci !== ci ? usuario : data);
 
-        if (tipoUsuario === 'cliente') {
-            usuariosActualizados = clientes.filter(usuario => usuario.ci !== ci ? usuario : data);
+    }
 
-        }
+    if (tipoUsuario === 'cajero') {
+        usuariosActualizados = cajeros.filter(usuario => usuario.ci !== ci ? usuario : data);
+    }
 
-        if (tipoUsuario === 'cajero') {
-            usuariosActualizados = cajeros.filter(usuario => usuario.ci !== ci ? usuario : data);
-        }
-
-        setUsuarios(usuariosActualizados);
-        console.log(data);
-    };
-
-
-    const eliminarUsuario = async (ci, tipoUsuario) => {
-
-        const { data } = await axios.delete(`https://scom-rest.herokuapp.com/api/${tipoUsuario}/${usuario.ci}`); //URL para editar
-        let usuariosActualizados;
-        console.log(data);
-        if (tipoUsuario === '') {
-            usuariosActualizados = usuarios.filter(usuario => usuario.ci !== ci);
-        }
-
-        if (tipoUsuario === 'cliente') {
-            usuariosActualizados = usuarios.filter(usuario => usuario.ci !== ci);
-        }
-
-        if (tipoUsuario === 'cajero') {
-            usuariosActualizados = usuarios.filter(usuario => usuario.ci !== ci);
-        }
-        setUsuario(usuariosActualizados);
-
-    };
+    setUsuarios(usuariosActualizados);
+    console.log(data);
+};
 
 
-    return (
-        <UsuarioContext.Provider value={{
-            //Variables
-            usuarios,
-            usuario,
-            cargando,
-            tipoUsuario,
+const eliminarUsuario = async (ci, tipoUsuario) => {
 
-            //Functions
-            eliminarUsuario,
-            submitUsuario,
-            obtenerUsuario,
-            setTipoUsuario,
+    const { data } = await axios.delete(`https://scom-rest.herokuapp.com/api/${tipoUsuario}/${usuario.ci}`); //URL para editar
+    let usuariosActualizados;
+    console.log(data);
+    if (tipoUsuario === '') {
+        usuariosActualizados = usuarios.filter(usuario => usuario.ci !== ci);
+    }
 
-            //FuncionesParallamarusuarios
-            obtenerClientes,
-            obtenerCajeros
+    if (tipoUsuario === 'cliente') {
+        usuariosActualizados = usuarios.filter(usuario => usuario.ci !== ci);
+    }
 
-        }}>
-            {children}
-        </UsuarioContext.Provider>
-    )
+    if (tipoUsuario === 'cajero') {
+        usuariosActualizados = usuarios.filter(usuario => usuario.ci !== ci);
+    }
+    setUsuario(usuariosActualizados);
+
+};
+
+
+return (
+    <UsuarioContext.Provider value={{
+        //Variables
+        usuarios,
+        usuario,
+        cargando,
+        tipoUsuario,
+
+        //Functions
+        eliminarUsuario,
+        submitUsuario,
+        obtenerUsuario,
+        setTipoUsuario,
+
+        //FuncionesParallamarusuarios
+        obtenerClientes,
+        obtenerCajeros
+
+    }}>
+        {children}
+    </UsuarioContext.Provider>
+)
 }
 
 export default UsuarioContext;
