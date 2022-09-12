@@ -36,7 +36,7 @@ export const FormularioIngrediente = () => {
             <div className="card mb-3" style={{
                 maxWidth: '800px'
             }}>
-                <div className="row g-0">
+                <div className="row g-0 px-4">
                     <div className="col-md-4 d-flex align-items-center justify-content-center">
                         <img src={Imagen} className="img-fluid img-mw" alt="ImagenCiono"/>
                     </div>

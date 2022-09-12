@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Login, RegistrarUsuario, Restaurant, Usuarios, EditarUsuario, Registrar, Opciones, Ingredientes, RegistrarIngrediente } from './pages';
+import { Login, RegistrarUsuario, Restaurant, Usuarios, EditarUsuario, Registrar, Opciones, Ingredientes, RegistrarIngrediente, Mesas, RegistrarMesa, Pedidos, PedidoInformacion, PedidoCobro } from './pages';
 import "./index.css";
 import { AuthProvider, UsuarioProvider, ProductosProvider } from './context';
-import { AuthLayout, AdministradorLayout } from './layouts';
+import { AuthLayout, AdministradorLayout, CajeroLayout } from './layouts';
 import { RegistrarCliente } from './components';
 
 function App() {
@@ -28,6 +28,15 @@ function App() {
 
                 <Route path='ingredientes' element={<Ingredientes />} />
                 <Route path='ingredientes/registrar' element={<RegistrarIngrediente />} />
+
+                <Route path='mesas' element={<Mesas />} />
+                <Route path='mesas/registrar' element={<RegistrarMesa />} />
+              </Route>
+
+              <Route path='/cajero' element={<CajeroLayout />}>
+                <Route index element={<Pedidos />} />
+                <Route path=':idPedido' element={<PedidoInformacion />} />
+                <Route path=':idPedido/cobro' element={<PedidoCobro />} />
               </Route>
             </Routes>
           </ProductosProvider>

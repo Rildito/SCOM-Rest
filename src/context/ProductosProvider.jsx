@@ -5,10 +5,13 @@ const ProductosContext = createContext();
 export const ProductosProvider = ({ children }) => {
 
   const [productos, setProductos] = useState([]);
-  const [ingredientes, setIngredientes] = useState([]);
+  const [producto, setProducto] = useState({});
   
   const [ingrediente, setIngrediente] = useState({});
-  const [producto, setProducto] = useState({});
+  const [ingredientes, setIngredientes] = useState([]);
+
+  const [mesa, setMesa] = useState({});
+  const [mesas, setMesas] = useState([]);
 
   const [modal, setModal] = useState(null);
 
@@ -23,6 +26,11 @@ export const ProductosProvider = ({ children }) => {
 
 
   const obtenerIngredientes = async () => {
+    // const { data:{data, response} } = await axios.get("https://scom-rest.herokuapp.com/api/ingredientes");
+    // setIngredientes(data);
+  };
+
+  const obtenerMesas = async () => {
     // const { data:{data, response} } = await axios.get("https://scom-rest.herokuapp.com/api/ingredientes");
     // setIngredientes(data);
   };
@@ -52,6 +60,33 @@ export const ProductosProvider = ({ children }) => {
     // setIngredientes(ingredientesActualizados);
   };
 
+
+  //MESAS
+  const submitMesa = mesa => {
+
+    if (mesa.id) {
+      editarMesa(mesa);
+    } else {
+      nuevoMesa(mesa);
+    }
+  };
+
+  const nuevoMesa = async mesa => {
+    // const { data } = await axios.post('/ingredientes', ingrediente); //URL para crear
+    // setIngredientes([...ingredientes, data])
+  };
+
+  const editarMesa = async mesa => {
+    // const { data } = await axios.post(`/ingredientes/${ingrediente.ci}`, ingrediente); //URL para editar
+    // setIngredientes([...ingredientes, data])
+  };
+
+  const eliminarMesa = async mesa => {
+    // const { data } = await axios.delete(`/ingredientes/${ingrediente.ci}`); //URL para editar
+    // const ingredientesActualizados = ingredientes.filter(ingrediente => ingrediente.nombre !== nombre);
+    // setIngredientes(ingredientesActualizados);
+  };
+
   return (
     <ProductosContext.Provider value={{
       //VARIABLES
@@ -59,13 +94,18 @@ export const ProductosProvider = ({ children }) => {
       producto,
       ingredientes,
       ingrediente,
+      mesas,
+      mesa,
       modal,
       setModal,
 
       //FUNCIONTS
       submitIngrediente,
       editarIngrediente,
-      eliminarIngrediente
+      eliminarIngrediente,
+      submitMesa,
+      editarMesa,
+      eliminarMesa
     }}>
       {children}
     </ProductosContext.Provider>
