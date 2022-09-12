@@ -1,3 +1,4 @@
+export { FormularioMesa } from "./FormularioMesa";
 
 
 export { Alerta } from "./Alerta";
@@ -16,5 +17,6 @@ export { Productos } from "./Productos";
 export { RegistrarCliente } from "./RegistrarCliente";
 export { SobreNosotros } from "./SobreNosotros";
 export { Spinner } from "./Spinner";
+
 
 

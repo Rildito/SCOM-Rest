@@ -28,7 +28,7 @@ export const Ingredientes = () => {
                         <tbody className='text-center'>
                             {
                                 ingredientes?.map(ingre => (
-                                    <tr key={ingre.Nombre} className="align-middle">
+                                    <tr key={ingre.codIngrediente} className="align-middle">
                                         <td>{ingre.Nombre}</td>
                                         <td>{ingre.Categoria}</td>
                                         <td>{ingre.Unidad}</td>
