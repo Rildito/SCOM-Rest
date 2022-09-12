@@ -1,3 +1,5 @@
+export { PedidoVisualizacion } from "./PedidoVisualizacion";
+
 export { PedidoCobro } from "./PedidoCobro";
 
 export { EditarUsuario } from "./EditarUsuario";
@@ -13,6 +15,7 @@ export { RegistrarMesa } from "./RegistrarMesa";
 export { RegistrarUsuario } from "./RegistrarUsuario";
 export { Restaurant } from "./Restaurant";
 export { Usuarios } from "./Usuarios";
+
 
 
 

@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Login, RegistrarUsuario, Restaurant, Usuarios, EditarUsuario, Registrar, Opciones, Ingredientes, RegistrarIngrediente, Mesas, RegistrarMesa, Pedidos, PedidoInformacion, PedidoCobro } from './pages';
+import { Login, RegistrarUsuario, Restaurant, Usuarios, EditarUsuario, Registrar, Opciones, Ingredientes, RegistrarIngrediente, Mesas, RegistrarMesa, Pedidos, PedidoInformacion, PedidoCobro, PedidoVisualizacion } from './pages';
 import "./index.css";
 import { AuthProvider, UsuarioProvider, ProductosProvider } from './context';
 import { AuthLayout, AdministradorLayout, CajeroLayout } from './layouts';
@@ -37,6 +37,7 @@ function App() {
                 <Route index element={<Pedidos />} />
                 <Route path=':idPedido' element={<PedidoInformacion />} />
                 <Route path=':idPedido/cobro' element={<PedidoCobro />} />
+                <Route path=':idPedido/visualizacion' element={<PedidoVisualizacion />} />
               </Route>
             </Routes>
           </ProductosProvider>
