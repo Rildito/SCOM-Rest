@@ -26,7 +26,7 @@ export const FormularioUsuario = () => {
 
     const { ci: id, usuario: usuarioMostrar } = useParams();
 
-    const { submitUsuario, usuario, tipoUsuario, errores } = useContext(UsuarioContext);
+    const { submitUsuario, usuario, tipoUsuario, errores} = useContext(UsuarioContext);
 
     useEffect(() => {
         if (id) {
@@ -51,10 +51,9 @@ export const FormularioUsuario = () => {
 
         await submitUsuario({ id, nombre, ci, apellidoMaterno, apellidoPaterno, contraseña, fechaContratacion, nombreUsuario, estado, nit, email, fechaNacimiento, salario, especialidad, ciCajeroAdiciona: "1000007" }, tipoUsuario);
 
-        if (!errores.length === 0) {
-
-            return;
-        } 
+        if (errores.length > 0) {
+            return
+        }
 
         setNombre('');
         setCi('');
@@ -75,6 +74,11 @@ export const FormularioUsuario = () => {
     };
     return (
         <>
+            {
+                errores.map(error => (
+                    <p className="w-100 p-2 mb-1 bg-danger rounded text-white">{error}</p>
+                ))
+            }
             <div className='container h-100 p-3 pb-0 table-responsive rounded-2'>
                 <form onSubmit={handleSubmit} className="row d-flex justify-content-center align-items-center">
                     <div className="col-md-6 col-12">
