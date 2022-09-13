@@ -1,3 +1,5 @@
+export { ModalCobro } from "./ModalCobro";
+
 export { FormularioMesa } from "./FormularioMesa";
 
 

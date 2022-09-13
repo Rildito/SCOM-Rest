@@ -1,17 +1,43 @@
-import { useNavigate, useParams } from 'react-router-dom'
+import { useContext } from 'react';
+import { ModalCobro } from '../components';
+import ProductosContext from '../context/ProductosProvider';
 
 export const PedidoInformacion = () => {
 
-    const navigate = useNavigate();
-    const { idPedido } = useParams();
+    const { modalCobro } = useContext(ProductosContext);
     const productos = [
+        {
+            codProducto: 1,
+            nombre: 'Bistec al horno',
+            cantidad: 4,
+            precio: 17.50
+        },
+        {
+            codProducto: 2,
+            nombre: 'Pollo a la brasa',
+            cantidad: 2,
+            precio: 15
+        },
+        {
+            codProducto: 3,
+            nombre: 'Silpancho ahumado',
+            cantidad: 1,
+            precio: 15
+        },
+        {
+            codProducto: 4,
+            nombre: 'Trucha hervida',
+            cantidad: 2,
+            precio: 20
+        },
 
     ];
 
     const handleCobrar = () => {
-        console.log("hola");
-        navigate(`/cajero/${idPedido}/visualizacion`)
+        modalCobro.show();
     };
+
+    let total = 0;
     return (
         <>
             <div className='w-100 container d-flex align-items-center flex-column'>
@@ -28,15 +54,25 @@ export const PedidoInformacion = () => {
                         </thead>
                         <tbody className='text-center'>
                             {
-                                productos?.map(ingre => (
-                                    <tr key={ingre.codIngrediente} className="align-middle">
-                                        <td>{ingre.Nombre}</td>
-                                        <td>{ingre.Categoria}</td>
-                                        <td>{ingre.Unidad}</td>
-                                        <td className='d-flex gap-1 justify-content-center'>{ingre.costo}</td>
-                                    </tr>
-                                ))
+                                productos?.map(producto => {
+                                    total += (producto.precio * producto.cantidad)
+                                    return (
+                                        <tr key={producto.codProducto} className="align-middle">
+                                            <td>{producto.nombre}</td>
+                                            <td>{producto.cantidad}</td>
+                                            <td>{producto.precio} Bs.</td>
+                                            <td className='d-flex gap-1 justify-content-center'>{producto.precio * producto.cantidad} Bs.</td>
+                                        </tr>
+                                    )
+                                }
+                                )
                             }
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>TOTAL: {total} Bs.</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -46,6 +82,7 @@ export const PedidoInformacion = () => {
                     </div>
                 </div>
             </div>
+            <ModalCobro />
         </>
     )
 }

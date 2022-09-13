@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cajero from '../assets/img/cajero.png';
-import Camarero from '../assets/img/camarero.jpg';
-import Chef from '../assets/img/chef.jpg';
-import Cliente from '../assets/img/usuario.jpg';
+import Camarero from '../assets/img/camarero.png';
+import Chef from '../assets/img/chef.png';
+import Cliente from '../assets/img/cliente.png';
 import UsuarioContext from '../context/UsuarioProvider';
 
 export const Registrar = () => {

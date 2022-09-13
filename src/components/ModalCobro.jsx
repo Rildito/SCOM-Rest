@@ -1,18 +1,21 @@
 import { Modal } from 'bootstrap';
 import { useEffect, useRef, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ProductosContext from '../context/ProductosProvider';
 
-export function ModalProducto() {
-    const { modal, setModal } = useContext(ProductosContext);
+export function ModalCobro() {
+    const { modalCobro, setModalCobro } = useContext(ProductosContext);
     const exampleModal = useRef()
     const navigate = useNavigate();
+
+    const { idPedido } = useParams();
     const handleClick = () => {
-        modal.hide();
-        navigate("/login");
+        modalCobro.hide();
+        navigate(`/cajero/${idPedido}/visualizacion`)
     };
+
     useEffect(() => {
-        setModal(
+        setModalCobro(
             new Modal(exampleModal.current)
         )
     }, [])
@@ -24,14 +27,15 @@ export function ModalProducto() {
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">PEDIDO</h5>
-                            <button type="button" className="btn-close" onClick={() => modal.hide()} aria-label="Close"></button>
+                            <h5 className="modal-title" id="exampleModalLabel">PROCESO DE PAGO</h5>
+                            <button type="button" className="btn-close" onClick={() => modalCobro.hide()} aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
-                            Si quiere realizar un pedido debe de iniciar sesion
+                            Confirmar Cobro
                         </div>
                         <div className="modal-footer d-flex justify-content-center">
-                            <button type="button" className="btn btn-primary text-uppercase" onClick={handleClick}>Confirmar pago</button>
+                            {/* <button type="button" className="btn btn-secondary" onClick={() => modal.hide()}>Close</button> */}
+                            <button type="button" className="btn btn-primary text-uppercase" onClick={handleClick}>CONFIRMAR COBRO</button>
                         </div>
                     </div>
                 </div>
