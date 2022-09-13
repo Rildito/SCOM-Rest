@@ -72,7 +72,7 @@ export const UsuarioProvider = ({ children }) => {
             console.log(error);
         } finally {
             setCargando(false);
-            }
+        }
     }
 
     const obtenerChefs = async () => {
@@ -100,7 +100,9 @@ export const UsuarioProvider = ({ children }) => {
 
     const obtenerUsuario = async (ci, tipoUsuario) => {
         setCargando(true);
-        const { data, error } = await axios.get(`https://scom-rest.herokuapp.com/api/${tipoUsuario}/${ci}`);
+        const { data, error } = await axios.get(`https://scom-rest.herokuapp.com/api/${tipoUsuario}/${ci}`, {
+            responseEncodig: 'utf-8'
+        });
         setUsuario(data.data);
         setCargando(false);
     };
@@ -116,32 +118,41 @@ export const UsuarioProvider = ({ children }) => {
 
     const nuevoUsuario = async (usuario, tipoUsuario) => {
 
-        setCargando(true);
-        const { data, error } = await axios.post(`https://scom-rest.herokuapp.com/api/${tipoUsuario}`, usuario);
-        console.log("DATA")
-        console.log(data);
-        console.log("ERROR")
-        console.log(error);
+        try {
+            setCargando(true);
+            const { data, error } = await axios.post(`https://scom-rest.herokuapp.com/api/${tipoUsuario}`, usuario, {
+                responseEncodig: 'utf-8'
+            });
+            console.log("DATA")
+            console.log(data);
+            console.log("ERROR")
+            console.log(error);
+            if (error?.length > 0) {
+                setCargando(false);
+                setErrores(error);
+                return
+            }
 
-        if (error?.length > 0) {
+            if (tipoUsuario === '') {
+                setUsuarios([...usuarios, data.data]);
+            }
+
+            if (tipoUsuario === 'cliente') {
+                setUsuarios([...usuarios, data.data]);
+            }
+
+            if (tipoUsuario === 'cajero') {
+                setUsuarios([...usuarios, data.data]);
+            }
             setCargando(false);
-            setErrores(error);
-            return
+            mostrarAlerta('Se creo el usuario correctamente', 'primary');
+        } catch (error) {
+            setCargando(false);
+            console.log(error);
         }
 
-        if (tipoUsuario === '') {
-            setUsuarios([...usuarios, data.data]);
-        }
 
-        if (tipoUsuario === 'cliente') {
-            setUsuarios([...usuarios, data.data]);
-        }
 
-        if (tipoUsuario === 'cajero') {
-            setUsuarios([...usuarios, data.data]    );
-        }
-        setCargando(false);
-        mostrarAlerta('Se creo el usuario correctamente', 'primary');
 
     };
 
