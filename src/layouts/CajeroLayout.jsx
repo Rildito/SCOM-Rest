@@ -11,7 +11,7 @@ export const CajeroLayout = () => {
 
     return (
         <div className='d-flex align-items-center flex-column vh-100'>
-            <nav className="navbar w-100 px-5 border-bottom shadow-sm">
+            <nav className="navbar w-100 px-5 border-bottom shadow-sm hide-on-print">
                 <div className="container-fluid">
                     <Link to={"/"} className="navbar-brand">
                         <img src={Imagen} alt="logo_imagen" className='img-fluid logo' width="250px" />
@@ -22,7 +22,7 @@ export const CajeroLayout = () => {
                     </form>
                 </div>
             </nav>
-            <main className='w-100 container shadow-lg px-4 pt-4 h-100'>
+            <main className='w-100 container shadow-lg px-4 pt-4 h-100 shadow-none-print container-print'>
                 <Outlet />
             </main>
         </div>

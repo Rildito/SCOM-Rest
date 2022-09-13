@@ -6,7 +6,7 @@ export const ProductosProvider = ({ children }) => {
 
   const [productos, setProductos] = useState([]);
   const [producto, setProducto] = useState({});
-  
+
   const [ingrediente, setIngrediente] = useState({});
   const [ingredientes, setIngredientes] = useState([]);
 
@@ -14,6 +14,7 @@ export const ProductosProvider = ({ children }) => {
   const [mesas, setMesas] = useState([]);
 
   const [modal, setModal] = useState(null);
+  const [modalCobro, setModalCobro] = useState(null);
 
 
   useEffect(() => {
@@ -90,22 +91,24 @@ export const ProductosProvider = ({ children }) => {
   return (
     <ProductosContext.Provider value={{
       //VARIABLES
-      productos,
-      producto,
-      ingredientes,
       ingrediente,
-      mesas,
+      ingredientes,
       mesa,
+      mesas,
       modal,
-      setModal,
-
+      modalCobro,
+      producto,
+      productos,
+      
       //FUNCIONTS
-      submitIngrediente,
       editarIngrediente,
-      eliminarIngrediente,
-      submitMesa,
       editarMesa,
-      eliminarMesa
+      eliminarIngrediente,
+      eliminarMesa,
+      setModal,
+      setModalCobro,
+      submitIngrediente,
+      submitMesa,
     }}>
       {children}
     </ProductosContext.Provider>

@@ -5,7 +5,6 @@ export const Pedidos = () => {
     const pedidos = ["Sopa de comida, ", "Sopa de fideo, ", "Pollo a la plancha"];
     return (
         <>
-
             <h2 className='fs-1 mb-4 text-primary fw-bold text-center'>PEDIDOS</h2>
             <Link to={`/cajero/${12312}`} className='w-100 bg-warning-gradient p-4 justify-content-start btn text-start mb-3'>
                 <div>
