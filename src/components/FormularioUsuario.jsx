@@ -22,11 +22,11 @@ export const FormularioUsuario = () => {
     const [salario, setSalario] = useState('');
     const [especialidad, setEspecialidad] = useState('');
 
-
     const { ci: id, usuario: usuarioMostrar } = useParams();
 
     const { submitUsuario, usuario, tipoUsuario, errores, confirmacion, setConfirmacion } = useContext(UsuarioContext);
 
+    //const [disableb, setDisabled] = useState(false);
     useEffect(() => {
         if (id) {
             setNombre(usuario.nombre);
@@ -65,6 +65,7 @@ export const FormularioUsuario = () => {
             setSalario('');
             setEspecialidad('');
             setConfirmacion(false);
+            setDisabled(false);
         }
 
 

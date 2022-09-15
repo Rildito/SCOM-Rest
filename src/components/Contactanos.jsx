@@ -2,9 +2,9 @@ import React from 'react'
 
 export const Contactanos = ({ enlace }) => {
     return (
-        <div className='w-75 mt-5' ref={enlace}>
+        <div className='w-md-50 w-100 mt-5' ref={enlace}>
             <h1 className='text-center text-primary'>CONTACTANOS</h1>
-            <div className="mb-3 mt-5 border shadow p-sm-5 p-0">
+            <div className="mb-3 mt-5 border shadow p-sm-5 p-2">
                 <div className="row d-flex justify-content-center">
                     <div className="col-md-7 bg-danger-gradient py-4 px-5">
                         <form className='d-flex flex-column align-items-center text-white'>

@@ -16,7 +16,10 @@ export const UsuarioProvider = ({ children }) => {
     const [tipoUsuario, setTipoUsuario] = useState('cliente');
 
     //alerta
-    const [alerta, setAlerta] = useState({});
+    const [alerta, setAlerta] = useState({
+        // msg:'HOLA MUNDO',
+        // tipoAlerta:'primary'
+    });
     const [errores, setErrores] = useState([]);
     const [confirmacion, setConfirmacion] = useState(false);
 

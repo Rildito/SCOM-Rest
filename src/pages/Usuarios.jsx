@@ -26,13 +26,13 @@ export const Usuarios = () => {
 
         <>
             {msg && <Alerta mensaje={msg} tipoAlerta={tipoAlerta} />}
-            <h1 className='py-5 text-center fw-bold text-white bg-dark w-100'>ADMINISTRA TUS USUARIOS</h1>
+            <h1 className='py-sm-5 py-3 text-center fw-bold text-white bg-dark w-100'>ADMINISTRA TUS USUARIOS</h1>
 
-            <div className='w-100 container'>
-                <div className="enlaces mb-2 d-sm-flex justify-content-between mt-3 p-sm-0 px-1">
-                    <div className='d-flex flex-sm-row flex-column gap-sm-0 gap-2'>
+            <div className='w-100 container-md'>
+                <div className="enlaces mb-2 d-md-flex justify-content-between mt-3 p-sm-0 px-1">
+                    <div className='d-flex flex-md-row flex-column gap-md-0 gap-2'>
 
-                        <input type="button" name="cliente" href="usuarioLista.php?usuario=chef" className={`btn ${tipoUsuario === 'cliente' ? 'btn-primary' : 'btn-outline-primary'} me-sm-2 w-100 w-sm-auto`} value="CLIENTES" onClick={elegirTipoUsuario} />
+                        <input type="button" name="cliente" href="usuarioLista.php?usuario=chef" className={`btn ${tipoUsuario === 'cliente' ? 'btn-primary' : 'btn-outline-primary'} me-sm-2 w-100 w-sm-auto `} value="CLIENTES" onClick={elegirTipoUsuario} />
 
 
                         <input type="button" name="chef" href="usuarioLista.php?usuario=chef" className={`btn ${tipoUsuario === 'chef' ? 'btn-secondary' : 'btn-outline-secondary'} me-sm-2 w-100 w-sm-auto`} value="CHEFS" onClick={elegirTipoUsuario} />
@@ -46,8 +46,8 @@ export const Usuarios = () => {
                         <input type="button" name="administrador" href="usuarioLista.php?usuario=administrador" className={`btn ${tipoUsuario === 'administrador' ? 'btn-secondary' : 'btn-outline-secondary'} me-sm-2 w-100 w-sm-auto`} value="ADMINISTRADORES" onClick={elegirTipoUsuario} />
                     </div>
 
-                    <div>
-                        <input type="button" href="usuarioLista.php" name="" className={`btn ${tipoUsuario === '' ? 'btn-info' : 'btn-outline-info'} w-100 w-sm-auto mt-sm-0 mt-2`} value="TODOS LOS USUARIOS" onClick={elegirTipoUsuario} />
+                    <div className=''>
+                        <input type="button" href="usuarioLista.php" name="" className={`btn ${tipoUsuario === '' ? 'btn-info' : 'btn-outline-info'} w-100 mt-md-0 mt-2`} value="TODOS LOS USUARIOS" onClick={elegirTipoUsuario} />
                     </div>
                 </div>
 
@@ -139,13 +139,13 @@ export const Usuarios = () => {
                                 </table>
                             </div>
 
-                            <div className='mt-3 d-flex justify-content-between'>
+                            <div className='mt-3 d-flex justify-content-between flex-sm-row flex-column'>
                                 <div>
-                                    <h5>¿Desea registrar un usuario?</h5>
+                                    <h5 className='text-sm-start'>¿Desea registrar un usuario?</h5>
                                     <button onClick={registrarUsuario} className='btn btn-primary mt-1 mb-3 w-sm-auto w-100'>Registrar Usuario</button>
                                 </div>
                                 <div>
-                                    <Link to={"/administrador"} className="btn btn-secondary">Volver principal</Link>
+                                    <Link to={"/administrador"} className="btn btn-secondary mb-sm-0 mb-3 w-100">Volver principal</Link>
                                 </div>
                             </div>
                         </>

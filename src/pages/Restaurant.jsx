@@ -26,7 +26,7 @@ export const Restaurant = () => {
     return (
         <>
             <Header enlace={inicio} scrollToSection={scrollToSection} referencias={referencias} />
-            <main className='d-flex flex-column justify-content-center align-items-center'>
+            <main className='d-flex flex-column justify-content-center align-items-center container-md'>
                 <SobreNosotros enlace={nosotros} />
                 <Productos enlace={productos} />
                 <Contactanos enlace={contactanos} />
