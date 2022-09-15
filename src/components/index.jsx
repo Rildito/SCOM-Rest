@@ -1,3 +1,5 @@
+export { Administradores } from "./Administradores";
+
 export { ModalCobro } from "./ModalCobro";
 
 export { FormularioMesa } from "./FormularioMesa";
@@ -19,6 +21,7 @@ export { Productos } from "./Productos";
 export { RegistrarCliente } from "./RegistrarCliente";
 export { SobreNosotros } from "./SobreNosotros";
 export { Spinner } from "./Spinner";
+
 
 
 

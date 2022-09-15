@@ -1,14 +1,14 @@
 
 import { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Alerta, Cajeros, Camareros, Chefs, Clientes, Spinner } from '../components';
+import { Administradores, Alerta, Cajeros, Camareros, Chefs, Clientes, Spinner } from '../components';
 import UsuarioContext from '../context/UsuarioProvider';
 import { obtenerEdad } from '../helpers/formatearFecha';
 
 export const Usuarios = () => {
 
     const navigate = useNavigate();
-    const { usuarios, setTipoUsuario, tipoUsuario, cargando, alerta } = useContext(UsuarioContext);
+    const { usuarios, setTipoUsuario, tipoUsuario, cargando, alerta, setErrores } = useContext(UsuarioContext);
 
     const elegirTipoUsuario = (e) => {
         e.preventDefault();
@@ -16,6 +16,7 @@ export const Usuarios = () => {
     };
 
     const registrarUsuario = () => {
+        setErrores([]);
         navigate(`/administrador/registrar/${tipoUsuario}`)
     };
 
@@ -30,17 +31,19 @@ export const Usuarios = () => {
             <div className='w-100 container'>
                 <div className="enlaces mb-2 d-sm-flex justify-content-between mt-3 p-sm-0 px-1">
                     <div className='d-flex flex-sm-row flex-column gap-sm-0 gap-2'>
-                        
+
                         <input type="button" name="cliente" href="usuarioLista.php?usuario=chef" className={`btn ${tipoUsuario === 'cliente' ? 'btn-primary' : 'btn-outline-primary'} me-sm-2 w-100 w-sm-auto`} value="CLIENTES" onClick={elegirTipoUsuario} />
 
 
                         <input type="button" name="chef" href="usuarioLista.php?usuario=chef" className={`btn ${tipoUsuario === 'chef' ? 'btn-secondary' : 'btn-outline-secondary'} me-sm-2 w-100 w-sm-auto`} value="CHEFS" onClick={elegirTipoUsuario} />
 
-                        
+
                         <input type="button" name="cajero" href="usuarioLista.php?usuario=chef" className={`btn ${tipoUsuario === 'cajero' ? 'btn-success' : 'btn-outline-success'} me-sm-2 w-100 w-sm-auto`} value="CAJEROS" onClick={elegirTipoUsuario} />
 
 
                         <input type="button" name="camarero" href="usuarioLista.php?usuario=chef" className={`btn ${tipoUsuario === 'camarero' ? 'btn-warning' : 'btn-outline-warning'} me-sm-2 w-100 w-sm-auto`} value="CAMAREROS" onClick={elegirTipoUsuario} />
+
+                        <input type="button" name="administrador" href="usuarioLista.php?usuario=administrador" className={`btn ${tipoUsuario === 'administrador' ? 'btn-secondary' : 'btn-outline-secondary'} me-sm-2 w-100 w-sm-auto`} value="ADMINISTRADORES" onClick={elegirTipoUsuario} />
                     </div>
 
                     <div>
@@ -114,6 +117,9 @@ export const Usuarios = () => {
                                             (tipoUsuario === 'chef' && <Chefs />)
                                         }
 
+                                        {
+                                            (tipoUsuario === 'administrador' && <Administradores />)
+                                        }
 
                                         {
                                             (tipoUsuario === '' && (usuarios?.map(usuario => (

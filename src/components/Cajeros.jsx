@@ -5,7 +5,7 @@ import { obtenerEdad } from '../helpers/formatearFecha';
 
 export const Cajeros = () => {
 
-    const { usuarios, eliminarUsuario } = useContext(UsuarioContext);
+    const { usuarios, eliminarUsuario, setErrores } = useContext(UsuarioContext);
     return (
         <>
             {
@@ -21,7 +21,7 @@ export const Cajeros = () => {
                         <td>{usuario.fechaContratacion}</td>
                         <td>{usuario.salario}</td>
                         <td className='d-flex gap-2'>
-                            <Link to={`/administrador/editar/${usuario.ci}&cajero`} className='btn btn-warning' >Editar</Link>
+                            <Link to={`/administrador/editar/${usuario.ci}&cajero`} className='btn btn-warning' onClick={() => setErrores([])}>Editar</Link>
                             <input type="button" name="eliminar" value="Eliminar" className='btn btn-danger' onClick={() => eliminarUsuario(usuario.ci, 'cajero')} />
 
                         </td>

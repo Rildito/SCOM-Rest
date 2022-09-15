@@ -1,11 +1,11 @@
 import { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import UsuarioContext from '../context/UsuarioProvider'
 import { obtenerEdad } from '../helpers/formatearFecha';
 
 export const Clientes = () => {
 
-    const { usuarios, eliminarUsuario } = useContext(UsuarioContext);
+    const { usuarios, eliminarUsuario, setErrores } = useContext(UsuarioContext);
 
     return (
         <>
@@ -22,7 +22,7 @@ export const Clientes = () => {
                         <td>{usuario.nit}</td>
                         <td>{usuario.email}</td>
                         <td className='d-flex gap-2'>
-                            <Link to={`/administrador/editar/${usuario.ci}&cliente`} className='btn btn-warning' >Editar</Link>
+                            <Link to={`/administrador/editar/${usuario.ci}&cliente`} className='btn btn-warning' onClick={() => setErrores([])}>Editar</Link>
                             <input type="button" name="eliminar" value="Eliminar" className='btn btn-danger' onClick={() => eliminarUsuario(usuario.ci, 'cliente')} />
 
                         </td>

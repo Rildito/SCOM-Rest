@@ -18,8 +18,20 @@ export const EditarUsuario = () => {
             obtenerUsuario(ci,'cliente')
         }
 
+        if (usuario === 'chef') {
+            obtenerUsuario(ci,'chef')
+        }
+
+        if (usuario === 'camarero') {
+            obtenerUsuario(ci,'camarero')
+        }
+
         if (usuario === 'cajero') {
             obtenerUsuario(ci, 'cajero')
+        }
+
+        if (usuario === 'administrador') {
+            obtenerUsuario(ci, 'administrador')
         }
     }, [usuario]);
 
