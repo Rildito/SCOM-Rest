@@ -61,17 +61,14 @@ export const PedidoInformacion = () => {
                                             <td>{producto.nombre}</td>
                                             <td>{producto.cantidad}</td>
                                             <td>{producto.precio} Bs.</td>
-                                            <td className='d-flex gap-1 justify-content-center'>{producto.precio * producto.cantidad} Bs.</td>
+                                            <td>{producto.precio * producto.cantidad} Bs.</td>
                                         </tr>
                                     )
                                 }
                                 )
                             }
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>TOTAL: {total} Bs.</td>
+                                <td colSpan={"4"}>TOTAL: {total} Bs.</td>
                             </tr>
                         </tbody>
                     </table>
