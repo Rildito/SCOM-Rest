@@ -65,7 +65,7 @@ export const FormularioUsuario = () => {
         setContraseña('');
         setFechaNacimiento('');
         setNombreUsuario('');
-        setEstado('');
+        setEstado('habilitado');
         setNit('');
         setEmail('');
         setFechaContratacion('');
