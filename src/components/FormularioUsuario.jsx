@@ -25,7 +25,7 @@ export const FormularioUsuario = () => {
 
     const { ci: id, usuario: usuarioMostrar } = useParams();
 
-    const { submitUsuario, usuario, tipoUsuario, errores, setErrores, cargando } = useContext(UsuarioContext);
+    const { submitUsuario, usuario, tipoUsuario, errores, confirmacion, setConfirmacion } = useContext(UsuarioContext);
 
     useEffect(() => {
         if (id) {
@@ -50,32 +50,28 @@ export const FormularioUsuario = () => {
 
         await submitUsuario({ id, nombre, ci, apellidoMaterno, apellidoPaterno, contraseña, fechaContratacion, nombreUsuario, estado, nit, email, fechaNacimiento, salario, especialidad, ciCajeroAdiciona: "1000007" }, tipoUsuario);
 
-        if (cargando) {
-            return
+        if (confirmacion) {
+            setNombre('');
+            setCi('');
+            setApellidoMaterno('');
+            setApellidoPaterno('');
+            setContraseña('');
+            setFechaNacimiento('');
+            setNombreUsuario('');
+            setEstado('');
+            setNit('');
+            setEmail('');
+            setFechaContratacion('');
+            setSalario('');
+            setEspecialidad('');
+            setConfirmacion(false);
         }
 
-        if (errores.length > 0) {
-            return;
-        }
-
-        setNombre('');
-        setCi('');
-        setApellidoMaterno('');
-        setApellidoPaterno('');
-        setContraseña('');
-        setFechaNacimiento('');
-        setNombreUsuario('');
-        setEstado('habilitado');
-        setNit('');
-        setEmail('');
-        setFechaContratacion('');
-        setSalario('');
-        setEspecialidad('');
 
     };
     return (
         <>
-           
+
             {
                 errores.map(error => (
                     <p key={error} className="w-100 p-2 mb-1 bg-danger rounded text-white">{error}</p>

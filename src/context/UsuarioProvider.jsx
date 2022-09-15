@@ -18,6 +18,7 @@ export const UsuarioProvider = ({ children }) => {
     //alerta
     const [alerta, setAlerta] = useState({});
     const [errores, setErrores] = useState([]);
+    const [confirmacion, setConfirmacion] = useState(false);
 
     useEffect(() => {
 
@@ -169,10 +170,12 @@ export const UsuarioProvider = ({ children }) => {
 
             if (error?.length > 0) {
                 setErrores(error);
-                return
+                return;
             }
+            console.log("ENTRO")
             setUsuarios([...usuarios, data]);
             setErrores([]);
+            setConfirmacion(true);
             navigate('/administrador/usuarios');
             mostrarAlerta('Se creo el usuario correctamente', 'primary');
         } catch (error) {
@@ -194,9 +197,12 @@ export const UsuarioProvider = ({ children }) => {
             }
             const usuariosActualizados = usuarios.map(us => us.ci !== data.ci ? us : data);
 
+
+            console.log("ENTRO EDITAR")
             setUsuarios(usuariosActualizados);
             setErrores([]);
             setUsuario({});
+            setConfirmacion(true);
             navigate('/administrador/usuarios');
             mostrarAlerta('Se modifico el usuario correctamente', 'primary');
         } catch (error) {
@@ -251,6 +257,8 @@ export const UsuarioProvider = ({ children }) => {
             tipoUsuario,
             alerta,
             errores,
+            confirmacion,
+            setConfirmacion,
             //Functions
             eliminarUsuario,
             submitUsuario,
