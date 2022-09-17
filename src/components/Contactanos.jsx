@@ -2,15 +2,15 @@ import React from 'react'
 
 export const Contactanos = ({ enlace }) => {
     return (
-        <div className='w-md-50 w-100 mt-5' ref={enlace}>
+        <div className='w-md-50 w-100 mt-5 overflow-hidden' ref={enlace}>
             <h1 className='text-center text-primary'>CONTACTANOS</h1>
-            <div className="mb-3 mt-5 border shadow p-sm-5 p-2">
+            <div className="mt-5 border shadow">
                 <div className="row d-flex justify-content-center">
-                    <div className="col-md-7 bg-danger-gradient py-4 px-5">
+                    <div className="col-md-7 bg-primary-gradient py-4 px-5">
                         <form className='d-flex flex-column align-items-center text-white'>
                             <div className="mb-3 w-100">
                                 <label htmlFor="exampleInputPassword1" className="form-label fw-bold">Nombre</label>
-                                <input type="text" className="form-control red" id="exampleInputPassword1" />
+                                <input type="text" className="form-control" id="exampleInputPassword1" />
                             </div>
 
                             <div className="mb-3 w-100">

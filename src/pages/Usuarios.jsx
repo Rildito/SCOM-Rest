@@ -59,10 +59,8 @@ export const Usuarios = () => {
                                     <thead className='text-center table-dark'>
                                         <tr>
                                             <th scope="col">CI</th>
-                                            <th scope="col">nombreUsuario</th>
-                                            <th scope="col">nombre</th>
-                                            <th scope="col">apellido Paterno</th>
-                                            <th scope="col">apellido Materno</th>
+                                            <th scope="col">Nombre de usuario</th>
+                                            <th scope="col">Nombre completo</th>
                                             <th scope="col">Edad</th>
                                             {
                                                 (tipoUsuario === 'cliente' && (

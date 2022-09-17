@@ -1,47 +1,40 @@
 import { useContext } from 'react';
-import { ModalCobro } from '../components';
+import { ModalCobro, Spinner } from '../components';
 import ProductosContext from '../context/ProductosProvider';
+import { useNavigate, useParams } from 'react-router-dom';
+import PedidosContext from '../context/PedidosProvider';
+import { useEffect } from 'react';
+import { capitalizarPrimeraLetra } from '../helpers/formatearTexto';
+import { formatearFecha } from '../helpers/formatearFecha';
 
 export const PedidoInformacion = () => {
 
+    const navigate = useNavigate();
     const { modalCobro } = useContext(ProductosContext);
-    const productos = [
-        {
-            codProducto: 1,
-            nombre: 'Bistec al horno',
-            cantidad: 4,
-            precio: 17.50
-        },
-        {
-            codProducto: 2,
-            nombre: 'Pollo a la brasa',
-            cantidad: 2,
-            precio: 15
-        },
-        {
-            codProducto: 3,
-            nombre: 'Silpancho ahumado',
-            cantidad: 1,
-            precio: 15
-        },
-        {
-            codProducto: 4,
-            nombre: 'Trucha hervida',
-            cantidad: 2,
-            precio: 20
-        },
-
-    ];
+    const { pedidoSeleccionado, obtenerPedido, cargando } = useContext(PedidosContext);
+    const { idPedido } = useParams();
+    let total = 0;
 
     const handleCobrar = () => {
         modalCobro.show();
     };
 
-    let total = 0;
+    const handleAgregarOtroPedido = () => {
+        navigate('/cajero');
+    };
+
+    useEffect(() => {
+        obtenerPedido(idPedido);
+    }, []);
+
+    if (cargando) {
+        return <Spinner />
+    }
     return (
         <>
             <div className='w-100 container d-flex align-items-center flex-column'>
                 <h2 className='text-primary fw-bold'>INFORMACION DE PEDIDO</h2>
+                <p className='text-muted'>Fecha de pedido: {formatearFecha(pedidoSeleccionado.fecha)}</p>
                 <div className='mt-3 table-wrapper-scroll-y my-custom-scrollbar-usuario w-100 border'>
                     <table className="table bg-white">
                         <thead className='text-center table-dark'>
@@ -54,28 +47,31 @@ export const PedidoInformacion = () => {
                         </thead>
                         <tbody className='text-center'>
                             {
-                                productos?.map(producto => {
+                                pedidoSeleccionado.productos?.map(producto => {
                                     total += (producto.precio * producto.cantidad)
                                     return (
-                                        <tr key={producto.codProducto} className="align-middle">
-                                            <td>{producto.nombre}</td>
+                                        <tr key={producto.idProducto} className="align-middle">
+                                            <td>{capitalizarPrimeraLetra(producto.nombre)}</td>
                                             <td>{producto.cantidad}</td>
-                                            <td>{producto.precio} Bs.</td>
-                                            <td>{producto.precio * producto.cantidad} Bs.</td>
+                                            <td>{(producto.precio).toFixed(2)} Bs.</td>
+                                            <td>{(producto.precio * producto.cantidad).toFixed(2)} Bs.</td>
                                         </tr>
                                     )
-                                }
-                                )
+                                })
                             }
                             <tr>
-                                <td colSpan={"4"}>TOTAL: {total} Bs.</td>
+                                <td colSpan={"4"} className="">TOTAL: {total.toFixed(2)} Bs.</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <div className='mt-3 w-100 d-flex justify-content-center'>
+                <div className='mt-3 w-100 d-flex justify-content-center gap-2'>
                     <div>
                         <button onClick={handleCobrar} className='btn btn-primary mt-1 mb-3 w-sm-auto w-100 text-uppercase'>Realizar Cobro</button>
+                    </div>
+
+                    <div>
+                        <button onClick={handleAgregarOtroPedido} className='btn btn-primary mt-1 mb-3 w-sm-auto w-100 text-uppercase'>Adjuntar otro pedido</button>
                     </div>
                 </div>
             </div>

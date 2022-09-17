@@ -1,9 +1,7 @@
+export { Productos } from "./Productos";
 export { Administradores } from "./Administradores";
-
 export { ModalCobro } from "./ModalCobro";
-
 export { FormularioMesa } from "./FormularioMesa";
-
 
 export { Alerta } from "./Alerta";
 export { Cajeros } from "./Cajeros";
@@ -17,9 +15,9 @@ export { Header } from "./Header";
 export { ModalProducto } from "./ModalProducto";
 export { PreguntasFrecuentes } from "./PreguntasFrecuentes";
 export { Producto } from "./Producto";
-export { Productos } from "./Productos";
+export { ProductosPreview } from "./ProductosPreview";
 export { RegistrarCliente } from "./RegistrarCliente";
-export { SobreNosotros } from "./SobreNosotros";
+export { SobreNosotrosPreview } from "./SobreNosotrosPreview";
 export { Spinner } from "./Spinner";
 
 

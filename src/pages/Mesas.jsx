@@ -40,13 +40,13 @@ export const Mesas = () => {
                         </tbody>
                     </table>
                 </div>
-                <div className='mt-3 d-flex justify-content-between w-100 px-5'>
+                <div className='mt-3 d-flex justify-content-between w-100 flex-sm-row flex-column'>
                     <div>
                         <h5>¿Desea registrar una Mesa?</h5>
                         <button onClick={registrarMesa} className='btn btn-primary mt-1 mb-3 w-sm-auto w-100'>Registrar Mesa</button>
                     </div>
                     <div>
-                        <Link to={"/administrador"} className="btn btn-secondary">Volver principal</Link>
+                        <Link to={"/administrador"} className="btn btn-secondary w-100">Volver principal</Link>
                     </div>
                 </div>
             </div>

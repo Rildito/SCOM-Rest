@@ -168,14 +168,14 @@ export const UsuarioProvider = ({ children }) => {
 
         try {
             setCargando(true);
-            console.log(usuario);
+            //console.log(usuario);
             const { data: { data, error } } = await axios.post(`https://scom-rest.herokuapp.com/api/${tipoUsuario}`, usuario);
 
             if (error?.length > 0) {
                 setErrores(error);
                 return;
             }
-            console.log("ENTRO")
+
             setUsuarios([...usuarios, data]);
             setErrores([]);
             setConfirmacion(true);
@@ -200,8 +200,6 @@ export const UsuarioProvider = ({ children }) => {
             }
             const usuariosActualizados = usuarios.map(us => us.ci !== data.ci ? us : data);
 
-
-            console.log("ENTRO EDITAR")
             setUsuarios(usuariosActualizados);
             setErrores([]);
             setUsuario({});

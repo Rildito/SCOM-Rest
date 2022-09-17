@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import { Header, PreguntasFrecuentes, Productos, SobreNosotros, Contactanos } from '../components';
+import { Header, PreguntasFrecuentes, ProductosPreview,  Contactanos, SobreNosotrosPreview } from '../components';
 
 
 export const Restaurant = () => {
@@ -26,9 +26,9 @@ export const Restaurant = () => {
     return (
         <>
             <Header enlace={inicio} scrollToSection={scrollToSection} referencias={referencias} />
-            <main className='d-flex flex-column justify-content-center align-items-center container-md'>
-                <SobreNosotros enlace={nosotros} />
-                <Productos enlace={productos} />
+            <main className='d-flex flex-column justify-content-center align-items-center container-md shadow px-0'>
+                <SobreNosotrosPreview enlace={nosotros} />
+                <ProductosPreview enlace={productos} />
                 <Contactanos enlace={contactanos} />
                 <PreguntasFrecuentes enlace={sugerencias} />
             </main>

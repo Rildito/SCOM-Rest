@@ -31,7 +31,7 @@ export function ModalProducto() {
                             Si quiere realizar un pedido debe de iniciar sesion
                         </div>
                         <div className="modal-footer d-flex justify-content-center">
-                            <button type="button" className="btn btn-primary text-uppercase" onClick={handleClick}>INICIAR SESION</button>
+                            <button type="button" className="btn btn-danger text-uppercase" onClick={handleClick}>INICIAR SESION</button>
                         </div>
                     </div>
                 </div>

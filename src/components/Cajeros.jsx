@@ -14,13 +14,11 @@ export const Cajeros = () => {
 
                         <th scope='row'>{usuario.ci}</th>
                         <td>{usuario.nombreUsuario}</td>
-                        <td>{usuario.nombre}</td>
-                        <td>{usuario.apellidoPaterno}</td>
-                        <td>{usuario.apellidoMaterno}</td>
+                        <td>{usuario.nombre} {usuario.apellidoPaterno} {usuario.apellidoMaterno}</td>
                         <td>{obtenerEdad(usuario.fechaNacimiento)}</td>
                         <td>{usuario.fechaContratacion}</td>
-                        <td>{usuario.salario}</td>
-                        <td className='d-flex gap-2'>
+                        <td>{usuario.salario} Bs.</td>
+                        <td className='d-flex gap-2 justify-content-center'>
                             <Link to={`/administrador/editar/${usuario.ci}&cajero`} className='btn btn-warning' onClick={() => setErrores([])}>Editar</Link>
                             <input type="button" name="eliminar" value="Eliminar" className='btn btn-danger' onClick={() => eliminarUsuario(usuario.ci, 'cajero')} />
 

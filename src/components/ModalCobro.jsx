@@ -11,7 +11,7 @@ export function ModalCobro() {
     const { idPedido } = useParams();
     const handleClick = () => {
         modalCobro.hide();
-        navigate(`/cajero/${idPedido}/visualizacion`)
+        navigate(`cobro`);
     };
 
     useEffect(() => {

@@ -15,13 +15,11 @@ export const Clientes = () => {
 
                         <th scope='row'>{usuario.ci}</th>
                         <td>{usuario.nombreUsuario}</td>
-                        <td>{usuario.nombre}</td>
-                        <td>{usuario.apellidoPaterno}</td>
-                        <td>{usuario.apellidoMaterno}</td>
+                        <td>{usuario.nombre} {usuario.apellidoPaterno} {usuario.apellidoMaterno}</td>
                         <td>{obtenerEdad(usuario.fechaNacimiento)}</td>
                         <td>{usuario.nit}</td>
                         <td>{usuario.email}</td>
-                        <td className='d-flex gap-2'>
+                        <td className='d-flex gap-2 justify-content-center'>
                             <Link to={`/administrador/editar/${usuario.ci}&cliente`} className='btn btn-warning' onClick={() => setErrores([])}>Editar</Link>
                             <input type="button" name="eliminar" value="Eliminar" className='btn btn-danger' onClick={() => eliminarUsuario(usuario.ci, 'cliente')} />
 

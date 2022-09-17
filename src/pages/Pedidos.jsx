@@ -1,63 +1,93 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+
+import PedidoContext from '../context/PedidosProvider';
+import { useEffect } from 'react';
 
 export const Pedidos = () => {
 
-    const pedidos = ["Sopa de comida, ", "Sopa de fideo, ", "Pollo a la plancha"];
+    const { pedidosBuscados, pedidos } = useContext(PedidoContext);
+
+    let total = 0;
     return (
         <>
             <h2 className='fs-1 mb-4 text-primary fw-bold text-center'>PEDIDOS</h2>
-            <Link to={`/cajero/${12312}`} className='w-100 bg-warning-gradient p-4 justify-content-start btn text-start mb-3'>
-                <div>
-                    <h4 className='text-danger fw-bold'>Codigo de pedido: 2</h4>
-                    <p className='mb-1'>Productos pedidos: {''}
-                        <span className='fw-bold'>
-                            {
-                                pedidos.map(pedido => (
-                                    pedido
-                                ))
-                            }
-                        </span>
-                    </p>
-                    <p className='mb-0'>Precio total: <span className='fw-bold'>575 Bs.</span></p>
-                </div>
 
-            </Link>
+            <div className='px-md-5 px-0'>
+                {
+                    (pedidosBuscados.length > 0 ? (
+                        pedidosBuscados.map(pedido => (
+                            <Link to={`${pedido.idPedido}`} className='w-100 bg-warning-gradient p-4 justify-content-start btn text-start mb-3' key={pedido.idPedido}>
 
-            <Link to={`/cajero/${12312}`} className='w-100 bg-warning-gradient p-4 justify-content-start btn text-start mb-3'>
-                <div>
-                    <h4 className='text-danger fw-bold'>Codigo de pedido: 2</h4>
-                    <p className='mb-1'>Productos pedidos: {''}
-                        <span className='fw-bold'>
-                            {
-                                pedidos.map(pedido => (
-                                    pedido
-                                ))
-                            }
-                        </span>
-                    </p>
-                    <p className='mb-0'>Precio total: <span className='fw-bold'>575 Bs.</span></p>
-                </div>
+                                <div className='d-flex justify-content-between flex-md-row flex-column'>
 
-            </Link>
+                                    <div>
+                                        <h4 className='text-danger fw-bold'>Codigo de pedido: {pedido.idPedido}</h4>
+                                        <p className='mb-0'>Productos pedidos: {''}
+                                            <span className='fw-bold'>
+                                                {
+                                                    pedido.productos.map(producto => {
+                                                        total += producto.precio;
+                                                        return (
+                                                            producto.nombre
+                                                        )
+                                                    })
 
-            <Link to={`/cajero/${12312}`} className='w-100 bg-warning-gradient p-4 justify-content-start btn text-start mb-3'>
-                <div>
-                    <h4 className='text-danger fw-bold'>Codigo de pedido: 2</h4>
-                    <p className='mb-1'>Productos pedidos: {''}
-                        <span className='fw-bold'>
-                            {
-                                pedidos.map(pedido => (
-                                    pedido
-                                ))
-                            }
-                        </span>
-                    </p>
-                    <p className='mb-0'>Precio total: <span className='fw-bold'>575 Bs.</span></p>
-                </div>
+                                                }
+                                            </span>
+                                        </p>
+                                        <p className='mb-0'>Precio total:
+                                            <span className='fw-bold'>
+                                                Total {' '}{total.toFixed(2)} {' '}Bs.
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p className='mb-0'>Nombre Cliente: <span className='fw-bold'>Luis Barra Paredes</span></p>
+                                        <p>CI: <span className='fw-bold'>8441659</span></p>
+                                    </div>
+                                </div>
+                            </Link>
+                        ))
 
-            </Link>
+                    ) : (
+                        pedidos.map(pedido => (
+                            <Link to={`${pedido.idPedido}`} className='w-100 bg-warning-gradient p-4 justify-content-start btn text-start mb-3' key={pedido.idPedido}>
 
-        
+                                <div className='d-flex justify-content-between flex-md-row flex-column'>
+
+                                    <div>
+                                        <h4 className='text-danger fw-bold'>Codigo de pedido: {pedido.idPedido}</h4>
+                                        <p className='mb-0'>Productos pedidos: {''}
+                                            <span className='fw-bold'>
+                                                {
+                                                    pedido.productos.map(producto => {
+                                                        total += producto.precio;
+                                                        return (
+                                                            producto.nombre
+                                                        )
+                                                    })
+
+                                                }
+                                            </span>
+                                        </p>
+                                        <p className='mb-0'>Precio total:
+                                            <span className='fw-bold'>
+                                                Total {' '}{total.toFixed(2)} {' '}Bs.
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p className='mb-0'>Nombre Cliente: <span className='fw-bold'>Luis Barra Paredes</span></p>
+                                        <p>CI: <span className='fw-bold'>8441659</span></p>
+                                    </div>
+                                </div>
+                            </Link>
+                        ))
+                    ))
+
+                }
+            </div>
         </>
     )
 }

@@ -2,7 +2,7 @@
 
 export const PreguntasFrecuentes = ({enlace}) => {
     return (
-        <div className="my-5" ref={enlace}>
+        <div className="my-5 px-md-5 px-3" ref={enlace}>
             <h1 className="text-primary text-center mb-4">PREGUNTAS FRECUENTES</h1>
             <div className="mb-4 text-justify">
                 <h2>Lorem ipsum dolor sit amet.</h2>

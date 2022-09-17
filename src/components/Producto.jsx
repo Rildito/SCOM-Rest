@@ -1,9 +1,8 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react';
 import Imagen from '../assets/img/bg.jpg';
 import AuthContext from '../context/AuthProvider';
 import ProductosContext from '../context/ProductosProvider';
-
-export const Producto = () => {
+export const Producto = ({ producto }) => {
 
     const { auth } = useContext(AuthContext)
     const { modal } = useContext(ProductosContext);
@@ -15,10 +14,9 @@ export const Producto = () => {
         }
     };
 
-
     return (
         <>
-            <div style={{ width: "23rem" }} className="col-3 card px-0 rounded overflow-hidden tini mb-4"
+            <div style={{ width: "23rem" }} className="col-3 card px-0 rounded"
             >
                 <img src={Imagen} />
                 <div className="card-body">

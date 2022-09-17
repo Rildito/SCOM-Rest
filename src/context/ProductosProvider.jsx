@@ -4,7 +4,43 @@ const ProductosContext = createContext();
 
 export const ProductosProvider = ({ children }) => {
 
-  const [productos, setProductos] = useState([]);
+  const [productos, setProductos] = useState([
+    {
+      idProducto:1,
+      nombre:'Saise',
+      precio:15,
+      estado:'disponible',
+      stock:10
+    },
+    {
+      idProducto:2,
+      nombre:'Pollo Frito',
+      precio:10,
+      estado:'disponible',
+      stock:20
+    },
+    {
+      idProducto:3,
+      nombre:'Aji de Fideo',
+      precio:15,
+      estado:'disponible',
+      stock:15
+    },
+    {
+      idProducto:4,
+      nombre:'jugo de platano',
+      precio:5,
+      estado:'disponible',
+      gradoAlcoholico:0
+    },
+    {
+      idProducto:5,
+      nombre:'jugo de naranja',
+      precio:10,
+      estado:'disponible',
+      gradoAlcoholico:0
+    },
+  ]);
   const [producto, setProducto] = useState({});
 
   const [ingrediente, setIngrediente] = useState({});
@@ -15,7 +51,7 @@ export const ProductosProvider = ({ children }) => {
 
   const [modal, setModal] = useState(null);
   const [modalCobro, setModalCobro] = useState(null);
-
+  
 
   useEffect(() => {
     const obtenerProductos = async () => {

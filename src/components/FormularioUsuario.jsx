@@ -24,10 +24,10 @@ export const FormularioUsuario = () => {
 
     const { ci: id, usuario: usuarioMostrar } = useParams();
 
-    const { submitUsuario, usuario, tipoUsuario, errores, confirmacion, setConfirmacion } = useContext(UsuarioContext);
+    const { submitUsuario, usuario, tipoUsuario, errores, confirmacion, setConfirmacion, editando } = useContext(UsuarioContext);
 
-    //const [disableb, setDisabled] = useState(false);
     useEffect(() => {
+
         if (id) {
             setNombre(usuario.nombre);
             setCi(usuario.ci);
@@ -65,7 +65,6 @@ export const FormularioUsuario = () => {
             setSalario('');
             setEspecialidad('');
             setConfirmacion(false);
-            setDisabled(false);
         }
 
 
@@ -265,6 +264,7 @@ export const FormularioUsuario = () => {
                                     value={salario}
                                     placeholder="0"
                                     min={"1"}
+                                    step={"0.01"}
                                     onChange={e => setSalario(e.target.value)}
                                 />
                             </div>
