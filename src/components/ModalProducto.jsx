@@ -1,16 +1,28 @@
 import { Modal } from 'bootstrap';
 import { useEffect, useRef, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AuthContext from '../context/AuthProvider';
 import ProductosContext from '../context/ProductosProvider';
 
 export function ModalProducto() {
     const { modal, setModal } = useContext(ProductosContext);
+    const { auth } = useContext(AuthContext);
     const exampleModal = useRef()
     const navigate = useNavigate();
-    const handleClick = () => {
+
+    const handleIniciarSesion = () => {
         modal.hide();
         navigate("/login");
     };
+
+    const handlePedirProducto = () => {
+        
+        
+
+        modal.hide();
+    };
+
+
     useEffect(() => {
         setModal(
             new Modal(exampleModal.current)
@@ -31,7 +43,10 @@ export function ModalProducto() {
                             Si quiere realizar un pedido debe de iniciar sesion
                         </div>
                         <div className="modal-footer d-flex justify-content-center">
-                            <button type="button" className="btn btn-danger text-uppercase" onClick={handleClick}>INICIAR SESION</button>
+                            {
+                                auth.ci ? (<button type="button" className="btn btn-primary text-uppercase" onClick={handlePedirProducto}>PEDIR</button>) : (<button type="button" className="btn btn-danger text-uppercase" onClick={handleIniciarSesion}>INICIAR SESION</button>)
+                            }
+
                         </div>
                     </div>
                 </div>

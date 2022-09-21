@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { createContext, useEffect, useState } from 'react'
 
 const ProductosContext = createContext();
@@ -6,39 +7,39 @@ export const ProductosProvider = ({ children }) => {
 
   const [productos, setProductos] = useState([
     {
-      idProducto:1,
-      nombre:'Saise',
-      precio:15,
-      estado:'disponible',
-      stock:10
+      idProducto: 1,
+      nombre: 'Saise',
+      precio: 15,
+      estado: 'disponible',
+      stock: 10
     },
     {
-      idProducto:2,
-      nombre:'Pollo Frito',
-      precio:10,
-      estado:'disponible',
-      stock:20
+      idProducto: 2,
+      nombre: 'Pollo Frito',
+      precio: 10,
+      estado: 'disponible',
+      stock: 20
     },
     {
-      idProducto:3,
-      nombre:'Aji de Fideo',
-      precio:15,
-      estado:'disponible',
-      stock:15
+      idProducto: 3,
+      nombre: 'Aji de Fideo',
+      precio: 15,
+      estado: 'disponible',
+      stock: 15
     },
     {
-      idProducto:4,
-      nombre:'jugo de platano',
-      precio:5,
-      estado:'disponible',
-      gradoAlcoholico:0
+      idProducto: 4,
+      nombre: 'jugo de platano',
+      precio: 5,
+      estado: 'disponible',
+      gradoAlcoholico: 0
     },
     {
-      idProducto:5,
-      nombre:'jugo de naranja',
-      precio:10,
-      estado:'disponible',
-      gradoAlcoholico:0
+      idProducto: 5,
+      nombre: 'jugo de naranja',
+      precio: 10,
+      estado: 'disponible',
+      gradoAlcoholico: 0
     },
   ]);
   const [producto, setProducto] = useState({});
@@ -51,8 +52,8 @@ export const ProductosProvider = ({ children }) => {
 
   const [modal, setModal] = useState(null);
   const [modalCobro, setModalCobro] = useState(null);
-  
 
+  const [cargando, setCargando] = useState(false);
   useEffect(() => {
     const obtenerProductos = async () => {
 
@@ -63,8 +64,27 @@ export const ProductosProvider = ({ children }) => {
 
 
   const obtenerIngredientes = async () => {
-    // const { data:{data, response} } = await axios.get("https://scom-rest.herokuapp.com/api/ingredientes");
-    // setIngredientes(data);
+    try {
+      setCargando(true);
+      const { data: { data, error } } = await axios.get('https://scom-rest.herokuapp.com/api/ingredientes'); //URL para crear
+      setIngredientes(data)
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setCargando(false);
+    }
+  };
+
+  const obtenerIngrediente = async (codIngrediente) => {
+    try {
+      setCargando(true);
+      const { data: { data, error } } = await axios.get(`https://scom-rest.herokuapp.com/api/ingredientes/${codIngrediente}`); //URL para crear
+      setIngrediente(data)
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setCargando(false);
+    }
   };
 
   const obtenerMesas = async () => {
@@ -82,8 +102,9 @@ export const ProductosProvider = ({ children }) => {
   };
 
   const nuevoIngrediente = async ingrediente => {
-    // const { data } = await axios.post('/ingredientes', ingrediente); //URL para crear
-    // setIngredientes([...ingredientes, data])
+    const { data } = await axios.post('https://scom-rest.herokuapp.com/api/ingredientes', ingrediente); //URL para crear
+    setIngredientes([...ingredientes, data])
+    console.log(data);
   };
 
   const editarIngrediente = async ingrediente => {
@@ -127,6 +148,7 @@ export const ProductosProvider = ({ children }) => {
   return (
     <ProductosContext.Provider value={{
       //VARIABLES
+      cargando,
       ingrediente,
       ingredientes,
       mesa,
@@ -135,7 +157,7 @@ export const ProductosProvider = ({ children }) => {
       modalCobro,
       producto,
       productos,
-      
+
       //FUNCIONTS
       editarIngrediente,
       editarMesa,
@@ -143,8 +165,11 @@ export const ProductosProvider = ({ children }) => {
       eliminarMesa,
       setModal,
       setModalCobro,
+      setCargando,
       submitIngrediente,
       submitMesa,
+      obtenerIngredientes,
+      obtenerIngrediente
     }}>
       {children}
     </ProductosContext.Provider>

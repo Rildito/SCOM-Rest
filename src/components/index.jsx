@@ -1,3 +1,5 @@
+export { FormularioProducto } from "./FormularioProducto";
+
 export { Productos } from "./Productos";
 export { Administradores } from "./Administradores";
 export { ModalCobro } from "./ModalCobro";

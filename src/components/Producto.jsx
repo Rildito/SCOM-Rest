@@ -4,14 +4,10 @@ import AuthContext from '../context/AuthProvider';
 import ProductosContext from '../context/ProductosProvider';
 export const Producto = ({ producto }) => {
 
-    const { auth } = useContext(AuthContext)
     const { modal } = useContext(ProductosContext);
 
     const handleClick = () => {
-        if (Object.entries(auth).length === 0) {
-            modal.show();
-            return
-        }
+        modal.show();
     };
 
     return (

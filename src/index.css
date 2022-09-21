@@ -13,6 +13,10 @@
     width: 55% !important;
   }
 
+  .w-md-40 {
+    width: 40% !important;
+  }
+
   .w-md-auto {
     width: auto !important;
   }

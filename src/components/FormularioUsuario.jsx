@@ -65,6 +65,7 @@ export const FormularioUsuario = () => {
             setSalario('');
             setEspecialidad('');
             setConfirmacion(false);
+            console.log("ENTRO-USUARIO")
         }
 
 

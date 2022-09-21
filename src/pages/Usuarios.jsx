@@ -32,18 +32,18 @@ export const Usuarios = () => {
                 <div className="enlaces mb-2 d-md-flex justify-content-between mt-3 p-sm-0 px-1">
                     <div className='d-flex flex-md-row flex-column gap-md-0 gap-2'>
 
-                        <input type="button" name="cliente" href="usuarioLista.php?usuario=chef" className={`btn ${tipoUsuario === 'cliente' ? 'btn-primary' : 'btn-outline-primary'} me-sm-2 w-100 w-sm-auto `} value="CLIENTES" onClick={elegirTipoUsuario} />
+                        <input type="button" name="cliente" className={`btn ${tipoUsuario === 'cliente' ? 'btn-primary' : 'btn-outline-primary'} me-sm-2 w-100 w-sm-auto `} value="CLIENTES" onClick={elegirTipoUsuario} />
 
 
-                        <input type="button" name="chef" href="usuarioLista.php?usuario=chef" className={`btn ${tipoUsuario === 'chef' ? 'btn-secondary' : 'btn-outline-secondary'} me-sm-2 w-100 w-sm-auto`} value="CHEFS" onClick={elegirTipoUsuario} />
+                        <input type="button" name="chef" className={`btn ${tipoUsuario === 'chef' ? 'btn-secondary' : 'btn-outline-secondary'} me-sm-2 w-100 w-sm-auto`} value="CHEFS" onClick={elegirTipoUsuario} />
 
 
-                        <input type="button" name="cajero" href="usuarioLista.php?usuario=chef" className={`btn ${tipoUsuario === 'cajero' ? 'btn-success' : 'btn-outline-success'} me-sm-2 w-100 w-sm-auto`} value="CAJEROS" onClick={elegirTipoUsuario} />
+                        <input type="button" name="cajero" className={`btn ${tipoUsuario === 'cajero' ? 'btn-success' : 'btn-outline-success'} me-sm-2 w-100 w-sm-auto`} value="CAJEROS" onClick={elegirTipoUsuario} />
 
 
-                        <input type="button" name="camarero" href="usuarioLista.php?usuario=chef" className={`btn ${tipoUsuario === 'camarero' ? 'btn-warning' : 'btn-outline-warning'} me-sm-2 w-100 w-sm-auto`} value="CAMAREROS" onClick={elegirTipoUsuario} />
+                        <input type="button" name="camarero" className={`btn ${tipoUsuario === 'camarero' ? 'btn-warning' : 'btn-outline-warning'} me-sm-2 w-100 w-sm-auto`} value="CAMAREROS" onClick={elegirTipoUsuario} />
 
-                        <input type="button" name="administrador" href="usuarioLista.php?usuario=administrador" className={`btn ${tipoUsuario === 'administrador' ? 'btn-secondary' : 'btn-outline-secondary'} me-sm-2 w-100 w-sm-auto`} value="ADMINISTRADORES" onClick={elegirTipoUsuario} />
+                        <input type="button" name="administrador" className={`btn ${tipoUsuario === 'administrador' ? 'btn-secondary' : 'btn-outline-secondary'} me-sm-2 w-100 w-sm-auto`} value="ADMINISTRADORES" onClick={elegirTipoUsuario} />
                     </div>
 
                     <div className=''>
@@ -124,9 +124,7 @@ export const Usuarios = () => {
                                                 <tr key={usuario.ci} className="align-middle">
                                                     <th scope='row'>{usuario.ci}</th>
                                                     <td>{usuario.nombreUsuario}</td>
-                                                    <td>{usuario.nombre}</td>
-                                                    <td>{usuario.apellidoPaterno}</td>
-                                                    <td>{usuario.apellidoMaterno}</td>
+                                                    <td>{  usuario.nombre} {usuario.apellidoPaterno} {usuario.apellidoMaterno}</td>
                                                     <td>{obtenerEdad(usuario.fechaNacimiento)}</td>
                                                 </tr>
                                             ))))

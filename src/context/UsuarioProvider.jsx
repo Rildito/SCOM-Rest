@@ -102,6 +102,7 @@ export const UsuarioProvider = ({ children }) => {
         try {
             const { data: { data, error } } = await axios.get("https://scom-rest.herokuapp.com/api/chefs");
             setUsuarios(data);
+
         } catch (error) {
             setCargando(false);
             setUsuarios([]);
@@ -146,7 +147,9 @@ export const UsuarioProvider = ({ children }) => {
             const { data: { data, error } } = await axios.get(`https://scom-rest.herokuapp.com/api/${tipoUsuario}/${ci}`, {
                 responseEncodig: 'utf-8'
             });
+            console.log(`https://scom-rest.herokuapp.com/api/${tipoUsuario}/${ci}`)
             setUsuario(data);
+            console.log(data);
 
         } catch (error) {
             mostrarAlerta('Ocurrio un error', 'danger');

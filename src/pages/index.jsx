@@ -1,3 +1,5 @@
+export { RegistrarProducto } from "./RegistrarProducto";
+
 export { ProductosCamarero } from "./ProductosCamarero";
 
 

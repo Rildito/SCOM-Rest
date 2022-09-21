@@ -7,10 +7,19 @@ export const Header = ({ enlace, scrollToSection, referencias }) => {
 
     const navigate = useNavigate();
     const { inicio, nosotros, productos, contactanos, sugerencias } = referencias;
-    const { auth } = useContext(AuthContext);
+    const { auth, setAuth } = useContext(AuthContext);
 
     const handleClick = () => {
         navigate('/login');
+    };
+
+    const handleCerrarSesion = () => {
+        setAuth({});
+        navigate('/');
+    };
+
+    const handleModificarDatos = () => {
+        console.log('Modificando datos')
     };
 
     return (
@@ -42,13 +51,13 @@ export const Header = ({ enlace, scrollToSection, referencias }) => {
                                 (Object.entries(auth).length > 0 &&
                                     <li className="nav-item dropdown mt-lg-0 mt-3">
                                         <a className="nav-link dropdown-toggle text-white p-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Hola: <span className='fw-bold'>Enrique123</span>
+                                            Hola: <span className='fw-bold'>{auth.nombreUsuario}</span>
                                         </a>
                                         <ul className="dropdown-menu" style={{
                                             margin: 0
                                         }}>
-                                            <li><a className="dropdown-item" href="#">Cerrar Sesion</a></li>
-                                            <li><a className="dropdown-item" href="#">Modificar Datos</a></li>
+                                            <button className="dropdown-item" onClick={handleCerrarSesion}>Cerrar Sesion</button>
+                                            <button className="dropdown-item" onClick={handleModificarDatos}>Modificar Datos</button>
                                         </ul>
                                     </li>)
                             }

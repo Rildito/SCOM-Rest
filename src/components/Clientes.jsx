@@ -17,7 +17,7 @@ export const Clientes = () => {
                         <td>{usuario.nombreUsuario}</td>
                         <td>{usuario.nombre} {usuario.apellidoPaterno} {usuario.apellidoMaterno}</td>
                         <td>{obtenerEdad(usuario.fechaNacimiento)}</td>
-                        <td>{usuario.nit}</td>
+                        <td>{usuario.NIT}</td>
                         <td>{usuario.email}</td>
                         <td className='d-flex gap-2 justify-content-center'>
                             <Link to={`/administrador/editar/${usuario.ci}&cliente`} className='btn btn-warning' onClick={() => setErrores([])}>Editar</Link>

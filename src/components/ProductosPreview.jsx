@@ -27,6 +27,7 @@ export const ProductosPreview = ({ enlace }) => {
                 }
             </div>
             <button className='btn btn-secondary w-lg-25 w-md-50 w-75 mt-4' onClick={handleClick}>VER MAS</button>
+            <ModalProducto />
         </>
     )
 }

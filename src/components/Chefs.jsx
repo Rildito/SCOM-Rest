@@ -20,7 +20,7 @@ export const Chefs = () => {
                         <td>{usuario.salario} Bs.</td>
                         <td>{usuario.especialidad}</td>
                         <td className='d-flex gap-2 justify-content-center'>
-                            <Link to={`/administrador/editar/${usuario.ci}&cajero`} className='btn btn-warning' onClick={() => setErrores([])}>Editar</Link>
+                            <Link to={`/administrador/editar/${usuario.ci}&chef`} className='btn btn-warning' onClick={() => setErrores([])}>Editar</Link>
                             <input type="button" name="eliminar" value="Eliminar" className='btn btn-danger' onClick={() => eliminarUsuario(usuario.ci, 'cajero')} />
 
                         </td>
