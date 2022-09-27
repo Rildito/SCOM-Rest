@@ -15,15 +15,15 @@ export const EditarUsuario = () => {
         }
 
         if (usuario === 'cliente') {
-            obtenerUsuario(ci,'cliente')
+            obtenerUsuario(ci, 'cliente')
         }
 
         if (usuario === 'chef') {
-            obtenerUsuario(ci,'chef')
+            obtenerUsuario(ci, 'chef')
         }
 
         if (usuario === 'camarero') {
-            obtenerUsuario(ci,'camarero')
+            obtenerUsuario(ci, 'camarero')
         }
 
         if (usuario === 'cajero') {
@@ -35,7 +35,7 @@ export const EditarUsuario = () => {
         }
     }, [usuario]);
 
-    if (cargando) return <Spinner />;
+    if (cargando) return <Spinner />
 
     return (
         <>

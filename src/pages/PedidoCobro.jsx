@@ -9,27 +9,9 @@ export const PedidoCobro = () => {
   const productos = [
     {
       codProducto: 1,
-      nombre: 'Bistecc al horno',
-      cantidad: 4,
-      precio: 17.50
-    },
-    {
-      codProducto: 2,
-      nombre: 'Pollo a la brasa',
+      nombre: 'Charquekan',
       cantidad: 2,
-      precio: 15
-    },
-    {
-      codProducto: 3,
-      nombre: 'Silpancho ahumado',
-      cantidad: 1,
-      precio: 15
-    },
-    {
-      codProducto: 4,
-      nombre: 'Trucha hervida',
-      cantidad: 2,
-      precio: 20
+      precio: 70
     },
 
   ];
@@ -58,8 +40,8 @@ export const PedidoCobro = () => {
 
         <div className='d-flex flex-sm-row align-items-center justify-content-around w-100 column flex-column'>
           <p>Nombre Cliente: <span className='fw-bold'>Jorge Perer Sandoval</span></p>
-          <p>CI/NIT: <span className='fw-bold'>12412512</span></p>
-          <p>Fecha: <span className='fw-bold'>{formatearFecha('2022/05/12')}</span></p>
+          <p>CI/NIT: <span className='fw-bold'>12412</span></p>
+          <p>Fecha: <span className='fw-bold'>{formatearFecha('2022/09/27')}</span></p>
         </div>
         <div className='mt-3 table-wrapper-scroll-y my-custom-scrollbar-usuario w-100'>
           <table className="table bg-white">

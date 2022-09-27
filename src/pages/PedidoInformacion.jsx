@@ -34,7 +34,7 @@ export const PedidoInformacion = () => {
         <>
             <div className='w-100 container d-flex align-items-center flex-column'>
                 <h2 className='text-primary fw-bold'>INFORMACION DE PEDIDO</h2>
-                <p className='text-muted'>Fecha de pedido: {formatearFecha(pedidoSeleccionado.fecha)}</p>
+                {/* <p className='text-muted'>Fecha de pedido: {formatearFecha(pedidoSeleccionado.data.fecha)}</p> */}
                 <div className='mt-3 table-wrapper-scroll-y my-custom-scrollbar-usuario w-100 border'>
                     <table className="table bg-white">
                         <thead className='text-center table-dark'>

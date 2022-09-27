@@ -1,3 +1,15 @@
+export { SolicitarMateria } from "./SolicitarMateria";
+
+export { PedidoRealizado } from "./PedidoRealizado";
+
+export { EditarMesa } from "./EditarMesa";
+
+export { EditarProducto } from "./EditarProducto";
+
+export { EditarIngrediente } from "./EditarIngrediente";
+
+export { ResumenPedido } from "./ResumenPedido";
+
 export { RegistrarProducto } from "./RegistrarProducto";
 
 export { ProductosCamarero } from "./ProductosCamarero";
@@ -21,6 +33,7 @@ export { RegistrarUsuario } from "./RegistrarUsuario";
 export { Restaurant } from "./Restaurant";
 export { SobreNosotros } from "./SobreNosotros";
 export { Usuarios } from "./Usuarios";
+
 
 
 

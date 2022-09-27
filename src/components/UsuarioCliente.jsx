@@ -41,7 +41,7 @@ export const UsuarioCliente = ({ usuario }) => {
             <td className='d-flex gap-2'>
                 <Link to={`/administrador/editar/${usuario.ci}&${usuario.tipoUsuario}`} className='btn btn-warning' >Editar</Link>
                 <input type="button" name="eliminar" value="Eliminar" className='btn btn-danger' onClick={() => eliminarUsuario(usuario.ci)} />
-                {/* tipoUsuario preguntar */}
+
             </td>
         </tr>
     )

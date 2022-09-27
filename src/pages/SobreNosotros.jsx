@@ -1,5 +1,9 @@
 import { useContext } from 'react';
 import Imagen from '../assets/img/logo.png';
+import Imagen0 from '../assets/img/img1.jpg';
+import Imagen1 from '../assets/img/image2.jfif';
+import Imagen2 from '../assets/img/img4.jfif';
+import Imagen3 from '../assets/img/img5.jpg';
 import AuthContext from '../context/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -53,12 +57,12 @@ export const SobreNosotros = () => {
                 <div className="card mb-md-5 border-0">
                     <div className="row g-0">
                         <div className="col-md-5">
-                            <img src={Imagen} className="img-fluid rounded-start" alt="..." />
+                            <img src={Imagen0} className="img-fluid rounded-start" alt="..." />
                         </div>
                         <div className="col-md-7">
                             <div className="card-body ms-md-5">
-                                <h5 className="card-title text-danger fs-3">Card title</h5>
-                                <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                <h5 className="card-title text-danger fs-3">¿Por que elegirnos?</h5>
+                                <p className="card-text">Somos el mejor lugar para disfrutar de excelentes platillos, para compartirlos en familia o personalmente.</p>
                                 <p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
                             </div>
                         </div>
@@ -69,25 +73,29 @@ export const SobreNosotros = () => {
                     <div className="row g-0 flex-md-row flex-column-reverse">
                         <div className="col-md-7">
                             <div className="card-body me-3">
-                                <h5 className="card-title text-danger fs-3">Card title</h5>
-                                <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                <h5 className="card-title text-danger fs-3">Nuestros Expertos</h5>
+                                <p className="card-text">Scom-Rest cuenta con los mejores chefs internacionalmente</p>
                                 <p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
                             </div>
                         </div>
                         <div className="col-md-5">
-                            <img src={Imagen} className="img-fluid rounded-start" alt="..." />
+                            <img src={Imagen3} className="img-fluid rounded-start" alt="..." />
                         </div>
                     </div>
                 </div>
                 <div className="card mb-md-5 border-0">
                     <div className="row g-0">
                         <div className="col-md-5">
-                            <img src={Imagen} className="img-fluid rounded-start" alt="..." />
+                            <img src={Imagen1} className="img-fluid rounded-start" alt="..." />
                         </div>
                         <div className="col-md-7">
                             <div className="card-body ms-md-5">
-                                <h5 className="card-title text-danger fs-3">Card title</h5>
-                                <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                <h5 className="card-title text-danger fs-3">Un concepto nuevo</h5>
+                                <p className="card-text"> Modernos en el estilo y clásicos en el sabor.
+
+                                    Un equipo de profesionales que hemos creado el restaurante donde nos gustaría comer a diario y en las ocasiones especiales. Con menú o a la carta. Con amigos o con clientes, con tiempo para disfrutar o con algo más de prisa porque el trabajo lo requiere.
+
+                                </p>
                                 <p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
                             </div>
                         </div>
@@ -98,13 +106,13 @@ export const SobreNosotros = () => {
                     <div className="row g-0 flex-md-row flex-column-reverse">
                         <div className="col-md-7">
                             <div className="card-body me-3">
-                                <h5 className="card-title text-danger fs-3">Card title</h5>
-                                <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                <h5 className="card-title text-danger fs-3">PENSANDO EN TI</h5>
+                                <p className="card-text">Nuestra cocina abierta responde a la necesidad de compartir nuestra pasión con los clientes. Nos gusta lo que hacemos y nos gusta que lo veas.</p>
                                 <p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
                             </div>
                         </div>
                         <div className="col-md-5">
-                            <img src={Imagen} className="img-fluid rounded-start" alt="..." />
+                            <img src={Imagen3} className="img-fluid rounded-start" alt="..." />
                         </div>
                     </div>
                 </div>

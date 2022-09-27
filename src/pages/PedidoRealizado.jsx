@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import { capitalizarPrimeraLetra } from '../helpers/formatearTexto';
 import { formatearFecha } from '../helpers/formatearFecha';
 
-export const PedidoConfirmacion = () => {
+export const PedidoRealizado = () => {
 
   const navigate = useNavigate();
   const { modalCobro } = useContext(ProductosContext);
@@ -28,12 +28,11 @@ export const PedidoConfirmacion = () => {
   return (
     <>
       <div className='w-100 container d-flex align-items-center flex-column'>
-        <h2 className='text-primary fw-bold text-center'>CONFIRMACION DE PEDIDO</h2>
+        <h2 className='text-primary fw-bold text-center'>CONFIRMACION DE REALIZACION </h2>
         <p className='text-muted'>Fecha de pedido: {formatearFecha(pedidoSeleccionado.fecha)}</p>
         <div className='d-md-flex justify-content-between w-100'>
           <div className='d-flex flex-md-row flex-column gap-2'>
-            <button className='btn btn-success' onClick={confirmarPedido}>CONFIRMAR</button>
-            <button className='btn btn-danger' onClick={() => cancelarPedido(pedidoSeleccionado.idPedido)}>CANCELAR</button>
+            <button className='btn btn-success' onClick={confirmarPedido}>REALIZADO</button>
           </div>
           {/* <button className='btn btn-primary w-md-auto w-100 mt-md-0 mt-2' onClick={agregarProducto}>AGREGAR MAS PRODUCTOS</button> */}
         </div>

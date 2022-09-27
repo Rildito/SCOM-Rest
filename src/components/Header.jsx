@@ -2,20 +2,17 @@ import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Imagen from '../assets/img/logo.png'
 import AuthContext from '../context/AuthProvider';
+import PedidoContext from '../context/PedidosProvider';
 
 export const Header = ({ enlace, scrollToSection, referencias }) => {
 
     const navigate = useNavigate();
     const { inicio, nosotros, productos, contactanos, sugerencias } = referencias;
-    const { auth, setAuth } = useContext(AuthContext);
+    const { auth, setAuth, handleCerrarSesion } = useContext(AuthContext);
+    const { pedido } = useContext(PedidoContext);
 
     const handleClick = () => {
         navigate('/login');
-    };
-
-    const handleCerrarSesion = () => {
-        setAuth({});
-        navigate('/');
     };
 
     const handleModificarDatos = () => {
@@ -43,6 +40,7 @@ export const Header = ({ enlace, scrollToSection, referencias }) => {
 
                         </div>
                         <div className="navbar-nav ms-auto text-center d-flex gap-lg-5 gap-3 ms-0">
+
                             {
                                 (Object.entries(auth).length === 0 && <li className="nav-item active text-white pointer fw-bold mt-lg-0 mt-3" onClick={handleClick}>LOG IN</li>)
                             }

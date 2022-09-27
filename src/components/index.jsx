@@ -1,6 +1,7 @@
-export { FormularioProducto } from "./FormularioProducto";
-
 export { Productos } from "./Productos";
+
+
+export { FormularioProducto } from "./FormularioProducto";
 export { Administradores } from "./Administradores";
 export { ModalCobro } from "./ModalCobro";
 export { FormularioMesa } from "./FormularioMesa";

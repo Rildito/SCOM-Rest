@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Imagen from '../assets/img/logo.png';
@@ -22,9 +23,27 @@ export const Login = () => {
         if (Object.keys(auth) > 0) {
             setNombreUsuario('');
             setPassword('');
-            console.log("ENTRO LOGIN")
         }
     };
+
+    useEffect(() => {
+        console.log(auth.tipoUsuario);
+        if (auth.tipoUsuario === 'administrador') {
+            navigate('/administrador')
+        }
+
+        if (auth.tipoUsuario === 'cliente') {
+            navigate('/')
+        }
+
+        if (auth.tipoUsuario === 'cajero') {
+            navigate('/cajero')
+        }
+
+        if (auth.tipoUsuario === 'chef') {
+            navigate('/chef')
+        }
+    }, [auth]);
 
     return (
         <>

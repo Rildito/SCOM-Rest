@@ -1,3 +1,5 @@
+export { ChefLayout } from "./ChefLayout";
+
 export { CamareroLayout } from "./CamareroLayout";
 
 export { CajeroLayout } from "./CajeroLayout";

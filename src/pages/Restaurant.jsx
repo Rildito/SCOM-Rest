@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import { Header, PreguntasFrecuentes, ProductosPreview,  Contactanos, SobreNosotrosPreview } from '../components';
+import { Header, PreguntasFrecuentes, ProductosPreview, Contactanos, SobreNosotrosPreview } from '../components';
 
 
 export const Restaurant = () => {

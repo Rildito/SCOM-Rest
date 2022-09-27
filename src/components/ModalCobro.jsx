@@ -31,7 +31,16 @@ export function ModalCobro() {
                             <button type="button" className="btn-close" onClick={() => modalCobro.hide()} aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
-                            Confirmar Cobro
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">NIT</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+
+                                <label for="exampleInputEmail1" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+
+                                <label for="exampleInputEmail1" class="form-label">Monto</label>
+                                <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+                            </div>
                         </div>
                         <div className="modal-footer d-flex justify-content-center">
                             {/* <button type="button" className="btn btn-secondary" onClick={() => modal.hide()}>Close</button> */}

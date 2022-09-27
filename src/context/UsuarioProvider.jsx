@@ -21,7 +21,6 @@ export const UsuarioProvider = ({ children }) => {
         // tipoAlerta:'primary'
     });
     const [errores, setErrores] = useState([]);
-    const [confirmacion, setConfirmacion] = useState(false);
 
     useEffect(() => {
 
@@ -148,7 +147,11 @@ export const UsuarioProvider = ({ children }) => {
                 responseEncodig: 'utf-8'
             });
             console.log(`https://scom-rest.herokuapp.com/api/${tipoUsuario}/${ci}`)
-            setUsuario(data);
+            if(data[0].tipoUsuario === 'administrador') {
+                setUsuario(data[0]);
+            }else{
+                setUsuario(data)
+            }
             console.log(data);
 
         } catch (error) {
@@ -171,9 +174,10 @@ export const UsuarioProvider = ({ children }) => {
 
         try {
             setCargando(true);
-            //console.log(usuario);
+            
             const { data: { data, error } } = await axios.post(`https://scom-rest.herokuapp.com/api/${tipoUsuario}`, usuario);
-
+            console.log(data);
+            console.log(error);
             if (error?.length > 0) {
                 setErrores(error);
                 return;
@@ -181,7 +185,6 @@ export const UsuarioProvider = ({ children }) => {
 
             setUsuarios([...usuarios, data]);
             setErrores([]);
-            setConfirmacion(true);
             navigate('/administrador/usuarios');
             mostrarAlerta('Se creo el usuario correctamente', 'primary');
         } catch (error) {
@@ -206,7 +209,6 @@ export const UsuarioProvider = ({ children }) => {
             setUsuarios(usuariosActualizados);
             setErrores([]);
             setUsuario({});
-            setConfirmacion(true);
             navigate('/administrador/usuarios');
             mostrarAlerta('Se modifico el usuario correctamente', 'primary');
         } catch (error) {
@@ -261,8 +263,6 @@ export const UsuarioProvider = ({ children }) => {
             tipoUsuario,
             alerta,
             errores,
-            confirmacion,
-            setConfirmacion,
             //Functions
             eliminarUsuario,
             submitUsuario,
@@ -270,6 +270,7 @@ export const UsuarioProvider = ({ children }) => {
             setTipoUsuario,
             setAlerta,
             setErrores,
+            setUsuario,
             //FuncionesParallamarusuarios
             obtenerClientes,
             obtenerCajeros,

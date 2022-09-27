@@ -17,34 +17,20 @@ export const Pedidos = () => {
                 {
                     (pedidosBuscados.length > 0 ? (
                         pedidosBuscados.map(pedido => (
-                            <Link to={`${pedido.idPedido}`} className='w-100 bg-warning-gradient p-4 justify-content-start btn text-start mb-3' key={pedido.idPedido}>
+                            <Link to={`${pedido.idpedido}`} className='w-100 bg-warning-gradient p-4 justify-content-start btn text-start mb-3' key={pedido.idpedido}>
 
                                 <div className='d-flex justify-content-between flex-md-row flex-column'>
 
-                                    <div>
-                                        <h4 className='text-danger fw-bold'>Codigo de pedido: {pedido.idPedido}</h4>
-                                        <p className='mb-0'>Productos pedidos: {''}
-                                            <span className='fw-bold'>
-                                                {
-                                                    pedido.productos.map(producto => {
-                                                        total += producto.precio;
-                                                        return (
-                                                            producto.nombre
-                                                        )
-                                                    })
+                                <div>
+                                        <h4 className='text-danger fw-bold'>Codigo de pedido: {pedido.idpedido}</h4>
+                                        <p className='mb-0'>Cod factura: <span className='fw-bold'>{pedido.codfactura}</span></p>
 
-                                                }
-                                            </span>
-                                        </p>
-                                        <p className='mb-0'>Precio total:
-                                            <span className='fw-bold'>
-                                                Total {' '}{total.toFixed(2)} {' '}Bs.
-                                            </span>
-                                        </p>
-                                    </div>
-                                    <div>
-                                        <p className='mb-0'>Nombre Cliente: <span className='fw-bold'>Luis Barra Paredes</span></p>
-                                        <p>CI: <span className='fw-bold'>8441659</span></p>
+                                        <p className='mb-0'>Ci camarero: <span className='fw-bold'>{pedido.ciCamarero}</span></p>
+
+                                        <p className='mb-0'>Ci Chef: <span className='fw-bold'>{pedido.ciChef}</span></p>
+
+                                        <p>ESTADO: <span className='fw-bold'>{pedido.estado}</span></p>
+                                        <p className='text-muted'>Fecha: {pedido.fecha}</p>
                                     </div>
                                 </div>
                             </Link>
@@ -52,23 +38,35 @@ export const Pedidos = () => {
 
                     ) : (
                         pedidos.map(pedido => (
-                            <Link to={`${pedido.idPedido}`} className='w-100 bg-warning-gradient p-4 justify-content-start btn text-start mb-3' key={pedido.idPedido}>
+                            <Link to={`${pedido.idpedido}`} className='w-100 bg-warning-gradient p-4 justify-content-start btn text-start mb-3' key={pedido.idpedido}>
 
                                 <div className='d-flex justify-content-between flex-md-row flex-column'>
 
                                     <div>
-                                        <h4 className='text-danger fw-bold'>Codigo de pedido: {pedido.idPedido}</h4>
+                                        <h4 className='text-danger fw-bold'>Codigo de pedido: {pedido.idpedido}</h4>
+                                        <p className='mb-0'>Cod factura: <span className='fw-bold'>{pedido.codfactura}</span></p>
+
+                                        <p className='mb-0'>Ci camarero: <span className='fw-bold'>{pedido.ciCamarero}</span></p>
+
+                                        <p className='mb-0'>Ci Chef: <span className='fw-bold'>{pedido.ciChef}</span></p>
+
+                                        <p>ESTADO: <span className='fw-bold'>{pedido.estado}</span></p>
+                                        <p className='text-muted'>Fecha: {pedido.fecha}</p>
+                                    </div>
+
+                                    {/* <div>
+                                        <h4 className='text-danger fw-bold'>Codigo de pedido: {pedido.idpedido}</h4>
                                         <p className='mb-0'>Productos pedidos: {''}
                                             <span className='fw-bold'>
-                                                {
-                                                    pedido.productos.map(producto => {
+                                                {/* {
+                                                    pedido?.productos.map(producto => {
                                                         total += producto.precio;
                                                         return (
                                                             producto.nombre
                                                         )
                                                     })
 
-                                                }
+                                                } 
                                             </span>
                                         </p>
                                         <p className='mb-0'>Precio total:
@@ -80,14 +78,14 @@ export const Pedidos = () => {
                                     <div>
                                         <p className='mb-0'>Nombre Cliente: <span className='fw-bold'>Luis Barra Paredes</span></p>
                                         <p>CI: <span className='fw-bold'>8441659</span></p>
-                                    </div>
+                                    </div> */}
                                 </div>
-                            </Link>
+                            </Link >
                         ))
                     ))
 
                 }
-            </div>
+            </div >
         </>
     )
 }

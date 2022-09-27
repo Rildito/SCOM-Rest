@@ -11,6 +11,12 @@ export const AuthProvider = ({ children }) => {
     const [errores, setErrores] = useState([]);
     const [auth, setAuth] = useState({});
 
+    useState(() => {
+        if (localStorage.getItem('auth')) {
+            setAuth(JSON.parse(localStorage.getItem('auth')))
+        }
+    }, []);
+
     const autenticarUsuario = async ({ nombreUsuario, password }) => {
         // const { data } = await axios.post("usuarios/perfil", { email, password }); //URL para autenticar
 
@@ -26,16 +32,39 @@ export const AuthProvider = ({ children }) => {
                 setCargando(false);
                 return
             }
+
             setErrores([]);
             setAuth(data);
-            navigate('/');
+            console.log(data);
+            localStorage.setItem('auth', JSON.stringify(data));
 
+            if (data.tipoUsuario === 'cliente') {
+                navigate('/');
+            }
+
+            if (data.tipoUsuario === 'administrador') {
+                navigate('/administrador');
+            }
+
+            if (data.tipoUsuario === 'cajero') {
+                navigate('/administrador');
+            }
+
+            if (data.tipoUsuario === 'chef') {
+                navigate('/chef');
+            }
         } catch (error) {
             // console.log(error);
         } finally {
             setCargando(false);
         }
 
+    };
+
+    const handleCerrarSesion = () => {
+        localStorage.removeItem('auth');
+        setAuth({});
+        navigate('/');
     };
 
     return (
@@ -46,6 +75,7 @@ export const AuthProvider = ({ children }) => {
             errores,
             //Functions
             autenticarUsuario,
+            handleCerrarSesion,
             setAuth,
             setErrores
         }}>

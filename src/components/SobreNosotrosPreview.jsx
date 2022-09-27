@@ -11,7 +11,7 @@ export const SobreNosotrosPreview = ({ enlace }) => {
                 </div>
                 <div className='col-lg-5 col-12 text-center'>
                     <h2 className='text-danger mt-lg-0 mt-4'>Historia</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam temporibus, facilis dicta perferendis expedita accusamus officiis praesentium accusantium quos officia maxime voluptas corrupti dolor est fugit ad quo illum minus. Assumenda corrupti odit ab laudantium iure nihil hic perferendis neque. Quo iste atque ea modi? Nulla labore repudiandae incidunt in.</p>
+                    <p>Hace treinta años, en este barrio entrañable, empezamos a cocinar entre amigos para los amigos. La propuesta de un lugar relajado y cercano que acompañara el retorno de los jóvenes al viejo barrio, aunado al interés en una comida con corazón y honesta fue la idea de donde nació <span className='fw-bold'>SCom-Rest</span>. Hoy nos hemos transformado en consonancia con el entorno aprovechando la experiencia y cuidando en todo momento sus principios originales: un servicio de amigos, comida con corazón, honesta y ser un buen lugar para comer. Hemos remodelado el espacio para ofrecer satisfacción a todos los gustos, desde nuestra clásica terraza sumergida en el alegre ambiente de la calle, pet friendly, los íntimos espacios interiores, barras de copeo y una terraza única, a cielo abierto, aislada en el primer nivel con la mejor vista de los alrededores.</p>
                     <Link to="nosotros" className='btn btn-secondary w-md-50 w-100 mt-3'>VER MAS</Link>
                 </div>
             </div>

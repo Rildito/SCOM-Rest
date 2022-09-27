@@ -1,12 +1,15 @@
 import { useContext } from 'react';
 import Imagen from '../assets/img/bg.jpg';
-import AuthContext from '../context/AuthProvider';
 import ProductosContext from '../context/ProductosProvider';
+import { capitalizarPrimeraLetra } from '../helpers/formatearTexto';
 export const Producto = ({ producto }) => {
 
-    const { modal } = useContext(ProductosContext);
+    const { idproducto, nombre, imagen, precio } = producto;
+    const { modal, setProductoPedido, obtenerProductoBuscar } = useContext(ProductosContext);
 
-    const handleClick = () => {
+    const handleClick = async producto => {
+        //setProductoPedido(producto);
+        await obtenerProductoBuscar(producto.idproducto);
         modal.show();
     };
 
@@ -14,15 +17,12 @@ export const Producto = ({ producto }) => {
         <>
             <div style={{ width: "23rem" }} className="col-3 card px-0 rounded"
             >
-                <img src={Imagen} />
+                <img src={imagen ? imagen : Imagen} alt="iconoProducto" />
                 <div className="card-body">
-                    <h5 className="card-title text-danger fw-semibold fs-4">Producto 1</h5>
-                    <p className="card-text">
-                        Some quick example text to build on the card title and make up the bulk of
-                        the card's content.
-                    </p>
+                    <h5 className="card-title text-dark fw-semibold fs-3">{capitalizarPrimeraLetra(nombre)}</h5>
+                    <p className='fs-4'>Precio: <span className='fw-bold text-primary'> {precio} Bs.</span></p>
                 </div>
-                <input type="button" className='btn btn-danger text-uppercase fw-bolder' onClick={handleClick} value="pedir" />
+                <input type="button" className='btn btn-danger text-uppercase fw-bolder' onClick={() => handleClick(producto)} value="VER MAS" />
             </div>
 
 

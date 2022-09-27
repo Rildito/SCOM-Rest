@@ -1,8 +1,8 @@
 import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
-import ProductosContext from "../context/ProductosProvider";
 import Imagen from '../assets/img/ingredienteForm.png'
-import { obtenerEdad } from "../helpers/formatearFecha";
+import { Alerta } from "./Alerta";
+import IngredientesContext from "../context/IngredientesProvider";
 
 export const FormularioIngrediente = () => {
 
@@ -10,28 +10,34 @@ export const FormularioIngrediente = () => {
     const [cantidad, setCantidad] = useState('');
     const [tipo, setTipo] = useState('fruta');
 
-    const { id } = useParams();
-    const { submitIngrediente, ingrediente } = useContext(ProductosContext);
+    const { codIngrediente } = useParams();
+    const { submitIngrediente, ingrediente, alerta, errores, cargando } = useContext(IngredientesContext);
 
     useEffect(() => {
-        if (id) {
-            setNombre(ingrediente.nombre);
-            setCantidad(ingrediente.cantidad);
-            setTipo(ingrediente.tipo);
+        if (codIngrediente) {
+            setNombre(ingrediente?.nombre);
+            setCantidad(ingrediente?.cantidad);
+            setTipo(ingrediente?.tipo);
         }
-    });
+
+    }, []);
 
     const handleSubmit = async e => {
         e.preventDefault();
 
         // console.log(nombre, tipo, cantidad);
         //crearingrediente
-        await submitIngrediente({ nombre, cantidad, tipo });
-
+        await submitIngrediente({ codingrediente: codIngrediente, nombre, cantidad, tipo });
     };
+
+    const { msg, tipoAlerta } = alerta;
+
     return (
 
         <>
+            {
+                msg && <Alerta mensaje={msg} tipoAlerta={tipoAlerta} />
+            }
             <div className="card mb-3" style={{
                 maxWidth: '800px'
             }}>
@@ -40,6 +46,11 @@ export const FormularioIngrediente = () => {
                         <img src={Imagen} className="img-fluid img-mw" alt="ImagenIcono" />
                     </div>
                     <div className="col-md-8">
+                        {
+                            errores?.map(error => (
+                                <p key={error} className="p-2 mt-1 mx-3 mb-0 bg-danger rounded text-white">{error}</p>
+                            ))
+                        }
                         <div className="card-body ">
                             <form onSubmit={handleSubmit} className="d-flex flex-column gap-2 aling-items-center ">
 
@@ -66,16 +77,16 @@ export const FormularioIngrediente = () => {
                                     onChange={e => setCantidad(e.target.value)}
                                 />
                                 <label htmlFor="tipo" className='form-label mb-0 fw-bold'>Tipo</label>
-                                <select value={tipo} onChange={e => setTipo(e.target.value)} className="form-select form-select-md" id="tipo" name="tipoIngrediente">
+                                <select value={tipo} onChange={e => setTipo(e.target.value)} className="form-select form-select-md" id="tipo" name="tipo">
                                     <option value="fruta">Fruta</option>
                                     <option value="hortaliza">Hortaliza</option>
                                     <option value="tuberculo">Tuberculo</option>
-                                    <option value="cereal">Pescado</option>
-                                    <option value="carne">Cereal y Derivados</option>
-                                    <option value="marisco">Cereal y Derivados</option>
+                                    <option value="cereal">Cereal</option>
+                                    <option value="carne">Carne</option>
+                                    <option value="marisco">Marisco</option>
                                 </select>
 
-                                <input type="submit" value={`${id ? 'Editar ingrediente' : 'Registrar ingrediente'}`} className='btn btn-warning text-black mt-3 text-uppercase fw-bolder mx-md-auto' />
+                                <input type="submit" value={`${codIngrediente ? 'Editar ingrediente' : 'Registrar ingrediente'}`} className='btn btn-warning text-black mt-3 text-uppercase fw-bolder mx-md-auto' disabled={cargando ? true : false} />
                             </form>
                         </div>
                     </div>

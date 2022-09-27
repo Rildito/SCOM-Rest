@@ -10,7 +10,7 @@ export const Productos = () => {
         <>
             {
                 productos.map(producto => (
-                    <Producto producto={producto} />
+                    <Producto key={producto.idproducto} producto={producto} />
                 ))
             }
 

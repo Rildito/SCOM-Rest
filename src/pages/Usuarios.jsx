@@ -1,4 +1,5 @@
 
+import { useEffect } from 'react';
 import { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Administradores, Alerta, Cajeros, Camareros, Chefs, Clientes, Spinner } from '../components';
@@ -8,7 +9,7 @@ import { obtenerEdad } from '../helpers/formatearFecha';
 export const Usuarios = () => {
 
     const navigate = useNavigate();
-    const { usuarios, setTipoUsuario, tipoUsuario, cargando, alerta, setErrores } = useContext(UsuarioContext);
+    const { usuarios, setTipoUsuario, tipoUsuario, cargando, alerta, setErrores, setUsuario } = useContext(UsuarioContext);
 
     const elegirTipoUsuario = (e) => {
         e.preventDefault();
@@ -21,6 +22,9 @@ export const Usuarios = () => {
     };
 
     const { msg, tipoAlerta } = alerta
+    useEffect(() => {
+        setUsuario({});
+    }, []);
 
     return (
 
@@ -124,7 +128,7 @@ export const Usuarios = () => {
                                                 <tr key={usuario.ci} className="align-middle">
                                                     <th scope='row'>{usuario.ci}</th>
                                                     <td>{usuario.nombreUsuario}</td>
-                                                    <td>{  usuario.nombre} {usuario.apellidoPaterno} {usuario.apellidoMaterno}</td>
+                                                    <td>{usuario.nombre} {usuario.apellidoPaterno} {usuario.apellidoMaterno}</td>
                                                     <td>{obtenerEdad(usuario.fechaNacimiento)}</td>
                                                 </tr>
                                             ))))

@@ -1,31 +1,33 @@
 import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
-import ProductosContext from "../context/ProductosProvider";
 import Imagen from '../assets/img/mesaForm.png'
+import IngredientesContext from "../context/IngredientesProvider";
 
 export const FormularioMesa = () => {
 
 
     const [nroMesa, setNroMesa] = useState('');
     const [estado, setEstado] = useState('habilitado');
-    const [color, setColor] = useState('');
+    const [ciCamarero, setCiCamarero] = useState('');
+    const [idPedido, setIdPedido] = useState('');
 
     const { id } = useParams();
-    const { submitMesa, mesa } = useContext(ProductosContext);
+    const { submitMesa, mesa, errores, cargando } = useContext(IngredientesContext);
 
     useEffect(() => {
         if (id) {
             setNroMesa(mesa.nroMesa);
             setEstado(mesa.estado);
-            setNroMesa(mesa.color);
+            setCiCamarero(mesa.ciCamarero);
+            setIdPedido(mesa.idpedido);
         }
-    });
+    }, []);
 
     const handleSubmit = async e => {
         e.preventDefault();
 
         //crearingrediente
-        await submitMesa({ nombre, estado, color });
+        await submitMesa({ id, nroMesa, estado, ciCamarero, idpedido: idPedido });
 
     };
     return (
@@ -39,9 +41,13 @@ export const FormularioMesa = () => {
                         <img src={Imagen} className="img-fluid img-mw" alt="ImagenCiono" />
                     </div>
                     <div className="col-md-8">
+                        {
+                            errores?.map(error => (
+                                <p key={error} className="p-2 mt-1 mx-3 mb-0 bg-danger rounded text-white">{error}</p>
+                            ))
+                        }
                         <div className="card-body ">
                             <form onSubmit={handleSubmit} className="d-flex flex-column gap-2 aling-items-center ">
-
                                 <label htmlFor="nroMesa" className='form-label mb-0 fw-bold'>NroMesa:</label>
                                 <input
                                     type="text"
@@ -59,19 +65,29 @@ export const FormularioMesa = () => {
                                     <option value="deshabilitado">Deshabilitado</option>
                                 </select>
 
-                                <label htmlFor="color" className='form-label mb-0 fw-bold'>Color:</label>
+                                <label htmlFor="ciCamarero" className='form-label mb-0 fw-bold'>Ci Camarero:</label>
                                 <input
                                     type="text"
-                                    id="color"
-                                    name="color"
+                                    id="ciCamarero"
+                                    name="ciCamarero"
                                     className='form-control'
-                                    value={color}
-                                    placeholder="rojo"
-                                    onChange={e => setColor(e.target.value)}
+                                    value={ciCamarero}
+                                    placeholder="Ci Camarero"
+                                    onChange={e => setCiCamarero(e.target.value)}
                                 />
 
+                                <label htmlFor="idPedido" className='form-label mb-0 fw-bold'>Id pedido:</label>
+                                <input
+                                    type="text"
+                                    id="idPedido"
+                                    name="idPedido"
+                                    className='form-control'
+                                    value={idPedido}
+                                    placeholder="rojo"
+                                    onChange={e => setIdPedido(e.target.value)}
+                                />
 
-                                <input type="submit" value={`${id ? 'Editar mesa' : 'Registrar mesa'}`} className='btn btn-warning text-black mt-3 text-uppercase fw-bolder mx-md-auto' />
+                                <input type="submit" value={`${id ? 'Editar mesa' : 'Registrar mesa'}`} className='btn btn-warning text-black mt-3 text-uppercase fw-bolder mx-md-auto' disabled={cargando ? true : false}/>
                             </form>
                         </div>
                     </div>

@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { useParams } from 'react-router-dom';
 import UsuarioContext from "../context/UsuarioProvider";
-
+import { Alerta } from './';
 export const FormularioUsuario = () => {
 
     const [nombre, setNombre] = useState('');
@@ -24,7 +24,7 @@ export const FormularioUsuario = () => {
 
     const { ci: id, usuario: usuarioMostrar } = useParams();
 
-    const { submitUsuario, usuario, tipoUsuario, errores, confirmacion, setConfirmacion, editando } = useContext(UsuarioContext);
+    const { submitUsuario, usuario, tipoUsuario, errores, alerta, cargando } = useContext(UsuarioContext);
 
     useEffect(() => {
 
@@ -48,28 +48,12 @@ export const FormularioUsuario = () => {
     const handleSubmit = async e => {
         e.preventDefault();
 
-        await submitUsuario({ id, nombre, ci, apellidoMaterno, apellidoPaterno, contraseña, fechaContratacion, nombreUsuario, estado, nit, email, fechaNacimiento, salario, especialidad, ciCajeroAdiciona: "1000007" }, tipoUsuario);
-
-        if (confirmacion) {
-            setNombre('');
-            setCi('');
-            setApellidoMaterno('');
-            setApellidoPaterno('');
-            setContraseña('');
-            setFechaNacimiento('');
-            setNombreUsuario('');
-            setEstado('');
-            setNit('');
-            setEmail('');
-            setFechaContratacion('');
-            setSalario('');
-            setEspecialidad('');
-            setConfirmacion(false);
-            console.log("ENTRO-USUARIO")
-        }
-
+        await submitUsuario({ id, nombre, ci, apellidoMaterno, apellidoPaterno, contraseña, fechaContratacion, nombreUsuario, estado, nit, email, fechaNacimiento, salario, especialidad }, tipoUsuario);
 
     };
+
+    const { msg, tipoAlerta } = alerta;
+
     return (
         <>
 
@@ -79,6 +63,7 @@ export const FormularioUsuario = () => {
                 ))
             }
             <div className='container h-100 p-3 pb-0 table-responsive rounded-2'>
+                {msg && <Alerta mensaje={msg} tipoAlerta={tipoAlerta} />}
                 <form onSubmit={handleSubmit} className="row d-flex justify-content-center align-items-center">
                     <div className="col-md-6 col-12">
                         <label htmlFor="nombre" className='form-label fw-bold'>Nombre</label>
@@ -272,7 +257,7 @@ export const FormularioUsuario = () => {
                         ) : null)
                     }
 
-                    <input type="submit" value={(id) ? `Actualizar Usuario` : `Registrar Usuario`} className='btn btn-warning text-black mt-3 text-uppercase fw-bolder mx-md-auto w-auto' />
+                    <input type="submit" value={(id) ? `Actualizar Usuario` : `Registrar Usuario`} className='btn btn-warning text-black mt-3 text-uppercase fw-bolder mx-md-auto w-auto' disabled={cargando ? true : false}/>
                 </form>
             </div >
         </>

@@ -4,12 +4,13 @@ import Usuario from '../assets/img/usuario.png'
 import Ingrediente from '../assets/img/ingrediente.png'
 import Producto from '../assets/img/producto.png'
 import Mesa from '../assets/img/mesa.png'
-
+import { useContext } from 'react';
+import AuthContext from '../context/AuthProvider';
 
 export const Opciones = () => {
 
   const navigate = useNavigate('');
-
+  const { auth, handleCerrarSesion } = useContext(AuthContext);
   const mandarOpcion = e => {
     e.preventDefault();
     navigate(`${e.target.value}`);
@@ -17,10 +18,14 @@ export const Opciones = () => {
 
   return (
     <>
+
       <h1 className="text-center w-100 bg-primary bg-dark text-white p-5 fw-bolder">
         VENTANA ADMINISTRADOR
       </h1>
-
+      <div className='w-100 d-flex justify-content-between container mt-3'>
+        <p className='fs-5'>Bienvenido: {auth.nombre} {auth.apellidoPaterno}</p>
+        <button className='btn btn-outline-success' onClick={handleCerrarSesion}>Cerrar Sesion</button>
+      </div>
       <div className="container bg-white h-75 mt-3">
         <div className="row justify-content-center">
           <form className="mt-5 d-flex row mb-4 mb-md-0 gap-sm-0 gap-3">
