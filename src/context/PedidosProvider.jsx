@@ -123,11 +123,17 @@ export const PedidosProvider = ({ children }) => {
     // ]);
     const [pedido, setPedido] = useState([]); //pedido cliente
     const [pedidos, setPedidos] = useState([]); //pedidos base de datos
+    const [pedidosCajero, setPedidosCajero] = useState([]); //pedidos base de datos
     const [pedidosBuscados, setPedidosBuscados] = useState([]);
     const [pedidoSeleccionado, setPedidoSeleccionado] = useState({});
     const [cargando, setCargando] = useState(false);
     const [palabraBuscarPedido, setPalabraBuscarPedido] = useState('');
-
+    const [errores, setErrores] = useState([]);
+    //cobros
+    const [pedidosCobro, setPedidosCobro] = useState([]);
+    const [clienteCobro, setClienteCobro] = useState({});
+    const [value, setValue] = useState('');
+    const [factura, setFactura] = useState({});
     //carrito
     const [pedidoCliente, setPedidoCliente] = useState([]);
 
@@ -139,42 +145,42 @@ export const PedidosProvider = ({ children }) => {
         setCargando(true);
         try {
             const { data: { data, error } } = await axios.get("https://scom-rest.herokuapp.com/api/pedidos");
-            console.log(data);
             setPedidos(data); //TODO: no obtenemos los ingredientes Revisar!!
+
+            const pedidosValidos = data.filter(pedido => pedido.estado === 'entregado');
+            setPedidosCajero(pedidosValidos); //TODO: no obtenemos los ingredientes Revisar!!
         } catch (error) {
             setCargando(false);
             console.log(error);
-            // mostrarAlerta('Ocurrio un error', 'danger');
         } finally {
             setCargando(false);
         }
     };
 
     const obtenerPedido = async id => {
-        setCargando(true);
         try {
+            setCargando(true);
             const { data: { data, error, productos } } = await axios.get(`https://scom-rest.herokuapp.com/api/pedido/${id}`);
             setPedidoSeleccionado({ data, productos }); //TODO: no obtenemos los ingredientes Revisar!!
             console.log(`https://scom-rest.herokuapp.com/api/pedido/${id}`);
             console.log("OBTENER PEDIDO")
         } catch (error) {
-            setCargando(false);
             console.log(error);
-            // mostrarAlerta('Ocurrio un error', 'danger');
         } finally {
             setCargando(false);
         }
-        setCargando(true);
-        setCargando(false);
     };
 
-    const confirmarPedido = () => {
+    const obtenerProductosPedido = async id => {
+        try {
+            const { data: { data, error, productos } } = await axios.get(`https://scom-rest.herokuapp.com/api/pedido/${id}`);
+            return productos //TODO: no obtenemos los ingredientes Revisar!!
+        } catch (error) {
+            console.log(error);
+        }
 
     };
 
-    const cancelarPedido = () => {
-
-    };
 
     const agregarPedido = (producto) => {
         if (pedido.some(productoState => productoState.idproducto === producto.idproducto)) {
@@ -187,23 +193,99 @@ export const PedidosProvider = ({ children }) => {
         }
     };
 
+    const obtenerPedidosCobro = async id => {
+
+        try {
+            console.log("OBTENIENDO PEDIDO")
+            setCargando(true);
+            const { data: { data, error, productos } } = await axios.get(`https://scom-rest.herokuapp.com/api/pedido/${id}`);
+
+            const pedido = { ...data, productos }
+            setPedidosCobro([...pedidosCobro, pedido]); //TODO: no obtenemos los ingredientes Revisar!!
+
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setCargando(false);
+        }
+    };
+
+    const crearFactura = async (codfactura, ciCajero, ciCliente) => {
+        try {
+            setCargando(true);
+            const { data: { data, error } } = await axios.post(`https://scom-rest.herokuapp.com/api/factura
+            `, { codfactura, ciCajero, ciCliente });
+
+            if (error?.length > 0) {
+                setErrores(error);
+                return
+            }
+
+            setFactura(data);
+        } catch (error) {
+            console.log(error);
+            toast.error('Ocurrio un error');
+        } finally {
+            setCargando(false);
+        }
+    }
+
+    const cambiarEstadoPedido = async (idPedidos, codFactura) => {
+        const prueba = await Promise.all(idPedidos.map(async idPedido => {
+            const { data: { data, error } } = await axios.put(`https://scom-rest.herokuapp.com/api/pedidovendido/${idPedido}/${codFactura}`);
+            //console.log(...data)
+
+            const pedidosActualizados = pedidosCajero.filter(pedidoState => pedidoState.idpedido !== idPedido);
+
+            setPedidosCajero(pedidosActualizados);
+
+            return data
+        }));
+    };
+
+    const pedidoRealizado = async (idPedido) => {
+        // // const { data: { data, error } } = await axios.put(`https://scom-rest.herokuapp.com/api/pedidovendido/${idPedido}/${codFactura}`); //TODO: pedir datos
+
+        // const pedidosActualizados = pedidos.filter(pedido => pedido.idPedido !== idPedido);
+        // setPedidos(pedidosActualizados);
+    
+    }
+
     return (
         <PedidoContext.Provider value={{
             //variables
             cargando,
+            clienteCobro,
+            errores,
             pedidosBuscados,
             palabraBuscarPedido,
             pedidos,
+            pedidosCajero,
             pedido,
             pedidoSeleccionado,
             pedidoCliente,
+            pedidosCobro,
+            value,
+            factura,
             //funciones
             agregarPedido,
-            confirmarPedido,
+            cambiarEstadoPedido,
+            crearFactura,
+            obtenerProductosPedido,
             obtenerPedido,
+            obtenerPedidosCobro,
+            setCargando,
+            setClienteCobro,
+            setErrores,
             setPalabraBuscarPedido,
             setPedidosBuscados,
             setPedidoCliente,
+            setPedidoSeleccionado,
+            setPedidos,
+            setPedidosCobro,
+            setValue,
+            setFactura,
+            pedidoRealizado
         }}>
             {children}
         </PedidoContext.Provider>

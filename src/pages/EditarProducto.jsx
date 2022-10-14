@@ -1,14 +1,13 @@
 import { useContext, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { Alerta, FormularioProducto, Spinner } from '../components';
+import { useParams } from 'react-router-dom';
+import { FormularioProducto, Spinner } from '../components';
 import ProductosContext from '../context/ProductosProvider';
 
 
 export const EditarProducto = () => {
 
-    const { alerta, obtenerProducto, cargando } = useContext(ProductosContext);
+    const { obtenerProducto, cargando } = useContext(ProductosContext);
     const { idproducto, tipoProducto } = useParams();
-    const { msg, tipoAlerta } = alerta;
 
     useEffect(() => {
         if (tipoProducto === 'platillo') {
@@ -16,7 +15,7 @@ export const EditarProducto = () => {
         }
 
         if (tipoProducto === 'bebida') {
-            obtenerProducto(ci, 'bebida')
+            obtenerProducto(idproducto, 'bebida')
         }
 
     }, [tipoProducto]);
@@ -25,7 +24,6 @@ export const EditarProducto = () => {
 
     return (
         <div className='w-100 d-flex justify-content-center flex-column vh-100'>
-            {msg && <Alerta mensaje={msg} tipoAlerta={tipoAlerta} />}
             <h1 className='py-5 text-center fw-bold text-white bg-dark mb-0 d-block'>EDITAR PRODUCTO</h1>
             <div className='border shadow-lg bg-white rounded-3 d-flex align-items-center justify-content-center h-100'>
                 <FormularioProducto />

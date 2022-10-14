@@ -16,6 +16,10 @@ export const Opciones = () => {
     navigate(`${e.target.value}`);
   };
 
+  const verSolicitudes = (e) => {
+    e.preventDefault();
+    navigate('solicitudes');
+  };
   return (
     <>
 
@@ -24,7 +28,9 @@ export const Opciones = () => {
       </h1>
       <div className='w-100 d-flex justify-content-between container mt-3'>
         <p className='fs-5'>Bienvenido: {auth.nombre} {auth.apellidoPaterno}</p>
+        <button className='btn btn-success' onClick={verSolicitudes}>VER SOLICITUDES DE MATERIA PRIMA</button>
         <button className='btn btn-outline-success' onClick={handleCerrarSesion}>Cerrar Sesion</button>
+
       </div>
       <div className="container bg-white h-75 mt-3">
         <div className="row justify-content-center">
@@ -48,6 +54,8 @@ export const Opciones = () => {
               <input className='w-100' type="image" src={Mesa} value="mesas" onClick={e => mandarOpcion(e)} />
               <h5 className="card-title text-center fs-3 fw-bolder text-danger my-3">MESAS</h5>
             </div>
+
+
           </form>
 
         </div>

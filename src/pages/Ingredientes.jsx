@@ -1,11 +1,11 @@
-import { useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Alerta, Spinner } from '../components';
+import { Spinner } from '../components';
 import IngredientesContext from '../context/IngredientesProvider';
 
 export const Ingredientes = () => {
 
-    const { ingredientes, eliminarIngrediente, alerta, cargando } = useContext(IngredientesContext);
+    const { ingredientes, eliminarIngrediente, cargando } = useContext(IngredientesContext);
 
     const navigate = useNavigate();
 
@@ -13,15 +13,10 @@ export const Ingredientes = () => {
         navigate('/administrador/ingredientes/registrar')
     };
 
-    const { msg, tipoAlerta } = alerta;
     // if (cargando) return <Spinner />;
 
     return (
         <>
-            {
-                msg && <Alerta mensaje={msg} tipoAlerta={tipoAlerta}/>
-            }
-            {/* {msg && <Alerta mensaje={msg} tipoAlerta={tipoAlerta} />} */}
             <h1 className='py-5 text-center fw-bold text-white bg-dark w-100 '>ADMINISTRA TUS INGREDIENTES</h1>
             {
                 (cargando ? <Spinner /> : (<>
@@ -68,7 +63,6 @@ export const Ingredientes = () => {
                 </>))
 
             }
-
         </>
     )
 }

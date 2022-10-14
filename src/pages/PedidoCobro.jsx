@@ -1,28 +1,41 @@
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom'
 import Imagen from '../assets/img/logo.png';
+import { Spinner } from '../components';
+import PedidoContext from '../context/PedidosProvider';
 import { formatearFecha } from '../helpers/formatearFecha';
+import { capitalizarPrimeraLetra } from '../helpers/formatearTexto';
 export const PedidoCobro = () => {
 
+  const [fechaActual, setFechaActual] = useState('');
+
   const navigate = useNavigate();
-  const { idPedido } = useParams();
+  const { pedidosCobro, setPedidosCobro, clienteCobro, factura, cargando } = useContext(PedidoContext);
 
-  const productos = [
-    {
-      codProducto: 1,
-      nombre: 'Charquekan',
-      cantidad: 2,
-      precio: 70
-    },
-
-  ];
 
   const handleCobrar = () => {
     window.print();
-    navigate('/cajero')
   };
 
+  const handleVolver = () => {
+    navigate('/cajero');  
+    // window.location.reload();  
+    setPedidosCobro([]);
+  };
   let total = 0;
 
+  useEffect(() => {
+    const today = new Date();
+    const day = today.getDate();
+    const month = today.getMonth() + 1;
+    const year = today.getFullYear();
+    console.log(formatearFecha(`${month}-${day}-${year}`))
+    setFechaActual(formatearFecha(`${month}-${day}-${year}`));
+  }, [])
+
+  if (cargando) return <Spinner />
   return (
 
     <>
@@ -34,14 +47,14 @@ export const PedidoCobro = () => {
           }} />
 
           <p className=''>Nombre Establecimiento: <span className='fw-bold'>Scom Rest</span></p>
-          <p>NIT Local: <span className='fw-bold'>12412512</span></p>
-          <p>Factura Electronica: <span className='fw-bold'>125125</span></p>
+          <p>NIT Local: <span className='fw-bold'>1235123</span></p>
+          <p>Factura Electronica: <span className='fw-bold'>{factura.codfactura}</span></p>
         </div>
 
         <div className='d-flex flex-sm-row align-items-center justify-content-around w-100 column flex-column'>
-          <p>Nombre Cliente: <span className='fw-bold'>Jorge Perer Sandoval</span></p>
-          <p>CI/NIT: <span className='fw-bold'>12412</span></p>
-          <p>Fecha: <span className='fw-bold'>{formatearFecha('2022/09/27')}</span></p>
+          <p>Nombre Cliente: <span className='fw-bold'>{clienteCobro.nombre}</span></p>
+          <p>CI/NIT: <span className='fw-bold'>{clienteCobro.nit}</span></p>
+          <p>Fecha: <span className='fw-bold'>{fechaActual}</span></p>
         </div>
         <div className='mt-3 table-wrapper-scroll-y my-custom-scrollbar-usuario w-100'>
           <table className="table bg-white">
@@ -51,31 +64,36 @@ export const PedidoCobro = () => {
                 <th scope="col">Cantidad</th>
                 <th scope="col">Precio Unitario</th>
                 <th scope="col">Sub Total</th>
+                <th scope="col">Id pedido</th>
               </tr>
             </thead>
             <tbody className='text-center'>
               {
-                productos?.map(producto => {
-                  total += (producto.precio * producto.cantidad)
-                  return (
-                    <tr key={producto.codProducto} className="align-middle">
-                      <td>{producto.nombre}</td>
-                      <td>{producto.cantidad}</td>
-                      <td>{producto.precio} Bs.</td>
-                      <td>{producto.precio * producto.cantidad} Bs.</td>
-                    </tr>
-                  )
-                }
-                )
+                pedidosCobro?.map(pedido => {
+                  return pedido?.productos.map(producto => {
+                    total += (producto.precio * producto.cantidad)
+                    return (
+                      <tr key={producto.idproducto} className="align-middle">
+                        <td>{capitalizarPrimeraLetra(producto.nombre)}</td>
+                        <td>{producto.cantidad}</td>
+                        <td>{(producto.precio).toFixed(2)} Bs.</td>
+                        <td>{(producto.precio * producto.cantidad).toFixed(2)} Bs.</td>
+                        <td>{pedido.idpedido}</td>
+                      </tr>
+                    )
+                  })
+                })
               }
               <tr>
-                <td colSpan={"4"}>TOTAL: {total} Bs.</td>
+                <td colSpan={"4"} className="fw-bold">TOTAL: {total.toFixed(2)} Bs.</td>
+                <td className='fw-bold'>Cambio: {(total - clienteCobro.monto) > 0 ? (total - clienteCobro.monto).toFixed(2) : ((total - clienteCobro.monto) * -1).toFixed(2)} Bs.</td>
               </tr>
             </tbody>
           </table>
         </div>
         <div className='mt-3 w-100 d-flex justify-content-between'>
           <button onClick={handleCobrar} className='btn btn-primary mt-1 mb-3 w-sm-auto w-100 text-uppercase hide-on-print'>Imprimir</button>
+          <button onClick={handleVolver} className='btn btn-primary mt-1 mb-3 w-sm-auto w-100 text-uppercase hide-on-print'>Volver a Pedidos</button>
         </div>
       </div>
     </>

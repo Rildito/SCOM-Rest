@@ -9,6 +9,11 @@
 }
 
 @media (min-width: 768px) {
+
+  .w-md-75 {
+    width: 75% !important;
+  }
+
   .w-md-50 {
     width: 55% !important;
   }
@@ -45,8 +50,8 @@
 }
 
 .bg-white-gradient {
-  background: rgb(215, 215, 215);
-  background: linear-gradient(90deg, rgba(215, 215, 215, 1) 0%, rgba(255, 145, 0, 1) 100%);
+  background: rgb(231,221,31);
+  background: linear-gradient(90deg, rgba(231,221,31,1) 0%, rgba(255,255,255,1) 0%, #fffdce 0%);
 }
 
 .bg-primary-gradient {
@@ -132,6 +137,29 @@
   display: block;
 }
 
+.top-btn-position {
+  position: fixed;
+  bottom: 15px;
+  right: 10px;
+  z-index: 100;
+}
+
+.top-btn-style {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  border: 2px solid #333;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+}
+
+.top-btn-style:hover {
+  animation: none;
+  background-color: #333;
+  color: #fff;
+  border: 2px solid #fff;
+}
 
 @media (max-width: 767px) {
   .img-mw {
@@ -139,6 +167,10 @@
   }
 }
 
+/* CARD */
+.bg-card{
+  background-color: #ffffff;
+}
 /*IMPRIMIR*/
 
 @media print {
@@ -169,9 +201,16 @@
   } */
 }
 
-@page {
+@page:first {
   size: auto;
-  margin: 0;
+  margin: 0mm;
+  /* margin-top: 50px;*/
+  margin-bottom: 6mm; 
+  margin-left: 10mm; 
+}
+
+@page{
+  margin-top: 10mm;
 }
 
 /*SPINER*/

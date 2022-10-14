@@ -1,22 +1,21 @@
 import { useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Alerta, Spinner } from '../components';
+import { Spinner } from '../components';
 import IngredientesContext from '../context/IngredientesProvider';
 
 export const Mesas = () => {
 
     // const { ingredientes, eliminarIngrediente } = useContext(IngredienteContext);
     const navigate = useNavigate();
-    const { mesas, cargando, eliminarMesa, alerta } = useContext(IngredientesContext);
+    const { mesas, cargando, eliminarMesa } = useContext(IngredientesContext);
 
     const registrarMesa = () => {
         navigate('/administrador/mesas/registrar')
     };
 
-    const { msg, tipoAlerta} = alerta;
     return (
         <>
-            {msg && <Alerta mensaje={msg} tipoAlerta={tipoAlerta}/>}
+
             <h1 className='py-5 text-center fw-bold text-white bg-dark w-100 '>ADMINISTRA TUS MESAS</h1>
             <div className='w-100 container d-flex justify-content-center flex-column align-items-center'>
                 {

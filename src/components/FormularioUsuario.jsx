@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import AuthContext from "../context/AuthProvider";
 import UsuarioContext from "../context/UsuarioProvider";
-import { Alerta } from './';
 export const FormularioUsuario = () => {
 
     const [nombre, setNombre] = useState('');
@@ -24,8 +24,8 @@ export const FormularioUsuario = () => {
 
     const { ci: id, usuario: usuarioMostrar } = useParams();
 
-    const { submitUsuario, usuario, tipoUsuario, errores, alerta, cargando } = useContext(UsuarioContext);
-
+    const { submitUsuario, usuario, tipoUsuario, errores, cargando } = useContext(UsuarioContext);
+    const { auth } = useContext(AuthContext);
     useEffect(() => {
 
         if (id) {
@@ -48,11 +48,9 @@ export const FormularioUsuario = () => {
     const handleSubmit = async e => {
         e.preventDefault();
 
-        await submitUsuario({ id, nombre, ci, apellidoMaterno, apellidoPaterno, contraseña, fechaContratacion, nombreUsuario, estado, nit, email, fechaNacimiento, salario, especialidad }, tipoUsuario);
+        await submitUsuario({ id, nombre, ci, apellidoMaterno, apellidoPaterno, contraseña, fechaContratacion, nombreUsuario, estado, nit, email, fechaNacimiento, salario, especialidad, ciCajeroAdiciona:"1000008" }, tipoUsuario);
 
     };
-
-    const { msg, tipoAlerta } = alerta;
 
     return (
         <>
@@ -63,8 +61,7 @@ export const FormularioUsuario = () => {
                 ))
             }
             <div className='container h-100 p-3 pb-0 table-responsive rounded-2'>
-                {msg && <Alerta mensaje={msg} tipoAlerta={tipoAlerta} />}
-                <form onSubmit={handleSubmit} className="row d-flex justify-content-center align-items-center">
+                <form onSubmit={handleSubmit} className="row d-flex justify-content-center">
                     <div className="col-md-6 col-12">
                         <label htmlFor="nombre" className='form-label fw-bold'>Nombre</label>
                         <input
@@ -147,12 +144,18 @@ export const FormularioUsuario = () => {
                             placeholder="Ej. 1111111"
                             onChange={e => setCi(e.target.value)}
                         />
+                        {
+                            auth.ci && (
+                                <>
+                                    <label htmlFor="estado" className='form-label fw-bold'>Estado</label>
+                                    <select value={estado} onChange={e => setEstado(e.target.value)} className='form-select mt-1'>
+                                        <option value="habilitado">Habilitado</option>
+                                        <option value="deshabilitado">Deshabilitado</option>
+                                    </select>
+                                </>
+                            )
+                        }
 
-                        <label htmlFor="estado" className='form-label fw-bold'>Estado</label>
-                        <select value={estado} onChange={e => setEstado(e.target.value)} className='form-select'>
-                            <option value="habilitado">Habilitado</option>
-                            <option value="deshabilitado">Deshabilitado</option>
-                        </select>
                     </div>
 
                     {
@@ -257,7 +260,15 @@ export const FormularioUsuario = () => {
                         ) : null)
                     }
 
-                    <input type="submit" value={(id) ? `Actualizar Usuario` : `Registrar Usuario`} className='btn btn-warning text-black mt-3 text-uppercase fw-bolder mx-md-auto w-auto' disabled={cargando ? true : false}/>
+                    <input type="submit" value={(id) ? `Actualizar Usuario` : auth.ci ? 'Registrar Usuario' : 'Registrarse'} className='btn btn-warning text-black mt-3 text-uppercase fw-bolder mx-md-auto w-auto' disabled={cargando ? true : false} />
+
+                    {
+                        auth.ci ? null :
+                            <Link
+                                className="text-decoration-none text-dark my-2"
+                                to="/login"
+                            >¿Ya tienes una cuenta? Registrate</Link>
+                    }
                 </form>
             </div >
         </>

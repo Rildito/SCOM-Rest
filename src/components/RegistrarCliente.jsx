@@ -23,7 +23,7 @@ export const RegistrarCliente = () => {
 
     const handleSubmit = async e => {
         e.preventDefault();
-        await submitUsuario({ nombre, ci: parseInt(ci, 10), apellidoPat, apellidoMat, password, edad, nombreUsuario, nit, email, ciCajeroAdiciona: 111111 }, tipoUsuario);
+        await submitUsuario({ nombre, ci: parseInt(ci, 10), apellidoPat, apellidoMat, password, edad, nombreUsuario, nit, email }, tipoUsuario);
 
     };
 
@@ -36,7 +36,6 @@ export const RegistrarCliente = () => {
             <h1 className='py-5 text-center fw-bold text-white bg-dark w-100 '>REGISTRATE</h1>
             <div className='w-md-50 w-75 p-md-4 p-3 border shadow-lg bg-white rounded-3 my-4'>
                 <form onSubmit={handleSubmit} className="row d-flex justify-content-center align-items-center ">
-                    {/* row d-flex flex-column gap-2 aling-items-center */}
                     <div className="col-md-6 col-12">
                         <label htmlFor="nombre" className='form-label fw-bold'>Nombre</label>
                         <input

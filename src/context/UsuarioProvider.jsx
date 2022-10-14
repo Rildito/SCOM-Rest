@@ -1,6 +1,9 @@
 import { createContext, useState, useEffect } from "react"
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import { useContext } from "react";
+import AuthContext from "./AuthProvider";
 
 const UsuarioContext = createContext();
 
@@ -15,40 +18,40 @@ export const UsuarioProvider = ({ children }) => {
     const [cargando, setCargando] = useState(false);
     const [tipoUsuario, setTipoUsuario] = useState('cliente');
 
-    //alerta
-    const [alerta, setAlerta] = useState({
-        // msg:'HOLA MUNDO',
-        // tipoAlerta:'primary'
-    });
     const [errores, setErrores] = useState([]);
 
+    const { auth, setAuth } = useContext(AuthContext);
+
+    //USUARIO COBRO
+
+    const [usuarioEgresos, setUsuarioEgresos] = useState([]);
+    const [cargandoDatos, setCargandoDatos] = useState(false);
     useEffect(() => {
+        if (auth.tipoUsuario === 'administrador') {
+            if (tipoUsuario === 'cliente') {
+                obtenerClientes();
+            }
 
-        if (tipoUsuario === 'cliente') {
-            obtenerClientes();
+            if (tipoUsuario === 'cajero') {
+                obtenerCajeros();
+            }
+
+            if (tipoUsuario === 'camarero') {
+                obtenerCamareros();
+            }
+
+            if (tipoUsuario === 'chef') {
+                obtenerChefs();
+            }
+
+            if (tipoUsuario === 'administrador') {
+                obtenerAdministradores();
+            }
+
+            if (tipoUsuario === '') {
+                obtenerUsuarios();
+            }
         }
-
-        if (tipoUsuario === 'cajero') {
-            obtenerCajeros();
-        }
-
-        if (tipoUsuario === 'camarero') {
-            obtenerCamareros();
-        }
-
-        if (tipoUsuario === 'chef') {
-            obtenerChefs();
-        }
-
-        if (tipoUsuario === 'administrador') {
-            obtenerAdministradores();
-        }
-
-        if (tipoUsuario === '') {
-            obtenerUsuarios();
-        }
-
-        //TODO:Aumentar si hay nuevos usuarios
 
     }, [tipoUsuario]);
 
@@ -59,9 +62,8 @@ export const UsuarioProvider = ({ children }) => {
             const { data: { data, error } } = await axios.get("https://scom-rest.herokuapp.com/api/usuarios");
             setUsuarios(data);
         } catch (error) {
-            setCargando(false);
-            setUsuarios([]);
-            mostrarAlerta('Ocurrio un error', 'danger');
+            console.log(error);
+            toast.error('Ocurrio un error inesperado');
         } finally {
             setCargando(false);
         }
@@ -73,9 +75,8 @@ export const UsuarioProvider = ({ children }) => {
             const { data: { data, error } } = await axios.get("https://scom-rest.herokuapp.com/api/clientes");
             setUsuarios(data);
         } catch (error) {
-            setCargando(false);
-            setUsuarios([]);
-            mostrarAlerta('Ocurrio un error', 'danger');
+            console.log(error);
+            toast.error('Ocurrio un error inesperado');
         } finally {
             setCargando(false);
         }
@@ -88,9 +89,8 @@ export const UsuarioProvider = ({ children }) => {
             const { data: { data, error } } = await axios.get("https://scom-rest.herokuapp.com/api/cajeros");
             setUsuarios(data);
         } catch (error) {
-            setCargando(false);
-            setUsuarios([]);
-            mostrarAlerta('Ocurrio un error', 'danger');
+            console.log(error);
+            toast.error('Ocurrio un error inesperado');
         } finally {
             setCargando(false);
         }
@@ -103,9 +103,8 @@ export const UsuarioProvider = ({ children }) => {
             setUsuarios(data);
 
         } catch (error) {
-            setCargando(false);
-            setUsuarios([]);
-            mostrarAlerta('Ocurrio un error', 'danger');
+            console.log(error);
+            toast.error('Ocurrio un error inesperado');
         } finally {
             setCargando(false);
         }
@@ -118,9 +117,8 @@ export const UsuarioProvider = ({ children }) => {
             const { data: { data, error } } = await axios.get("https://scom-rest.herokuapp.com/api/camareros")
             setUsuarios(data);
         } catch (error) {
-            setCargando(false);
-            setUsuarios([]);
-            mostrarAlerta('Ocurrio un error', 'danger');
+            console.log(error);
+            toast.error('Ocurrio un error inesperado');
         } finally {
             setCargando(false);
         }
@@ -132,9 +130,8 @@ export const UsuarioProvider = ({ children }) => {
             const { data: { data, error } } = await axios.get("https://scom-rest.herokuapp.com/api/administradores")
             setUsuarios(data);
         } catch (error) {
-            setCargando(false);
-            setUsuarios([]);
-            mostrarAlerta('Ocurrio un error', 'danger');
+            console.log(error);
+            toast.error('Ocurrio un error inesperado');
         } finally {
             setCargando(false);
         }
@@ -143,26 +140,22 @@ export const UsuarioProvider = ({ children }) => {
     const obtenerUsuario = async (ci, tipoUsuario) => {
         try {
             setCargando(true);
+
             const { data: { data, error } } = await axios.get(`https://scom-rest.herokuapp.com/api/${tipoUsuario}/${ci}`, {
                 responseEncodig: 'utf-8'
             });
-            console.log(`https://scom-rest.herokuapp.com/api/${tipoUsuario}/${ci}`)
-            if(data[0].tipoUsuario === 'administrador') {
-                setUsuario(data[0]);
-            }else{
-                setUsuario(data)
-            }
-            console.log(data);
-
+            setUsuario(data)
         } catch (error) {
-            mostrarAlerta('Ocurrio un error', 'danger');
+            console.log(error);
+            navigate('/administrador/usuarios');
+            toast.error('Ocurrio un error inesperado');
         } finally {
             setCargando(false);
         }
     };
 
     const submitUsuario = async (usuario, tipoUsuario) => {
-
+        console.log(usuario, tipoUsuario)
         if (usuario.id) {
             await editarUsuario(usuario, tipoUsuario);
         } else {
@@ -174,10 +167,8 @@ export const UsuarioProvider = ({ children }) => {
 
         try {
             setCargando(true);
-            
+
             const { data: { data, error } } = await axios.post(`https://scom-rest.herokuapp.com/api/${tipoUsuario}`, usuario);
-            console.log(data);
-            console.log(error);
             if (error?.length > 0) {
                 setErrores(error);
                 return;
@@ -185,13 +176,20 @@ export const UsuarioProvider = ({ children }) => {
 
             setUsuarios([...usuarios, data]);
             setErrores([]);
-            navigate('/administrador/usuarios');
-            mostrarAlerta('Se creo el usuario correctamente', 'primary');
+            if (auth.tipoUsuario === 'adminitrador') {
+                navigate('/administrador/usuarios');
+                toast.success('Se creo el usuario correctamente');
+            } else {
+                setAuth(data)
+                navigate('/')
+            }
         } catch (error) {
-            mostrarAlerta('Ocurrio un error', 'danger');
+            console.log(error);
+            navigate('/administrador/usuarios');
+            toast.error('Ocurrio un error inesperado');
         } finally {
             setCargando(false);
-        }
+        }//TODO: configurar los nombres de usuarios.
     };
 
     const editarUsuario = async (usuario, tipoUsuario) => {
@@ -204,20 +202,23 @@ export const UsuarioProvider = ({ children }) => {
                 setErrores(error);
                 return
             }
+            console.log(data, "DATA")
             const usuariosActualizados = usuarios.map(us => us.ci !== data.ci ? us : data);
 
             setUsuarios(usuariosActualizados);
             setErrores([]);
             setUsuario({});
+
             navigate('/administrador/usuarios');
-            mostrarAlerta('Se modifico el usuario correctamente', 'primary');
+            toast.success('Se modifico el usuario correctamente');
+
         } catch (error) {
-            mostrarAlerta('Ocurrio un error', 'danger');
+            console.log(error);
+            navigate('/administrador/usuarios');
+            toast.error('Ocurrio un error inesperado');
         } finally {
             setCargando(false);
         }
-
-
     };
 
 
@@ -234,26 +235,43 @@ export const UsuarioProvider = ({ children }) => {
             setUsuarios(usuariosActualizados);
             setErrores([]);
             navigate('/administrador/usuarios');
-            mostrarAlerta('Se elimino el usuario correctamente', 'danger');
+            toast.success('Se elimino el usuario correctamente');
         } catch (error) {
-            mostrarAlerta('Ocurrio un error', 'danger');
+            console.log(error);
+            navigate('/administrador/usuarios');
+            toast.error('Ocurrio un error inesperado');
         } finally {
             setCargando(false);
         }
-
-
     };
 
-    const mostrarAlerta = (mensaje, tipoAlerta) => {
-        setAlerta({
-            msg: mensaje,
-            tipoAlerta
-        })
+    const obtenerSalarios = async () => {
+        setCargandoDatos(true);
+        // const { data: { data: data1, error: error1 } } = await axios.get("https://scom-rest.herokuapp.com/api/cajeros");
+        // setUsuarioEgresos(data1);
 
-        setTimeout(() => {
-            setAlerta({});
-        }, 3000)
-    }
+        // const { data: { data: data2, error: error2 } } = await axios.get("https://scom-rest.herokuapp.com/api/chefs");
+        // setUsuarioEgresos([...usuarioEgresos, ...data2]);
+
+        // const { data: { data: data3, error: error3 } } = await axios.get("https://scom-rest.herokuapp.com/api/camareros")
+        // setUsuarioEgresos([...usuarioEgresos, ...data3]);
+
+        // const { data: { data: data4, error: error5 } } = await axios.get("https://scom-rest.herokuapp.com/api/administradores")
+        // setUsuarioEgresos([...usuarioEgresos, ...data4]);
+
+        const urls = ["https://scom-rest.herokuapp.com/api/cajeros", "https://scom-rest.herokuapp.com/api/chefs", "https://scom-rest.herokuapp.com/api/camareros", "https://scom-rest.herokuapp.com/api/administradores"];
+        const prueba = await Promise.all(urls.map(async url => {
+            const { data: { data, error } } = await axios(url);
+            //console.log(...data)
+            return data
+        }));
+        const usuarios = [].concat(prueba[0], prueba[1], prueba[2], prueba[3]);
+        setUsuarioEgresos(usuarios)
+        setCargandoDatos(false);
+
+        //console.log(usuarioEgresos)
+    };
+
     return (
         <UsuarioContext.Provider value={{
             //Variables
@@ -261,20 +279,22 @@ export const UsuarioProvider = ({ children }) => {
             usuario,
             cargando,
             tipoUsuario,
-            alerta,
+            cargandoDatos,
             errores,
             //Functions
             eliminarUsuario,
             submitUsuario,
             obtenerUsuario,
             setTipoUsuario,
-            setAlerta,
+
             setErrores,
             setUsuario,
             //FuncionesParallamarusuarios
             obtenerClientes,
             obtenerCajeros,
-            obtenerChefs
+            obtenerChefs,
+            obtenerSalarios,
+            usuarioEgresos
 
         }}>
             {children}

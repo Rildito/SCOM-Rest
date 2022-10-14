@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { FormularioMesa, Spinner } from '../components';
 import IngredientesContext from '../context/IngredientesProvider';
 

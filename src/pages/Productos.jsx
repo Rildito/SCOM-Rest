@@ -1,26 +1,22 @@
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import { useNavigate, Link } from 'react-router-dom';
-import { ModalProducto, Productos as Products } from '../components';
-import ProductosContext from '../context/ProductosProvider';
+import { ModalProducto, Producto } from '../components';
 import Imagen from '../assets/img/logo.png'
 import AuthContext from '../context/AuthProvider';
-import { ToastContainer } from 'react-toastify';
 import PedidoContext from '../context/PedidosProvider';
+import ProductosContext from '../context/ProductosProvider';
 
 export const Productos = () => {
 
     const navigate = useNavigate();
 
     const { pedido } = useContext(PedidoContext);
-    const { auth } = useContext(AuthContext);
+    const { auth, handleCerrarSesion } = useContext(AuthContext);
+    const { productos } = useContext(ProductosContext);
 
     const handleClick = () => {
         navigate('/');
     };
-
-    useEffect(() => {
-
-    }, [])
 
     return (
         <div className='d-flex flex-column justify-content-center align-items-center'>
@@ -45,9 +41,9 @@ export const Productos = () => {
                                         <Link className="nav-link dropdown-toggle text-black p-0" to={"/pedido"} role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             Hola: <span className='fw-bold'>{auth.nombreUsuario}</span>
                                         </Link>
-                                        <ul className="dropdown-menu" style={{ margin: 0 }} >
-                                            <li><Link className="dropdown-item" to="#">Cerrar Sesion</Link></li>
-                                            <li><Link className="dropdown-item" to="#">Modificar Datos</Link></li>
+                                        <ul className="dropdown-menu mt-1" style={{ margin: 0 }} >
+                                            <button className="dropdown-item" onClick={handleCerrarSesion}>Cerrar Sesion</button>
+                                            {/* <li><Link className="dropdown-item" to="#">Modificar Datos</Link></li> */}
                                         </ul>
                                     </li>
                                 </>)
@@ -57,12 +53,15 @@ export const Productos = () => {
 
                 </div>
             </nav >
-            <h1 className='text-primary fw-semibold text-center mb-4'>NUESTROS PRODUCTOS</h1>
+            <h1 className='text-success fw-semibold text-center mb-4'>NUESTROS PRODUCTOS</h1>
             <div className='row d-flex justify-content-center gap-4 w-100 mb-3'>
-                <Products />
+                {
+                    productos.map(producto => (
+                        <Producto key={producto.idproducto} producto={producto} />
+                    ))
+                }
             </div>
             <ModalProducto />
-            <ToastContainer />
         </div >
     )
 }

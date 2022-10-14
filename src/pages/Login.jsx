@@ -16,14 +16,6 @@ export const Login = () => {
         e.preventDefault();
         await autenticarUsuario({ nombreUsuario, password });
 
-        if (cargando) {
-            return
-        }
-
-        if (Object.keys(auth) > 0) {
-            setNombreUsuario('');
-            setPassword('');
-        }
     };
 
     useEffect(() => {
@@ -51,7 +43,7 @@ export const Login = () => {
 
             <div className='vh-100 container d-flex justify-content-center align-items-center flex-column bg-white'>
                 <img src={Imagen} className="img-fluid mb-5" />
-                <div className='w-md-50 w-75 p-md-4 p-3 border shadow-lg bg-white rounded-3 mb-5'>
+                <div className='w-md-50 w-100 p-md-4 p-3 border shadow-lg bg-white rounded-3 mb-5'>
                     <h1 className='text-center fw-normal fs-3'>Inicia Sesión</h1>
                     {
                         errores?.map(error => (

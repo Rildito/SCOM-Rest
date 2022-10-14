@@ -5,14 +5,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import PedidosContext from '../context/PedidosProvider';
 import { useEffect } from 'react';
 import { capitalizarPrimeraLetra } from '../helpers/formatearTexto';
-import { formatearFecha } from '../helpers/formatearFecha';
 
 export const PedidoInformacion = () => {
 
     const navigate = useNavigate();
     const { modalCobro } = useContext(ProductosContext);
-    const { pedidoSeleccionado, obtenerPedido, cargando } = useContext(PedidosContext);
-    const { idPedido } = useParams();
+    const { pedidosCobro, cargando, setPedidosBuscados, setValue } = useContext(PedidosContext);
+
     let total = 0;
 
     const handleCobrar = () => {
@@ -20,12 +19,10 @@ export const PedidoInformacion = () => {
     };
 
     const handleAgregarOtroPedido = () => {
+        setPedidosBuscados([]);
+        setValue('');
         navigate('/cajero');
     };
-
-    useEffect(() => {
-        obtenerPedido(idPedido);
-    }, []);
 
     if (cargando) {
         return <Spinner />
@@ -43,24 +40,30 @@ export const PedidoInformacion = () => {
                                 <th scope="col">Cantidad</th>
                                 <th scope="col">Precio Unitario</th>
                                 <th scope="col">Sub Total</th>
+                                <th scope="col">Id pedido</th>
                             </tr>
                         </thead>
                         <tbody className='text-center'>
                             {
-                                pedidoSeleccionado.productos?.map(producto => {
-                                    total += (producto.precio * producto.cantidad)
-                                    return (
-                                        <tr key={producto.idProducto} className="align-middle">
-                                            <td>{capitalizarPrimeraLetra(producto.nombre)}</td>
-                                            <td>{producto.cantidad}</td>
-                                            <td>{(producto.precio).toFixed(2)} Bs.</td>
-                                            <td>{(producto.precio * producto.cantidad).toFixed(2)} Bs.</td>
-                                        </tr>
-                                    )
+                                pedidosCobro?.map(pedido => {
+                                    return pedido?.productos.map(producto => {
+                                        total += (producto.precio * producto.cantidad)
+                                        return (
+
+                                            <tr key={producto.idproducto} className="align-middle">
+                                                <td>{capitalizarPrimeraLetra(producto.nombre)}</td>
+                                                <td>{producto.cantidad}</td>
+                                                <td>{(producto.precio).toFixed(2)} Bs.</td>
+                                                <td>{(producto.precio * producto.cantidad).toFixed(2)} Bs.</td>
+                                                <td>{pedido.idpedido}</td>
+                                            </tr>
+
+                                        )
+                                    })
                                 })
                             }
                             <tr>
-                                <td colSpan={"4"} className="">TOTAL: {total.toFixed(2)} Bs.</td>
+                                <td colSpan={"5"} className="fw-bold">TOTAL: {total.toFixed(2)} Bs.</td>
                             </tr>
                         </tbody>
                     </table>

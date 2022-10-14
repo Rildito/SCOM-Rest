@@ -39,7 +39,7 @@ export const Header = ({ enlace, scrollToSection, referencias }) => {
                             <li className="nav-item active text-white pointer" onClick={() => scrollToSection(sugerencias)}>Preguntas frecuentes</li>
 
                         </div>
-                        <div className="navbar-nav ms-auto text-center d-flex gap-lg-5 gap-3 ms-0">
+                        <div className="navbar-nav text-center d-flex gap-lg-5 gap-3 ms-0">
 
                             {
                                 (Object.entries(auth).length === 0 && <li className="nav-item active text-white pointer fw-bold mt-lg-0 mt-3" onClick={handleClick}>LOG IN</li>)
@@ -51,11 +51,11 @@ export const Header = ({ enlace, scrollToSection, referencias }) => {
                                         <a className="nav-link dropdown-toggle text-white p-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             Hola: <span className='fw-bold'>{auth.nombreUsuario}</span>
                                         </a>
-                                        <ul className="dropdown-menu" style={{
+                                        <ul className="dropdown-menu mt-1" style={{
                                             margin: 0
                                         }}>
                                             <button className="dropdown-item" onClick={handleCerrarSesion}>Cerrar Sesion</button>
-                                            <button className="dropdown-item" onClick={handleModificarDatos}>Modificar Datos</button>
+                                            {/* <button className="dropdown-item" onClick={handleModificarDatos}>Modificar Datos</button> */}
                                         </ul>
                                     </li>)
                             }

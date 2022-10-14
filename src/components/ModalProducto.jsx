@@ -8,10 +8,10 @@ import { capitalizarPrimeraLetra } from '../helpers/formatearTexto';
 import PedidoContext from '../context/PedidosProvider';
 
 export function ModalProducto() {
-    const { modal, setModal, productoPedido, productoBuscar, ingredienteBuscar } = useContext(ProductosContext);
+    const { modal, setModal, productoPedido, productoBuscar } = useContext(ProductosContext);
     const { auth } = useContext(AuthContext);
     const { agregarPedido, pedido } = useContext(PedidoContext);
-    const exampleModal = useRef()
+    const exampleModal = useRef();
     const navigate = useNavigate();
 
     const [cantidad, setCantidad] = useState(1);
@@ -34,20 +34,21 @@ export function ModalProducto() {
         setModal(
             new Modal(exampleModal.current)
         )
+
     }, [])
 
-    useEffect(() => {
-        console.log(pedido)
-        if (pedido?.some(pedidoState => pedidoState.idproducto === productoPedido.idproducto)) {
-            const productoEdicion = pedido.find(pedidoState => pedidoState.idproducto === productoPedido.idproducto);
-            setEdicion(true);
-            setCantidad(productoEdicion.cantidad)
-        } else {
-            setCantidad(1);
-            setEdicion(false);
-        }
+    // useEffect(() => {
+    //     console.log(pedido)
+    //     if (pedido?.some(pedidoState => pedidoState.idproducto === productoPedido.idproducto)) {
+    //         const productoEdicion = pedido.find(pedidoState => pedidoState.idproducto === productoPedido.idproducto);
+    //         setEdicion(true);
+    //         setCantidad(productoEdicion.cantidad)
+    //     } else {
+    //         setCantidad(1);
+    //         setEdicion(false);
+    //     }
 
-    }, [productoPedido, pedido])
+    // }, [productoPedido, pedido])
 
     return (
         <>
@@ -56,35 +57,61 @@ export function ModalProducto() {
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">PEDIDO</h5>
+                            <h5 className="modal-title text-uppercase" id="exampleModalLabel">{productoBuscar.tipoProducto}</h5>
                             <button type="button" className="btn-close" onClick={() => modal.hide()} aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
                             {
-                                <div className="card border-0 ">
-                                    <div className="row g-0">
-                                        <div className="col-md-4 d-flex justify-content-center">
-                                            <img src={Imagen} className="img-fluid rounded-start" alt="..." style={{
-                                                maxHeight: '200px'
-                                            }} />
-                                        </div>
-                                        <div className="col-md-8">
-                                            <div className="card-body">
-                                                <h5 className="card-title fs-3">{capitalizarPrimeraLetra(productoBuscar.nombre)}</h5>
-                                                <p className="card-text fs-3 text-danger">{productoBuscar.precio} Bs.</p>
+                                auth.ci ? (
+                                    <div className="card border-0 ">
+                                        <div className="row g-0">
+                                            <div className="col-md-4 d-flex justify-content-center">
+                                                <img src={Imagen} className="img-fluid rounded-start" alt="..." style={{
+                                                    maxHeight: '200px'
+                                                }} />
+                                            </div>
+                                            <div className="col-md-8">
+                                                <div className="card-body">
+                                                    <h5 className="card-title fs-2 text-warning fw-bold mb-1">{capitalizarPrimeraLetra(productoBuscar.nombre)}</h5>
+                                                    <p className="card-text fs-3 text-danger fw-bold mb-1">{productoBuscar.precio} Bs.</p>
+                                                    {
+                                                        productoBuscar.ingredientes && (
+                                                            <>
+                                                                <h5 className='fw-bold fs-4'>INGREDIENTES</h5>
+                                                                <ul>
+                                                                    {
+                                                                        productoBuscar.ingredientes?.map(ingrediente => (
 
-                                                <h5 className='fw-bold'>INGREDIENTES</h5>
-                                                {
-                                                    ingredienteBuscar.map(ingrediente => (
-                                                        <>
-                                                            <p className='mb-0'>{capitalizarPrimeraLetra(ingrediente.nombre)}</p>
-                                                        </>
-                                                    ))
-                                                }
+                                                                            <li className='mb-0 fs-5' key={ingrediente.codingrediente}>{capitalizarPrimeraLetra(ingrediente.nombre)}</li>
+
+                                                                        ))
+
+                                                                    }
+                                                                </ul>
+                                                            </>
+                                                        )
+                                                    }
+
+                                                    {
+                                                        productoBuscar.gradoAlcoholico && (
+                                                            <p className='fs-5'>Grado Alcoholico: <span className='fw-semibold'>{productoBuscar.gradoAlcoholico}</span></p>
+                                                        )
+                                                    }
+
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                ) : (
+                                    <>
+                                        <p> Si quiere ver mas informacion acerca del producto debe de iniciar sesion</p>
+                                        <div className="modal-footer d-flex justify-content-center">
+                                            <button type="button" className="btn btn-danger text-uppercase" onClick={handleIniciarSesion}>INICIAR SESION</button>
+
+                                        </div>
+                                    </>
+                                )
+
                                 // auth.ci ? (
                                 //     <div className="card border-0 ">
                                 //         <div className="row g-0">

@@ -1,5 +1,3 @@
-
-import { useParams } from 'react-router-dom';
 import { FormularioIngrediente } from '../components';
 
 export const RegistrarIngrediente = () => {
@@ -10,7 +8,6 @@ export const RegistrarIngrediente = () => {
             <div className='border shadow-lg bg-white rounded-3 h-100 d-flex align-items-center justify-content-center'>
                 <FormularioIngrediente />
             </div>
-
         </div>
     );
 }

@@ -1,4 +1,5 @@
-export { Productos } from "./Productos";
+export { ScrollToTop } from "./ScrollToTop";
+
 
 
 export { FormularioProducto } from "./FormularioProducto";
@@ -6,7 +7,6 @@ export { Administradores } from "./Administradores";
 export { ModalCobro } from "./ModalCobro";
 export { FormularioMesa } from "./FormularioMesa";
 
-export { Alerta } from "./Alerta";
 export { Cajeros } from "./Cajeros";
 export { Camareros } from "./Camareros";
 export { Chefs } from "./Chefs";

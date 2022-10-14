@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import PedidosContext from '../context/PedidosProvider';
 import { useEffect } from 'react';
 import { capitalizarPrimeraLetra } from '../helpers/formatearTexto';
-import { formatearFecha } from '../helpers/formatearFecha';
+import { formatearFecha, obtenerFechaActual } from '../helpers/formatearFecha';
 
 export const PedidoConfirmacion = () => {
 
@@ -29,7 +29,7 @@ export const PedidoConfirmacion = () => {
     <>
       <div className='w-100 container d-flex align-items-center flex-column'>
         <h2 className='text-primary fw-bold text-center'>CONFIRMACION DE PEDIDO</h2>
-        <p className='text-muted'>Fecha de pedido: {formatearFecha(pedidoSeleccionado.fecha)}</p>
+        <p className='text-muted'>Fecha de pedido: {obtenerFechaActual()}</p>
         <div className='d-md-flex justify-content-between w-100'>
           <div className='d-flex flex-md-row flex-column gap-2'>
             <button className='btn btn-success' onClick={confirmarPedido}>CONFIRMAR</button>

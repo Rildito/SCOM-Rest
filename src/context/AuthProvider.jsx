@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
     const [cargando, setCargando] = useState(false);
     const [errores, setErrores] = useState([]);
     const [auth, setAuth] = useState({});
-
+    
     useState(() => {
         if (localStorage.getItem('auth')) {
             setAuth(JSON.parse(localStorage.getItem('auth')))
@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
         try {
             setCargando(true);
             const { data: { data, error } } = await axios.post("https://scom-rest.herokuapp.com/api/login", {
-                user: nombreUsuario,
+                user: nombreUsuario,                                                                    
                 password
             }); //URL para autenticar
 
@@ -47,7 +47,7 @@ export const AuthProvider = ({ children }) => {
             }
 
             if (data.tipoUsuario === 'cajero') {
-                navigate('/administrador');
+                navigate('/cajero');
             }
 
             if (data.tipoUsuario === 'chef') {

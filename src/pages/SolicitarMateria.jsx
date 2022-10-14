@@ -1,11 +1,10 @@
-import { useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Alerta, Spinner } from '../components';
 import IngredientesContext from '../context/IngredientesProvider';
 
 export const SolicitarMateria = () => {
 
-    const { ingredientes, pedirMateria, alerta, cargando } = useContext(IngredientesContext);
+    const { ingredientes, pedirMateria, cargando } = useContext(IngredientesContext);
 
     const navigate = useNavigate();
 
@@ -13,15 +12,11 @@ export const SolicitarMateria = () => {
         navigate('/administrador/ingredientes/registrar')
     };
 
-    const { msg, tipoAlerta } = alerta;
-    // if (cargando) return <Spinner />;
+
+    if (cargando) return <Spinner />;
 
     return (
         <>
-            {
-                msg && <Alerta mensaje={msg} tipoAlerta={tipoAlerta} />
-            }
-
             <div className='w-100 container'>
                 <div className='mt-3 table-wrapper-scroll-y my-custom-scrollbar w-100 border'>
                     <table className="table bg-white">
@@ -50,11 +45,6 @@ export const SolicitarMateria = () => {
                             }
                         </tbody>
                     </table>
-                </div>
-                <div className='mt-3 d-flex justify-content-between w-100 flex-sm-row flex-column'>
-                    <div>
-                        <Link to={"/chef"} className="btn btn-secondary w-100">Volver a pedidos</Link>
-                    </div>
                 </div>
             </div>
         </>)

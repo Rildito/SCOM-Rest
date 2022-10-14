@@ -27,6 +27,7 @@ export const EditarUsuario = () => {
         }
 
         if (usuario === 'cajero') {
+            console.log('CAJERO');
             obtenerUsuario(ci, 'cajero')
         }
 
@@ -40,7 +41,7 @@ export const EditarUsuario = () => {
     return (
         <>
             <h1 className='py-5 text-center fw-bold text-white bg-dark w-100 '>EDITAR {usuario.toUpperCase()}</h1>
-            <div className='w-md-50 w-75 p-md-4 p-3 border shadow-lg bg-white rounded-3 my-5'>
+            <div className='w-md-50 w-100 p-md-4 p-3 border shadow-lg bg-white rounded-3 my-5'>
                 <div className='row'>
                     <FormularioUsuario />
                 </div>

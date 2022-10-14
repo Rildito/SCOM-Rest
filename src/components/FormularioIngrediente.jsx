@@ -1,7 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import Imagen from '../assets/img/ingredienteForm.png'
-import { Alerta } from "./Alerta";
 import IngredientesContext from "../context/IngredientesProvider";
 
 export const FormularioIngrediente = () => {
@@ -11,7 +10,7 @@ export const FormularioIngrediente = () => {
     const [tipo, setTipo] = useState('fruta');
 
     const { codIngrediente } = useParams();
-    const { submitIngrediente, ingrediente, alerta, errores, cargando } = useContext(IngredientesContext);
+    const { submitIngrediente, ingrediente, errores, cargando } = useContext(IngredientesContext);
 
     useEffect(() => {
         if (codIngrediente) {
@@ -30,14 +29,9 @@ export const FormularioIngrediente = () => {
         await submitIngrediente({ codingrediente: codIngrediente, nombre, cantidad, tipo });
     };
 
-    const { msg, tipoAlerta } = alerta;
-
     return (
 
         <>
-            {
-                msg && <Alerta mensaje={msg} tipoAlerta={tipoAlerta} />
-            }
             <div className="card mb-3" style={{
                 maxWidth: '800px'
             }}>
@@ -92,7 +86,7 @@ export const FormularioIngrediente = () => {
                     </div>
                 </div>
             </div>
-
+ 
         </>
     )
 }

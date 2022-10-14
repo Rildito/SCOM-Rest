@@ -2,22 +2,21 @@
 import { useEffect } from 'react';
 import { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Alerta, Spinner } from '../components';
+import { Spinner } from '../components';
 import ProductosContext from '../context/ProductosProvider';
 
 export const ProductosAdministrador = () => {
 
     const navigate = useNavigate();
-    // const { usuarios, setTipoUsuario, tipoUsuario, cargando, alerta, setErrores, setUsuario } = useContext(UsuarioContext);
+    // const { usuarios, setTipoUsuario, tipoUsuario, cargando, setErrores, setUsuario } = useContext(UsuarioContext);
 
-    const { productos, setTipoProducto, tipoProducto, cargando, alerta, setProducto, setErrores } = useContext(ProductosContext);
+    const { productos, setTipoProducto, tipoProducto, cargando, setProducto, setErrores, eliminarProducto } = useContext(ProductosContext);
 
     const registrarProducto = () => {
         setErrores([]);
         navigate(`/administrador/productos/registrar`)
     };
 
-    const { msg, tipoAlerta } = alerta
     useEffect(() => {
         setProducto({});
     }, []);
@@ -25,7 +24,6 @@ export const ProductosAdministrador = () => {
     return (
 
         <>
-            {msg && <Alerta mensaje={msg} tipoAlerta={tipoAlerta} />}
             <h1 className='py-sm-5 py-3 text-center fw-bold text-white bg-dark w-100'>ADMINISTRA TUS USUARIOS</h1>
 
             <div className='w-100 container-md'>
@@ -39,6 +37,8 @@ export const ProductosAdministrador = () => {
 
                     </div>
 
+                    
+                    {/* <Link className='btn btn-primary mt-md-0 mt-2 w-md-auto w-100' to="imagenes" >Administrar Imagenes</Link> */}
                     <div className=''>
                         <input type="button" name="" className={`btn ${tipoProducto === '' ? 'btn-info' : 'btn-outline-info'} w-100 mt-md-0 mt-2`} value="TODOS LOS PRODUCTOS" onClick={() => setTipoProducto('')} />
                     </div>

@@ -1,15 +1,14 @@
-
 import { useEffect } from 'react';
 import { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Administradores, Alerta, Cajeros, Camareros, Chefs, Clientes, Spinner } from '../components';
+import { Administradores, Cajeros, Camareros, Chefs, Clientes, Spinner } from '../components';
 import UsuarioContext from '../context/UsuarioProvider';
 import { obtenerEdad } from '../helpers/formatearFecha';
 
 export const Usuarios = () => {
 
     const navigate = useNavigate();
-    const { usuarios, setTipoUsuario, tipoUsuario, cargando, alerta, setErrores, setUsuario } = useContext(UsuarioContext);
+    const { usuarios, setTipoUsuario, tipoUsuario, cargando, setErrores, setUsuario } = useContext(UsuarioContext);
 
     const elegirTipoUsuario = (e) => {
         e.preventDefault();
@@ -21,7 +20,6 @@ export const Usuarios = () => {
         navigate(`/administrador/registrar/${tipoUsuario}`)
     };
 
-    const { msg, tipoAlerta } = alerta
     useEffect(() => {
         setUsuario({});
     }, []);
@@ -29,7 +27,6 @@ export const Usuarios = () => {
     return (
 
         <>
-            {msg && <Alerta mensaje={msg} tipoAlerta={tipoAlerta} />}
             <h1 className='py-sm-5 py-3 text-center fw-bold text-white bg-dark w-100'>ADMINISTRA TUS USUARIOS</h1>
 
             <div className='w-100 container-md'>
@@ -66,6 +63,7 @@ export const Usuarios = () => {
                                             <th scope="col">Nombre de usuario</th>
                                             <th scope="col">Nombre completo</th>
                                             <th scope="col">Edad</th>
+                                            {tipoUsuario === '' && <th scope='col'>Tipo de usuario</th>}
                                             {
                                                 (tipoUsuario === 'cliente' && (
                                                     <>
@@ -130,6 +128,7 @@ export const Usuarios = () => {
                                                     <td>{usuario.nombreUsuario}</td>
                                                     <td>{usuario.nombre} {usuario.apellidoPaterno} {usuario.apellidoMaterno}</td>
                                                     <td>{obtenerEdad(usuario.fechaNacimiento)}</td>
+                                                    <td>{usuario.tipoUsuario}</td>
                                                 </tr>
                                             ))))
                                         }

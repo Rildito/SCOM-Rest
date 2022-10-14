@@ -93,7 +93,6 @@ export const FormularioMesa = () => {
                     </div>
                 </div>
             </div>
-
         </>
     )
 }

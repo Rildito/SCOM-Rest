@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { createContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-
+import { toast } from 'react-toastify';
+import AuthContext from './AuthProvider';
 
 const IngredientesContext = createContext();
 
@@ -19,12 +20,22 @@ export const IngredientesProvider = ({ children }) => {
 
 
     const [cargando, setCargando] = useState(false);
-    const [alerta, setAlerta] = useState({});
     const [errores, setErrores] = useState([]);
 
+    const { auth } = useContext(AuthContext);
     useEffect(() => {
-        obtenerIngredientes();
-        obtenerMesas();
+        if (auth.tipoUsuario === 'administrador') {
+            obtenerIngredientes();
+            obtenerMesas();
+        }
+        
+        if (auth.tipoUsuario === 'chef') {
+            obtenerIngredientes();
+        }
+
+        setErrores([]);
+        setIngrediente({});
+        setMesa({});
     }, [])
 
     const obtenerIngredientes = async () => {
@@ -42,12 +53,11 @@ export const IngredientesProvider = ({ children }) => {
     const obtenerIngrediente = async (codIngrediente) => {
         try {
             setCargando(true);
-            console.log(`https://scom-rest.herokuapp.com/api/ingrediente/${codIngrediente}`);
             const { data: { data, error } } = await axios.get(`https://scom-rest.herokuapp.com/api/ingrediente/${codIngrediente}`); //URL para crear
             setIngrediente(data)
-            console.log(data);
         } catch (error) {
             console.log(error);
+            toast.error('Ocurrio un error inesperado');
         } finally {
             setCargando(false);
         }
@@ -76,10 +86,10 @@ export const IngredientesProvider = ({ children }) => {
             setIngredientes([...ingredientes, data])
             setErrores([]);
             navigate('/administrador/ingredientes');
-            mostrarAlerta('Se creo correctamente el ingrediente', 'primary')
+            toast.success('Se creo correctamente el ingrediente');
         } catch (error) {
             console.log(error);
-            mostrarAlerta('Ocurrio un error', 'danger');
+            toast.error('Ocurrio un error inesperado');
         } finally {
             setCargando(false);
         }
@@ -101,12 +111,13 @@ export const IngredientesProvider = ({ children }) => {
             const ingredientesActualizados = ingredientes.map(ingre => ingre.codingrediente === data.codingrediente ? data : ingre);
             setIngredientes(ingredientesActualizados)
             setErrores([]);
-            setCargando(false);
             navigate('/administrador/ingredientes');
-            mostrarAlerta('Se edito correctamente el ingrediente', 'primary')
+            toast.success('Se edito correctamente el ingrediente');
         } catch (error) {
             console.log(error);
-            mostrarAlerta('Ocurrio un error', 'danger');
+            toast.error('Ocurrio un error inesperado');
+        } finally {
+            setCargando(false);
         }
     };
 
@@ -118,17 +129,14 @@ export const IngredientesProvider = ({ children }) => {
             const ingredientesActualizados = ingredientes.filter(ingre => ingre.codingrediente !== codIngrediente);
             console.log(codIngrediente);
             setIngredientes(ingredientesActualizados);
-            setCargando(false);
             navigate('/administrador/ingredientes');
-            mostrarAlerta('Se elimino correctamente el ingrediente', 'danger')
+            toast.success('Se elimino correctamente el ingrediente');
         } catch (error) {
             console.log(error);
-            mostrarAlerta('Ocurrio un error', 'danger');
+            toast.error('Ocurrio un error inesperado');
+        } finally {
+            setCargando(false);
         }
-
-        // const { data } = await axios.delete(`/ingredientes/${ingrediente.ci}`); //URL para editar
-        // const ingredientesActualizados = ingredientes.filter(ingrediente => ingrediente.nombre !== nombre);
-        // setIngredientes(ingredientesActualizados);
     };
 
     const obtenerMesas = async () => {
@@ -176,13 +184,13 @@ export const IngredientesProvider = ({ children }) => {
                 setCargando(false);
                 return
             }
-            console.log(data);
             setMesas([...mesas, data])
             setErrores([]);
             navigate('/administrador/mesas');
-            mostrarAlerta('Se creo correctamente la mesa', 'primary')
+            toast.success('Se registro correctamente la mesa');
         } catch (error) {
             console.log(error);
+            toast.error('Ocurrio un error inesperado');
         } finally {
             setCargando(false);
         }
@@ -202,9 +210,11 @@ export const IngredientesProvider = ({ children }) => {
             setMesas(mesasActualizadas);
             setErrores([]);
             navigate('/administrador/mesas');
-            mostrarAlerta('Se edito correctamente la mesa', 'primary')
+            toast.success('Se edito correctamente la mesa');
+
         } catch (error) {
             console.log(error);
+            toast.error('Ocurrio un error inesperado');
         } finally {
             setCargando(false);
         }
@@ -225,32 +235,19 @@ export const IngredientesProvider = ({ children }) => {
             setMesas(mesasActualizadas);
             setErrores([]);
             navigate('/administrador/mesas');
-            mostrarAlerta('Se elimino correctamente la mesa', 'danger')
+            toast.success('Se elimino correctamente la mesa');
         } catch (error) {
             console.log(error);
+            toast.error('Ocurrio un error inesperado');
         } finally {
             setCargando(false);
         }
     };
 
-    const pedirMateria = () => {
-        mostrarAlerta('Se solicito materia prima','primary')
-    };
-    const mostrarAlerta = (mensaje, tipoAlerta) => {
-        setAlerta({
-            msg: mensaje,
-            tipoAlerta
-        })
-
-        setTimeout(() => {
-            setAlerta({});
-        }, 3000)
-    }
-
     return (
         <IngredientesContext.Provider value={{
             //VARIABLES
-            alerta,
+
             cargando,
             ingrediente,
             ingredientes,
@@ -263,7 +260,6 @@ export const IngredientesProvider = ({ children }) => {
             editarMesa,
             eliminarIngrediente,
             eliminarMesa,
-            pedirMateria,
             setErrores,
             setCargando,
             submitIngrediente,
@@ -271,7 +267,7 @@ export const IngredientesProvider = ({ children }) => {
             obtenerIngredientes,
             obtenerIngrediente,
             setIngrediente,
-            obtenerMesa
+            obtenerMesa,
 
         }}>
             {children}

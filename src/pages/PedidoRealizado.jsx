@@ -5,17 +5,19 @@ import { useNavigate, useParams } from 'react-router-dom';
 import PedidosContext from '../context/PedidosProvider';
 import { useEffect } from 'react';
 import { capitalizarPrimeraLetra } from '../helpers/formatearTexto';
-import { formatearFecha } from '../helpers/formatearFecha';
+import { formatearFecha, obtenerFechaActual } from '../helpers/formatearFecha';
 
 export const PedidoRealizado = () => {
 
   const navigate = useNavigate();
   const { modalCobro } = useContext(ProductosContext);
-  const { pedidoSeleccionado, obtenerPedido, cargando, confirmarPedido, cancelarPedido } = useContext(PedidosContext);
+  const { pedidoSeleccionado, obtenerPedido, cargando, pedidoRealizado} = useContext(PedidosContext);
   const { idPedido } = useParams();
 
-  const agregarProducto = () => {
-    navigate('productos');
+  const pedidoRealizar = (idPedido) => {
+    pedidoRealizado(idPedido)
+    console.log(idPedido)
+    navigate('/chef');
   };
 
   useEffect(() => {
@@ -29,10 +31,10 @@ export const PedidoRealizado = () => {
     <>
       <div className='w-100 container d-flex align-items-center flex-column'>
         <h2 className='text-primary fw-bold text-center'>CONFIRMACION DE REALIZACION </h2>
-        <p className='text-muted'>Fecha de pedido: {formatearFecha(pedidoSeleccionado.fecha)}</p>
+        <p className='text-muted'>Fecha de pedido: {obtenerFechaActual()}</p>
         <div className='d-md-flex justify-content-between w-100'>
           <div className='d-flex flex-md-row flex-column gap-2'>
-            <button className='btn btn-success' onClick={confirmarPedido}>REALIZADO</button>
+            <button className='btn btn-success' onClick={()=>pedidoRealizar(pedidoSeleccionado.idpedido)}>REALIZADO</button>
           </div>
           {/* <button className='btn btn-primary w-md-auto w-100 mt-md-0 mt-2' onClick={agregarProducto}>AGREGAR MAS PRODUCTOS</button> */}
         </div>
