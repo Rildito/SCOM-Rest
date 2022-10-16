@@ -44,8 +44,8 @@ export const EstadoProducto = () => {
 
                 {
                     productos.map(producto => (
-                        <div className="card" style={{ width: '18rem' }}>
-                            <img src={producto.imagen ? producto.imagen : Imagen} className="card-img-top" alt="imagenProducto" />
+                        <div className="card" style={{ width: '18rem' }} key={producto.idproducto}>
+                            <img src={producto.imagen ? producto.imagen : Imagen} className="card-img-top" alt="imagenProducto" style={{height:'200px'}}/>
                             <div className="card-body">
                                 <h5 className="card-title fs-3 fw-bold text-success">{capitalizarPrimeraLetra(producto.nombre)}</h5>
                                 <p className="card-text fs-4 text-danger fw-semibold">{producto.precio} Bs.</p>

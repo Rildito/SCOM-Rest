@@ -1,7 +1,9 @@
 import axios from 'axios';
+import { useContext } from 'react';
 import { createContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import AuthContext from './AuthProvider';
 
 const ProductosContext = createContext();
 
@@ -17,8 +19,10 @@ export const ProductosProvider = ({ children }) => {
   const [modalCobro, setModalCobro] = useState(null);
 
   const [cargando, setCargando] = useState(false);
+  const [cargando2, setCargando2] = useState(false);
   const [tipoProducto, setTipoProducto] = useState('');
   const [errores, setErrores] = useState([]);
+  const { auth } = useContext(AuthContext);
 
   useEffect(() => {
     if (tipoProducto === 'platillo') {
@@ -37,7 +41,7 @@ export const ProductosProvider = ({ children }) => {
     setErrores([]);
     setProducto({});
 
-  }, [tipoProducto])
+  }, [tipoProducto, auth])
 
   const obtenerProductos = async () => {
     setCargando(true);
@@ -160,6 +164,8 @@ export const ProductosProvider = ({ children }) => {
   };
 
   const eliminarProducto = async idProducto => {
+    console.log(idProducto);
+    console.log(`https://scom-rest.herokuapp.com/api/${tipoProducto}/${idProducto}`)
     try {
       setCargando(true);
       const { data: { data, error } } = await axios.delete(`https://scom-rest.herokuapp.com/api/${tipoProducto}/${idProducto}`);
@@ -187,14 +193,14 @@ export const ProductosProvider = ({ children }) => {
   const obtenerProductoBuscar = async (idproducto, tipoProducto) => {
     let producto = {};
     try {
-      setCargando(true);
+      setCargando2(true);
       const { data: { data, error } } = await axios.get(`https://scom-rest.herokuapp.com/api/${tipoProducto}/${idproducto}`);
 
       if (data[1]) {
-        producto= {...data[0]}
+        producto = { ...data[0] }
         producto.ingredientes = data[1].map(ingre => ingre)
-      }else {
-        producto = {...data}
+      } else {
+        producto = { ...data }
       }
       if (error?.length > 0) {
         setErrores(error);
@@ -206,7 +212,7 @@ export const ProductosProvider = ({ children }) => {
       console.log(error);
       toast.error('Ocurrio un error inesperado');
     } finally {
-      setCargando(false);
+      setCargando2(false);
     }
 
 
@@ -257,6 +263,7 @@ export const ProductosProvider = ({ children }) => {
     <ProductosContext.Provider value={{
       //VARIABLES
       cargando,
+      cargando2,
       errores,
       modal,
       modalCobro,

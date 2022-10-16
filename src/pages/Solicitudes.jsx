@@ -23,8 +23,8 @@ export const Solicitudes = () => {
             <h1 className="text-center w-100 bg-primary bg-dark text-white p-5 fw-bolder">
                 SOLICITUDES DE MATERIA PRIMA
             </h1>
-            <button className='btn btn-success mt-2' onClick={volverPantalla}>Volver a pantalla principal</button>
-            <div className='mt-3 table-wrapper-scroll-y my-custom-scrollbar-usuario border'>
+            <button className='btn btn-success mt-2 w-md-auto w-100' onClick={volverPantalla}>Volver a pantalla principal</button>
+            <div className='mt-3 table-wrapper-scroll-y my-custom-scrollbar-usuario border w-100'>
                 <table className="table bg-white">
                     <thead className='text-center table-dark'>
                         <tr>

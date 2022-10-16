@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { useNavigate, Link } from 'react-router-dom';
-import { ModalProducto, Producto } from '../components';
+import { ModalProducto, Producto, Spinner } from '../components';
 import Imagen from '../assets/img/logo.png'
 import AuthContext from '../context/AuthProvider';
 import PedidoContext from '../context/PedidosProvider';
@@ -12,7 +12,7 @@ export const Productos = () => {
 
     const { pedido } = useContext(PedidoContext);
     const { auth, handleCerrarSesion } = useContext(AuthContext);
-    const { productos } = useContext(ProductosContext);
+    const { productos, cargando } = useContext(ProductosContext);
 
     const handleClick = () => {
         navigate('/');
@@ -54,13 +54,20 @@ export const Productos = () => {
                 </div>
             </nav >
             <h1 className='text-success fw-semibold text-center mb-4'>NUESTROS PRODUCTOS</h1>
-            <div className='row d-flex justify-content-center gap-4 w-100 mb-3'>
-                {
-                    productos.map(producto => (
-                        <Producto key={producto.idproducto} producto={producto} />
-                    ))
-                }
-            </div>
+            {
+                cargando ? <>
+
+                    <Spinner />
+                    <p className='text-center'>Obteniendo productos...</p>
+                </> : <div className='row d-flex justify-content-center gap-4 w-100 mb-3'>
+                    {
+                        productos.map(producto => (
+                            <Producto key={producto.idproducto} producto={producto} />
+                        ))
+                    }
+                </div>
+            }
+
             <ModalProducto />
         </div >
     )

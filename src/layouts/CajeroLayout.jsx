@@ -31,7 +31,7 @@ export const CajeroLayout = () => {
     return (
         <div className='d-flex align-items-center flex-column min-vh-100'>
             <nav className="navbar w-100 px-md-5 px-0 border-bottom shadow-sm hide-on-print ">
-                <div className="container-fluid justify-content-md-between justify-content-center">
+                <div className="container-fluid justify-content-lg-between justify-content-center flex-lg-row flex-column">
 
                     <Link to={"/"} className="navbar-brand">
                         <img src={Imagen} alt="logo_imagen" className='img-fluid logo' width="225px" />

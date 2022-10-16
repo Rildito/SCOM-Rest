@@ -53,7 +53,7 @@ export const UsuarioProvider = ({ children }) => {
             }
         }
 
-    }, [tipoUsuario]);
+    }, [tipoUsuario, auth]);
 
     const obtenerUsuarios = async () => {
 

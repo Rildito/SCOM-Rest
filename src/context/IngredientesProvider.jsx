@@ -36,7 +36,7 @@ export const IngredientesProvider = ({ children }) => {
         setErrores([]);
         setIngrediente({});
         setMesa({});
-    }, [])
+    }, [auth])
 
     const obtenerIngredientes = async () => {
         try {

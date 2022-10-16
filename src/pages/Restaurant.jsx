@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import { Header, PreguntasFrecuentes, ProductosPreview, Contactanos, SobreNosotrosPreview, ScrollToTop } from '../components';
+import { Header, PreguntasFrecuentes, ProductosPreview, Contactanos, SobreNosotrosPreview, ScrollToTop, Mapa } from '../components';
 
 
 export const Restaurant = () => {
@@ -31,6 +31,7 @@ export const Restaurant = () => {
                 <SobreNosotrosPreview enlace={nosotros} />
                 <ProductosPreview enlace={productos} />
                 <Contactanos enlace={contactanos} />
+                <Mapa />
                 <PreguntasFrecuentes enlace={sugerencias} />
             </main>
         </>

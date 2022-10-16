@@ -7,6 +7,7 @@ import Imagen3 from '../assets/img/img5.jpg';
 import AuthContext from '../context/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { ScrollToTop } from '../components';
 export const SobreNosotros = () => {
 
     const navigate = useNavigate();
@@ -121,7 +122,7 @@ export const SobreNosotros = () => {
                     </div>
                 </div>
             </div>
-
+            <ScrollToTop />
         </div>
     )
 }

@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { Spinner } from '../components';
 import IngredientesContext from '../context/IngredientesProvider';
 
 export const SolicitarMateria = () => {

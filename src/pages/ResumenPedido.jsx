@@ -11,7 +11,7 @@ export const ResumenPedido = () => {
         <>
             {
                 pedido?.map(producto => (
-                    <div className="card mb-3" style="max-width: 540px;">
+                    <div className="card mb-3" style="max-width: 540px;" key={producto.idproducto}>
                         <div className="row g-0">
                             <div className="col-md-4">
                                 <img src="..." className="img-fluid rounded-start" alt="..." />

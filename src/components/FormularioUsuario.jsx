@@ -48,7 +48,7 @@ export const FormularioUsuario = () => {
     const handleSubmit = async e => {
         e.preventDefault();
 
-        await submitUsuario({ id, nombre, ci, apellidoMaterno, apellidoPaterno, contraseña, fechaContratacion, nombreUsuario, estado, nit, email, fechaNacimiento, salario, especialidad, ciCajeroAdiciona:"1000008" }, tipoUsuario);
+        await submitUsuario({ id, nombre, ci, apellidoMaterno, apellidoPaterno, contraseña, fechaContratacion, nombreUsuario, estado, NIT:nit, email, fechaNacimiento, salario, especialidad, ciCajeroAdiciona:"1000008" }, tipoUsuario);
 
     };
 

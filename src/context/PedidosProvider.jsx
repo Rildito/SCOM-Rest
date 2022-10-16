@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { createContext, useState } from "react"
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import { useContext } from "react";
+import AuthContext from "./AuthProvider";
 
 const PedidoContext = createContext();
 
@@ -137,9 +139,11 @@ export const PedidosProvider = ({ children }) => {
     //carrito
     const [pedidoCliente, setPedidoCliente] = useState([]);
 
+
+    const { auth } = useContext(AuthContext);
     useEffect(() => {
         obtenerPedidos();
-    }, [])
+    }, [auth])
 
     const obtenerPedidos = async () => {
         setCargando(true);
@@ -248,7 +252,7 @@ export const PedidosProvider = ({ children }) => {
 
         // const pedidosActualizados = pedidos.filter(pedido => pedido.idPedido !== idPedido);
         // setPedidos(pedidosActualizados);
-    
+
     }
 
     return (

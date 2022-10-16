@@ -54,6 +54,7 @@ export const ProductosAdministrador = () => {
                                             <th scope="col">Id Producto</th>
                                             <th scope="col">Nombre</th>
                                             <th scope="col">Precio</th>
+                                            <th scope="col">Tipo de producto</th>
                                             <th scope="col">Estado</th>
                                             {
                                                 (tipoProducto === 'platillo' && (
@@ -85,6 +86,7 @@ export const ProductosAdministrador = () => {
                                                     <th scope='row'>{producto.idproducto}</th>
                                                     <td>{producto.nombre}</td>
                                                     <td>{producto.precio} Bs.</td>
+                                                    <td>{producto.tipoProducto}</td>
                                                     <td>{producto.estado}</td>
                                                 </tr>
                                             ))))
@@ -95,6 +97,7 @@ export const ProductosAdministrador = () => {
                                                     <th scope='row'>{producto.idproducto}</th>
                                                     <td>{producto.nombre}</td>
                                                     <td>{producto.precio} Bs.</td>
+                                                    <td>{producto.tipoProducto}</td>
                                                     <td>{producto.estado}</td>
                                                     <td>{producto.stock}</td>
                                                     <td className='d-flex gap-2 justify-content-center'>
@@ -111,6 +114,7 @@ export const ProductosAdministrador = () => {
                                                     <th scope='row'>{producto.idproducto}</th>
                                                     <td>{producto.nombre}</td>
                                                     <td>{producto.precio} Bs.</td>
+                                                    <td>{producto.tipoProducto}</td>
                                                     <td>{producto.estado}</td>
                                                     <td>{producto.gradoAlcoholico}</td>
                                                     <td className='d-flex gap-2 justify-content-center'>
