@@ -19,6 +19,7 @@ export const UsuarioProvider = ({ children }) => {
     const [tipoUsuario, setTipoUsuario] = useState('cliente');
 
     const [errores, setErrores] = useState([]);
+    const [facturas, setFacturas] = useState([]);
 
     const { auth, setAuth } = useContext(AuthContext);
 
@@ -298,6 +299,23 @@ export const UsuarioProvider = ({ children }) => {
             setCargando(false);
         }
     };
+
+    const obtenerFacturas = async () => {
+        try {
+            setCargando(true);
+            const { data: { data, error } } = await axios.get(`https://scom-rest.herokuapp.com/api/facturas`, {
+                responseEncodig: 'utf-8'
+            });
+            setFacturas(data);
+        } catch (error) {
+            console.log(error);
+            toast.error('Ocurrio un error inesperado');
+            return false
+        } finally {
+            setCargando(false);
+        }
+    };
+
     return (
         <UsuarioContext.Provider value={{
             //Variables
@@ -307,6 +325,7 @@ export const UsuarioProvider = ({ children }) => {
             tipoUsuario,
             cargandoDatos,
             errores,
+            facturas,
             //Functions
             eliminarUsuario,
             submitUsuario,
@@ -323,6 +342,7 @@ export const UsuarioProvider = ({ children }) => {
             obtenerChefs,
             obtenerSalarios,
             obtenerOpiniones,
+            obtenerFacturas,
             usuarioEgresos
 
         }}>

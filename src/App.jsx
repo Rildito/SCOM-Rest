@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Login, RegistrarUsuario, Restaurant, Usuarios, EditarUsuario, Registrar, Opciones, Ingredientes, RegistrarIngrediente, Mesas, RegistrarMesa, Pedidos, PedidoInformacion, PedidoCobro, Productos, SobreNosotros, PedidoConfirmacion, ProductosCamarero, RegistrarProducto, ResumenPedido, EditarIngrediente, EditarProducto, EditarMesa, PedidoRealizado, SolicitarMateria, Informe, EstadoProducto, PedidosCajero, Opiniones } from './pages';
+import { Login, RegistrarUsuario, Restaurant, Usuarios, EditarUsuario, Registrar, Opciones, Ingredientes, RegistrarIngrediente, Mesas, RegistrarMesa, Pedidos, PedidoInformacion, PedidoCobro, Productos, SobreNosotros, PedidoConfirmacion, ProductosCamarero, RegistrarProducto, ResumenPedido, EditarIngrediente, EditarProducto, EditarMesa, PedidoRealizado, SolicitarMateria, Informe, EstadoProducto, PedidosCajero, Opiniones, Facturas } from './pages';
 import "./index.css";
 import { AuthProvider, UsuarioProvider, ProductosProvider, PedidosProvider } from './context';
 import { AuthLayout, AdministradorLayout, CajeroLayout, CamareroLayout, ChefLayout } from './layouts';
@@ -51,6 +51,7 @@ function App() {
 
                       <Route path='solicitudes' element={<Solicitudes />} />
                       <Route path='opiniones' element={<Opiniones />} />
+                      <Route path='facturas' element={<Facturas />} />
                     </Route>
 
                     <Route path='/cajero' element={<CajeroLayout />}>

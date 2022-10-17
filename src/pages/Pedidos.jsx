@@ -51,7 +51,7 @@ export const Pedidos = () => {
                         })
 
                     ) : (
-                        total > 0 ? 
+                        pedidos?.length > 0 ? 
                         pedidos.map(pedido => {
                             if (pedido.estado === 'habilitado') {
                                 total+=1;

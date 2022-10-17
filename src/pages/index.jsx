@@ -1,3 +1,5 @@
+export { Facturas } from "./Facturas";
+
 export { Opiniones } from "./Opiniones";
 export { Solicitudes } from "./Solicitudes";
 

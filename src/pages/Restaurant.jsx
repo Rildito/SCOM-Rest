@@ -1,5 +1,7 @@
-import { useRef, useEffect } from 'react';
+import { useContext, useRef, useEffect } from 'react';
 import { Header, PreguntasFrecuentes, ProductosPreview, Contactanos, SobreNosotrosPreview, ScrollToTop, Mapa } from '../components';
+import AuthContext from '../context/AuthProvider';
+import ProductosContext from '../context/ProductosProvider';
 
 
 export const Restaurant = () => {
@@ -10,6 +12,9 @@ export const Restaurant = () => {
     const contactanos = useRef(null);
     const sugerencias = useRef(null);
     const referencias = { inicio, nosotros, productos, contactanos, sugerencias };
+
+    const { salida } = useContext(AuthContext);
+    const { obtenerProductos } = useContext(ProductosContext);
 
     useEffect(() => {
         window.scrollTo({
@@ -23,6 +28,11 @@ export const Restaurant = () => {
             behavior: "smooth",
         });
     };
+
+    useEffect(() => {
+        obtenerProductos();
+    }, [salida])
+
     return (
         <>
             <Header enlace={inicio} scrollToSection={scrollToSection} referencias={referencias} />

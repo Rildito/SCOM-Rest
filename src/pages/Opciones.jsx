@@ -25,16 +25,23 @@ export const Opciones = () => {
     e.preventDefault();
     navigate('opiniones');
   }
+
+  const verFacturas = (e) => {
+    e.preventDefault();
+    navigate('facturas');
+  }
+
   return (
     <>
 
-      <h1 className="text-center w-100 bg-primary bg-dark text-white p-5 fw-bolder">
+      <h1 className="text-center w-100 bg-primary bg-dark text-white p-md-5 p-2 fw-bolder">
         VENTANA ADMINISTRADOR
       </h1>
       <div className='w-100 d-flex justify-content-between container mt-3 flex-md-row flex-column align-items-center gap-3'>
         <p className='fs-5 mb-0'>Bienvenido: {auth.nombre} {auth.apellidoPaterno}</p>
         <button className='btn btn-success w-md-auto w-100' onClick={verSolicitudes}>VER SOLICITUDES DE MATERIA PRIMA</button>
-        <button className='btn btn-success w-md-auto w-100' onClick={verOpiniones}>Ver opiniones</button>
+        <button className='btn btn-warning w-md-auto w-100' onClick={verOpiniones}>Ver opiniones</button>
+        <button className='btn btn-primary w-md-auto w-100' onClick={verFacturas}>Ver facturas</button>
         <button className='btn btn-outline-danger w-md-auto w-100' onClick={handleCerrarSesion}>Cerrar Sesion</button>
 
       </div>

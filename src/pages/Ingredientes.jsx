@@ -1,11 +1,11 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Spinner } from '../components';
 import IngredientesContext from '../context/IngredientesProvider';
 
 export const Ingredientes = () => {
 
-    const { ingredientes, eliminarIngrediente, cargando, setErrores } = useContext(IngredientesContext);
+    const { ingredientes, eliminarIngrediente, cargando, setErrores, obtenerIngredientes } = useContext(IngredientesContext);
 
     const navigate = useNavigate();
 
@@ -14,7 +14,16 @@ export const Ingredientes = () => {
         navigate('/administrador/ingredientes/registrar');
     };
 
-    // if (cargando) return <Spinner />;
+    // useEffect(()=>{
+    //     obtenerIngredientes();
+    // },[])
+
+    // if (cargando) return <>
+    //     <Spinner />;
+    //     <p className='text-center'>Obteniendo ingredientes...</p>
+    // </>
+
+    
 
     return (
         <>

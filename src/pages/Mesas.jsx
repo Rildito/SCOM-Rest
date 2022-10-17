@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Spinner } from '../components';
 import IngredientesContext from '../context/IngredientesProvider';
@@ -7,12 +7,20 @@ export const Mesas = () => {
 
     // const { ingredientes, eliminarIngrediente } = useContext(IngredienteContext);
     const navigate = useNavigate();
-    const { mesas, cargando, eliminarMesa } = useContext(IngredientesContext);
+    const { mesas, cargando, eliminarMesa, obtenerMesas } = useContext(IngredientesContext);
 
     const registrarMesa = () => {
         navigate('/administrador/mesas/registrar')
     };
 
+    // useEffect(()=>{
+    //     obtenerMesas();
+    // },[])
+
+    // if (cargando) return <>
+    //     <Spinner />;
+    //     <p className='text-center'>Obteniendo mesas...</p>
+    // </>
     return (
         <>
 

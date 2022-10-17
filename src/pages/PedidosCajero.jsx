@@ -61,7 +61,7 @@ export const PedidosCajero = () => {
                         })
 
                     ) : (
-                        npedidos > 0 ? 
+                        pedidos?.length > 0 ? 
                         pedidos?.map(pedido => {
                             if (!(pedidosCobro.some(pedidoState => pedidoState.idpedido === pedido.idpedido)) && pedido.estado === 'entregado') {
                                 npedidos+=1;

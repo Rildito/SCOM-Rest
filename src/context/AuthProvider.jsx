@@ -10,6 +10,7 @@ export const AuthProvider = ({ children }) => {
     const [cargando, setCargando] = useState(false);
     const [errores, setErrores] = useState([]);
     const [auth, setAuth] = useState({});
+    const [salida, setSalida] = useState(false);
 
     useState(() => {
         if (localStorage.getItem('auth')) {
@@ -57,12 +58,13 @@ export const AuthProvider = ({ children }) => {
         } finally {
             setCargando(false);
         }
-
+        setSalida(false);
     };
 
     const handleCerrarSesion = () => {
         localStorage.removeItem('auth');
         setAuth({});
+        setSalida(true);
         navigate('/');
     };
 
@@ -72,6 +74,7 @@ export const AuthProvider = ({ children }) => {
             auth,
             cargando,
             errores,
+            salida,
             //Functions
             autenticarUsuario,
             handleCerrarSesion,

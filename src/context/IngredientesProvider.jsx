@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState, useLayoutEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import AuthContext from './AuthProvider';
@@ -13,27 +13,36 @@ export const IngredientesProvider = ({ children }) => {
     const [ingrediente, setIngrediente] = useState({});
     const [ingredientes, setIngredientes] = useState([]);
     const [solicitudes, setSolicitudes] = useState();
-    
+
     //MESAS
 
     const [mesa, setMesa] = useState({});
     const [mesas, setMesas] = useState([]);
-
 
     const [cargando, setCargando] = useState(false);
     const [cargando2, setCargando2] = useState(false);
     const [errores, setErrores] = useState([]);
 
     const { auth } = useContext(AuthContext);
-    useEffect(() => {
+
+    useLayoutEffect(() => {
+        const obtenerIngreMes = async () => {
+            await obtenerIngredientes();
+            await obtenerMesas();
+        };
+
+        // if (auth.tipoUsuario === 'administrador') {
+        //     obtenerIngredientes();
+        //     obtenerMesas();
+        // }
         if (auth.tipoUsuario === 'administrador') {
-            obtenerIngredientes();
-            obtenerMesas();
+            obtenerIngreMes();
         }
 
         if (auth.tipoUsuario === 'chef') {
             obtenerIngredientes();
         }
+
 
         setErrores([]);
         setIngrediente({});
@@ -345,6 +354,7 @@ export const IngredientesProvider = ({ children }) => {
             submitIngrediente,
             submitMesa,
             obtenerIngredientes,
+            obtenerMesas,
             obtenerIngrediente,
             obtenerSolicitudes,
             setIngrediente,
@@ -352,7 +362,6 @@ export const IngredientesProvider = ({ children }) => {
             obtenerMesa,
             pedirMateria,
             setErrores
-
         }}>
             {children}
         </IngredientesContext.Provider>

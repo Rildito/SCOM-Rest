@@ -142,7 +142,9 @@ export const PedidosProvider = ({ children }) => {
 
     const { auth } = useContext(AuthContext);
     useEffect(() => {
-        obtenerPedidos();
+        if (auth.tipoUsuario !== 'administrador' || auth.tipoUsuario !== 'cliente') {
+            obtenerPedidos();
+        }
     }, [auth])
 
     const obtenerPedidos = async () => {
