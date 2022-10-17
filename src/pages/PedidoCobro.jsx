@@ -31,7 +31,6 @@ export const PedidoCobro = () => {
     const day = today.getDate();
     const month = today.getMonth() + 1;
     const year = today.getFullYear();
-    console.log(formatearFecha(`${month}-${day}-${year}`))
     setFechaActual(formatearFecha(`${month}-${day}-${year}`));
   }, [])
 

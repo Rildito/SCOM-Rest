@@ -125,10 +125,11 @@ export const PedidosProvider = ({ children }) => {
     // ]);
     const [pedido, setPedido] = useState([]); //pedido cliente
     const [pedidos, setPedidos] = useState([]); //pedidos base de datos
-    const [pedidosCajero, setPedidosCajero] = useState([]); //pedidos base de datos
+    // const [pedidosCajero, setPedidosCajero] = useState([]); //pedidos base de datos
     const [pedidosBuscados, setPedidosBuscados] = useState([]);
     const [pedidoSeleccionado, setPedidoSeleccionado] = useState({});
     const [cargando, setCargando] = useState(false);
+    const [cargando2, setCargando2] = useState(false);
     const [palabraBuscarPedido, setPalabraBuscarPedido] = useState('');
     const [errores, setErrores] = useState([]);
     //cobros
@@ -138,7 +139,6 @@ export const PedidosProvider = ({ children }) => {
     const [factura, setFactura] = useState({});
     //carrito
     const [pedidoCliente, setPedidoCliente] = useState([]);
-
 
     const { auth } = useContext(AuthContext);
     useEffect(() => {
@@ -151,8 +151,8 @@ export const PedidosProvider = ({ children }) => {
             const { data: { data, error } } = await axios.get("https://scom-rest.herokuapp.com/api/pedidos");
             setPedidos(data); //TODO: no obtenemos los ingredientes Revisar!!
 
-            const pedidosValidos = data.filter(pedido => pedido.estado === 'entregado');
-            setPedidosCajero(pedidosValidos); //TODO: no obtenemos los ingredientes Revisar!!
+            // const pedidosValidos = data.filter(pedido => pedido.estado === 'entregado');
+            // setPedidosCajero(pedidosValidos); //TODO: no obtenemos los ingredientes Revisar!!
         } catch (error) {
             setCargando(false);
             console.log(error);
@@ -235,36 +235,38 @@ export const PedidosProvider = ({ children }) => {
     }
 
     const cambiarEstadoPedido = async (idPedidos, codFactura) => {
-        const prueba = await Promise.all(idPedidos.map(async idPedido => {
+        const idPedidosExitosos = await Promise.all(idPedidos.map(async idPedido => {
+
             const { data: { data, error } } = await axios.put(`https://scom-rest.herokuapp.com/api/pedidovendido/${idPedido}/${codFactura}`);
             //console.log(...data)
-
-            const pedidosActualizados = pedidosCajero.filter(pedidoState => pedidoState.idpedido !== idPedido);
-
-            setPedidosCajero(pedidosActualizados);
-
-            return data
+            return idPedido
         }));
+        console.log(idPedidosExitosos);
+        const pedidosActualizados = pedidos.filter(pedidoState => (!idPedidosExitosos.includes(pedidoState.idpedido)));
+        console.log(pedidosActualizados);
+        setPedidos(pedidosActualizados);
     };
 
     const pedidoRealizado = async (idPedido) => {
-        // // const { data: { data, error } } = await axios.put(`https://scom-rest.herokuapp.com/api/pedidovendido/${idPedido}/${codFactura}`); //TODO: pedir datos
+        setCargando2(true);
+        const { data: { data, error } } = await axios.put(`https://scom-rest.herokuapp.com/api/pedidorealizado/${idPedido}`); //TODO: pedir datos
 
-        // const pedidosActualizados = pedidos.filter(pedido => pedido.idPedido !== idPedido);
-        // setPedidos(pedidosActualizados);
-
+        const pedidosActualizados = pedidos.filter(pedido => pedido.idpedido !== data.idpedido);
+        setPedidos(pedidosActualizados);
+        setCargando2(false);
     }
 
     return (
         <PedidoContext.Provider value={{
             //variables
             cargando,
+            cargando2,
             clienteCobro,
             errores,
             pedidosBuscados,
             palabraBuscarPedido,
             pedidos,
-            pedidosCajero,
+            // pedidosCajero,
             pedido,
             pedidoSeleccionado,
             pedidoCliente,
@@ -277,6 +279,7 @@ export const PedidosProvider = ({ children }) => {
             crearFactura,
             obtenerProductosPedido,
             obtenerPedido,
+            obtenerPedidos,
             obtenerPedidosCobro,
             setCargando,
             setClienteCobro,

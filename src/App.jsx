@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Login, RegistrarUsuario, Restaurant, Usuarios, EditarUsuario, Registrar, Opciones, Ingredientes, RegistrarIngrediente, Mesas, RegistrarMesa, Pedidos, PedidoInformacion, PedidoCobro, Productos, SobreNosotros, PedidoConfirmacion, ProductosCamarero, RegistrarProducto, ResumenPedido, EditarIngrediente, EditarProducto, EditarMesa, PedidoRealizado, SolicitarMateria, Informe, EstadoProducto, PedidosCajero } from './pages';
+import { Login, RegistrarUsuario, Restaurant, Usuarios, EditarUsuario, Registrar, Opciones, Ingredientes, RegistrarIngrediente, Mesas, RegistrarMesa, Pedidos, PedidoInformacion, PedidoCobro, Productos, SobreNosotros, PedidoConfirmacion, ProductosCamarero, RegistrarProducto, ResumenPedido, EditarIngrediente, EditarProducto, EditarMesa, PedidoRealizado, SolicitarMateria, Informe, EstadoProducto, PedidosCajero, Opiniones } from './pages';
 import "./index.css";
 import { AuthProvider, UsuarioProvider, ProductosProvider, PedidosProvider } from './context';
 import { AuthLayout, AdministradorLayout, CajeroLayout, CamareroLayout, ChefLayout } from './layouts';
@@ -50,6 +50,7 @@ function App() {
                       <Route path='productos/editar/:idproducto&:tipoProducto' element={<EditarProducto />} />
 
                       <Route path='solicitudes' element={<Solicitudes />} />
+                      <Route path='opiniones' element={<Opiniones />} />
                     </Route>
 
                     <Route path='/cajero' element={<CajeroLayout />}>
@@ -59,12 +60,6 @@ function App() {
                       <Route path=':idPedido/cobro' element={<PedidoCobro />} />
                     </Route>
 
-                    <Route path='/camarero' element={<CamareroLayout />}>
-                      <Route index element={<Pedidos />} />
-                      <Route path=':idPedido' element={<PedidoConfirmacion />} />
-                      <Route path=':idPedido/productos' element={<ProductosCamarero />} />
-                    </Route>
-
                     <Route path='/chef' element={<ChefLayout />}>
                       <Route index element={<Pedidos />} />
                       <Route path=':idPedido' element={<PedidoRealizado />} />
@@ -72,6 +67,15 @@ function App() {
                       <Route path='pedir' element={<SolicitarMateria />} />
                       <Route path='estado' element={<EstadoProducto />} />
                     </Route>
+
+                    
+                    <Route path='/camarero' element={<CamareroLayout />}>
+                      <Route index element={<Pedidos />} />
+                      <Route path=':idPedido' element={<PedidoConfirmacion />} />
+                      <Route path=':idPedido/productos' element={<ProductosCamarero />} />
+                    </Route>
+
+                    
 
                     <Route path='/*' element={<Restaurant />} />
                   </Routes>

@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react'
 import axios from 'axios';
-import AuthContext from '../context/AuthProvider';
+import { toast } from 'react-toastify';
 
 export const Contactanos = ({ enlace }) => {
 
@@ -27,13 +27,22 @@ export const Contactanos = ({ enlace }) => {
         }
 
         console.log(opinion);
-        
-        const { data: { data, error } } = axios.post('https://scom-rest.herokuapp.com/api/opinion', opinion)
 
+        const { data: { data, error } } = await axios.post('https://scom-rest.herokuapp.com/api/opinion', opinion)
+
+        console.log(data);
         if (error?.length > 0) {
             setErrores(error);
             return
         }
+
+        toast.success('Opinion enviada correctamente');
+        setNombre('');
+        setApellido('');
+        setEmail('');
+        setMensaje('');
+        setError('');
+        setErrores('');
     };
 
     return (
@@ -51,29 +60,29 @@ export const Contactanos = ({ enlace }) => {
                                 <p key={error.mensaje} className='text-white text-center mt-3 mb-0 bg-danger p-1 rounded'>{error}</p>
                             ))
                         }
-                        
+
                         <form className='d-flex flex-column align-items-center text-white p-3' onSubmit={handleSubmit}>
                             <div className="mb-3 w-100">
-                                <label htmlFor="exampleInputPassword1" className="form-label fw-bold">Nombre</label>
-                                <input type="text" className="form-control" id="exampleInputPassword1" onChange={e => setNombre(e.target.value)} />
+                                <label htmlFor="nombre" className="form-label fw-bold">Nombre/s</label>
+                                <input type="text" className="form-control" id="nombre" value={nombre} onChange={e => setNombre(e.target.value)} />
                             </div>
 
                             <div className="mb-3 w-100">
-                                <label htmlFor="exampleInputPassword1" className="form-label fw-bold">Apellido</label>
-                                <input type="text" className="form-control" id="exampleInputPassword1" onChange={e => setApellido(e.target.value)} />
+                                <label htmlFor="apellido" className="form-label fw-bold">Apellido/s</label>
+                                <input type="text" className="form-control" id="apellido" value={apellido} onChange={e => setApellido(e.target.value)} />
                             </div>
 
                             <div className="mb-3 w-100">
-                                <label htmlFor="exampleInputEmail1" className="form-label fw-bold">Email</label>
-                                <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                                <label htmlFor="email" className="form-label fw-bold">Email</label>
+                                <input type="email" className="form-control" id="email" value={email}
                                     onChange={e => setEmail(e.target.value)} />
                             </div>
 
                             <div className="mb-3 w-100">
-                                <label htmlFor="exampleFormControlTextarea1" className="form-label fw-bold">Mensaje</label>
-                                <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" onChange={e => setMensaje(e.target.value)}></textarea>
+                                <label htmlFor="mensaje" className="form-label fw-bold">Mensaje</label>
+                                <textarea className="form-control" id="mensaje" rows="3" onChange={e => setMensaje(e.target.value)} value={mensaje}></textarea>
                             </div>
-                            <button type="submit" className="btn btn-dark text-uppercase w-md-auto w-100">Enviar</button>
+                            <button type="submit" className="btn btn-dark text-uppercase w-auto">Enviar</button>
                         </form>
                     </div>
 

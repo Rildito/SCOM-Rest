@@ -1,4 +1,5 @@
-import { Solicitudes } from "./Solicitudes";
+export { Opiniones } from "./Opiniones";
+export { Solicitudes } from "./Solicitudes";
 
 export { EstadoProducto } from "./EstadoProducto";
 export { PedidosCajero } from "./PedidosCajero";

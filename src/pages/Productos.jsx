@@ -61,9 +61,11 @@ export const Productos = () => {
                     <p className='text-center'>Obteniendo productos...</p>
                 </> : <div className='row d-flex justify-content-center gap-4 w-100 mb-3'>
                     {
-                        productos.map(producto => (
-                            <Producto key={producto.idproducto} producto={producto} />
-                        ))
+                        productos.map(producto => {
+                            if (producto.estado === 'habilitado') return (
+                                <Producto key={producto.idproducto} producto={producto} />
+                            )
+                        })
                     }
                 </div>
             }

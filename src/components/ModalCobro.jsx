@@ -5,70 +5,86 @@ import { useNavigate, useParams } from 'react-router-dom';
 import AuthContext from '../context/AuthProvider';
 import PedidoContext from '../context/PedidosProvider';
 import ProductosContext from '../context/ProductosProvider';
+import UsuarioContext from '../context/UsuarioProvider';
 
-export function ModalCobro() {
+export function ModalCobro({ total }) {
 
+    const [confirmado, setConfirmado] = useState(false);
     //COBRO
     const [nombre, setNombre] = useState('');
     const [nit, setNit] = useState('');
     const [monto, setMonto] = useState(0);
+    const [ci, setCi] = useState('');
     const [error, setError] = useState('');
-    const [montoPagar, setMontoPagar] = useState(0);
 
     const { modalCobro, setModalCobro } = useContext(ProductosContext);
     const { setClienteCobro, crearFactura, pedidosCobro, errores, cambiarEstadoPedido } = useContext(PedidoContext);
     const { auth } = useContext(AuthContext);
+    const { obtenerUsuarioCobrar, cargando, usuario } = useContext(UsuarioContext);
 
     const exampleModal = useRef()
     const navigate = useNavigate();
 
-    const { idPedido } = useParams();
-
-
     const handleClick = async () => {
         setError('');
-        console.log('click')
-        
-        if ([nombre, nit, monto].includes('') || monto === 0) {
-            setError('Todos los campos son obligatorios')
-            return
+
+        if (!confirmado) {
+            if (ci === '') {
+                setError('El ci del cliente es obligatorio')
+                return
+            }
+
+            const usuarioCobrar = await obtenerUsuarioCobrar(ci);
+            if (Object.keys(usuarioCobrar).length > 0) {
+                setConfirmado(true);
+                setNit(usuarioCobrar.NIT);
+                setNombre(usuarioCobrar.nombre);
+            }else {
+                setError('No se encontro el cliente')
+                return
+            }
         }
-        
-        pedidosCobro.map(pedido => {
-            let total = 0;
-            pedido?.productos.map(producto => {
-                total += (producto.precio * producto.cantidad)
+
+        if (confirmado) {
+
+
+            if ([monto].includes('') || monto === 0) {
+                setError('El monto es obligatorio')
+                return
+            }
+
+            if (Number(monto) < Number(total)) {
+                setError('El monto recibido no puede ser menor a el monto a pagar');
+                return
+            }
+
+            
+            setClienteCobro({ //TODO: Pedir URL para cambiar estado del producto, hablar eso de las facturas.
+                nombre,
+                nit,
+                monto
             })
-            setMontoPagar(total);
-        })
+  
 
-        console.log(montoPagar, "MONOTPAGR");
-        console.log(Number(monto), "MOTNO");
+            //CREAR FACTURA
+            // CAMBIAR ESTADO A PEDIDOS
 
-        if (montoPagar > Number(monto)) {
-            setError('El monto ingresado no es correcto')
-            return
+            const codfactura = (Math.random() + '').substring(2, 9);
+
+            await crearFactura(codfactura, String(auth.ci), usuario.ci);
+
+            const idPedidos = pedidosCobro.map(pedidoState => pedidoState.idpedido);
+            cambiarEstadoPedido(idPedidos, codfactura)
+            navigate(`cobro`);
+
+            modalCobro.hide(); //REALIZAR PROCESO DE COBRO
+            setConfirmado(false);
         }
 
-        modalCobro.hide(); //REALIZAR PROCESO DE COBRO
-
-        setClienteCobro({ //TODO: Pedir URL para cambiar estado del producto, hablar eso de las facturas.
-            nombre,
-            nit,
-            monto
-        })
 
 
-        //CREAR FACTURA
-        // CAMBIAR ESTADO A PEDIDOS
 
-        const codfactura = (Math.random() + '').substring(2, 9);
 
-        await crearFactura(codfactura, String(auth.ci), nit);
-
-        const idPedidos = pedidosCobro.map(pedidoState => pedidoState.idpedido);
-        cambiarEstadoPedido(idPedidos, codfactura)
-        navigate(`cobro`);
 
     };
 
@@ -98,19 +114,33 @@ export function ModalCobro() {
                                     ))
                                 }
 
-                                <label htmlFor="nit" className="form-label">NIT</label>
-                                <input type="text" id="nit" name="nit" className="form-control" value={nit} onChange={e => setNit(e.target.value)} />
+                                {
+                                    confirmado ? (
+                                        <>
+                                            <label htmlFor="nit" className="form-label">NIT</label>
+                                            <input type="text" id="nit" name="nit" className="form-control" value={nit} onChange={e => setNit(e.target.value)} />
 
-                                <label htmlFor="exampleInputEmail1" className="form-label mt-2">Nombre</label>
-                                <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={nombre} onChange={e => setNombre(e.target.value)} />
+                                            <label htmlFor="nombre" className="form-label mt-2">Nombre</label>
+                                            <input type="text" className="form-control" id="nombre" value={nombre} onChange={e => setNombre(e.target.value)} />
 
-                                <label htmlFor="exampleInputEmail1" className="form-label mt-2">Monto</label>
-                                <input type="number" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={monto} onChange={e => setMonto(e.target.value)} step={0.01} min="0" />
+                                            <p className='mt-2 mb-0'>Monto a pagar: <span className='fw-bold'>{total} Bs.</span></p>
+
+                                            <label htmlFor="monto" className="form-label mt-2">Monto recibido:</label>
+                                            <input type="number" className="form-control" id="monto" value={monto} onChange={e => setMonto(e.target.value)} step={0.01} min="0" />
+                                        </>
+
+                                    ) : (
+                                        <>
+                                            <label htmlFor="ci" className="form-label fw-bold">Ci cliente</label>
+                                            <input type="text" id="ci" name="ci" className="form-control" value={ci} onChange={e => setCi(e.target.value)} />
+                                        </>
+                                    )
+                                }
                             </div>
                         </div>
                         <div className="modal-footer d-flex justify-content-center">
                             {/* <button type="button" className="btn btn-secondary" onClick={() => modal.hide()}>Close</button> */}
-                            <button type="button" className="btn btn-primary text-uppercase" onClick={handleClick}>CONFIRMAR COBRO</button>
+                            <button type="button" className="btn btn-primary text-uppercase" onClick={handleClick} disabled={cargando ? true : false}>{`${confirmado ? 'CONFIRMAR COBRO' : 'BUSCAR CLIENTE'}`}</button>
                         </div>
                     </div>
                 </div>

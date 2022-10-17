@@ -27,9 +27,11 @@ export const ProductosPreview = ({ enlace }) => {
                 </> : <>
                     <div className='row d-flex justify-content-center gap-4 w-100 flex-wrap'>
                         {
-                            productos.slice(0, 3).map(producto => (
-                                <Producto key={producto.idproducto} producto={producto} />
-                            ))
+                            productos.slice(0, 3).map(producto => {
+                                if (producto.estado === 'habilitado') return (
+                                    <Producto key={producto.idproducto} producto={producto} />
+                                )
+                            })
                         }
                     </div>
                     <button className='btn btn-success w-lg-25 w-md-50 w-75 my-4' onClick={handleClick}>VER MAS</button>

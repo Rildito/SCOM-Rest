@@ -63,22 +63,22 @@ export function ModalProducto() {
                         <div className="modal-body">
                             {
                                 auth.ci ? (
-                                    <div className="card border-0 ">
+                                    <div className="card border-0">
                                         <div className="row g-0">
-                                            <div className="col-md-4 d-flex justify-content-center">
-                                                <img src={Imagen} className="img-fluid rounded-start" alt="..." style={{
+                                            <div className="col-md-12 d-flex justify-content-center">
+                                                <img src={productoBuscar.imagen} className="img-fluid rounded" alt="..." style={{
                                                     maxHeight: '200px'
                                                 }} />
                                             </div>
-                                            <div className="col-md-8">
-                                                <div className="card-body">
+                                            <div className="col-md-12">
+                                                <div className="card-body px-4 pt-3">
                                                     <h5 className="card-title fs-2 text-warning fw-bold mb-1">{capitalizarPrimeraLetra(productoBuscar.nombre)}</h5>
                                                     <p className="card-text fs-3 text-danger fw-bold mb-1">{productoBuscar.precio} Bs.</p>
                                                     {
                                                         productoBuscar.ingredientes && (
                                                             <>
                                                                 <h5 className='fw-bold fs-4'>INGREDIENTES</h5>
-                                                                <ul>
+                                                                <ul className='mb-0'>
                                                                     {
                                                                         productoBuscar.ingredientes?.map(ingrediente => (
 

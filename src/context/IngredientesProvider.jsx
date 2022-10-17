@@ -12,7 +12,8 @@ export const IngredientesProvider = ({ children }) => {
 
     const [ingrediente, setIngrediente] = useState({});
     const [ingredientes, setIngredientes] = useState([]);
-
+    const [solicitudes, setSolicitudes] = useState();
+    
     //MESAS
 
     const [mesa, setMesa] = useState({});
@@ -20,6 +21,7 @@ export const IngredientesProvider = ({ children }) => {
 
 
     const [cargando, setCargando] = useState(false);
+    const [cargando2, setCargando2] = useState(false);
     const [errores, setErrores] = useState([]);
 
     const { auth } = useContext(AuthContext);
@@ -28,7 +30,7 @@ export const IngredientesProvider = ({ children }) => {
             obtenerIngredientes();
             obtenerMesas();
         }
-        
+
         if (auth.tipoUsuario === 'chef') {
             obtenerIngredientes();
         }
@@ -244,17 +246,95 @@ export const IngredientesProvider = ({ children }) => {
         }
     };
 
+    const pedirMateria = async (codIngrediente, ciChef) => {
+
+        try {
+            setCargando2(true);
+            const { data: { data, error } } = await axios.put(`https://scom-rest.herokuapp.com/api/chefSolicita/${ciChef}/${codIngrediente}`);
+
+            if (error?.length > 0) {
+                setErrores(error);
+                setCargando2(false);
+                return
+            }
+            console.log(data);
+
+            const ingredientesActualizados = ingredientes.filter(ingrediente => data[1].codIngrediente !== ingrediente.codingrediente);
+            setIngredientes(ingredientesActualizados);
+
+            setErrores([]);
+            toast.success('Se solicito correctamente el ingrediente');
+
+        } catch (error) {
+            console.log(error);
+            toast.error('Ocurrio un error inesperado');
+        } finally {
+            setCargando2(false);
+        }
+
+    };
+
+    const suministrar = async (codIngrediente) => {
+
+        try {
+            setCargando2(true);
+            const { data: { data, error } } = await axios.put(`https://scom-rest.herokuapp.com/api/suministrar/${codIngrediente}`);
+
+            if (error?.length > 0) {
+                setErrores(error);
+                setCargando2(false);
+                return
+            }
+            console.log(data);
+
+            const solicitudesActualizadas = solicitudes.filter(solicitud => solicitud.codIngrediente !== codIngrediente);
+            setSolicitudes(solicitudesActualizadas);
+
+            setErrores([]);
+            toast.success('Se suministro el ingrediente correctamente');
+
+        } catch (error) {
+            console.log(error);
+            toast.error('Ocurrio un error inesperado');
+        } finally {
+            setCargando2(false);
+        }
+    };
+
+    const obtenerSolicitudes = async () => {
+        try {
+            setCargando(true);
+            const { data: { data, error } } = await axios.get(`https://scom-rest.herokuapp.com/api/solicitudes`);
+
+            if (error?.length > 0) {
+                setErrores(error);
+                setCargando(false);
+                return
+            }
+
+            setSolicitudes(data);
+            toast.success('Se solicito suministro el ingrediente correctamente');
+
+        } catch (error) {
+            console.log(error);
+            toast.error('Ocurrio un error inesperado');
+        } finally {
+            setCargando(false);
+        }
+    };
+
     return (
         <IngredientesContext.Provider value={{
             //VARIABLES
 
             cargando,
+            cargando2,
             ingrediente,
             ingredientes,
             errores,
             mesa,
             mesas,
-
+            solicitudes,
             //FUNCIONTS
             editarIngrediente,
             editarMesa,
@@ -266,8 +346,12 @@ export const IngredientesProvider = ({ children }) => {
             submitMesa,
             obtenerIngredientes,
             obtenerIngrediente,
+            obtenerSolicitudes,
             setIngrediente,
+            suministrar,
             obtenerMesa,
+            pedirMateria,
+            setErrores
 
         }}>
             {children}

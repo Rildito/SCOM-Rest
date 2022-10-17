@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Spinner } from '../components';
 import ProductosContext from '../context/ProductosProvider';
+import { capitalizarPrimeraLetra } from '../helpers/formatearTexto';
 
 export const ProductosAdministrador = () => {
 
@@ -24,7 +25,7 @@ export const ProductosAdministrador = () => {
     return (
 
         <>
-            <h1 className='py-sm-5 py-3 text-center fw-bold text-white bg-dark w-100'>ADMINISTRA TUS USUARIOS</h1>
+            <h1 className='py-sm-5 py-3 text-center fw-bold text-white bg-dark w-100'>ADMINISTRA TUS PRODUCTOS</h1>
 
             <div className='w-100 container-md'>
                 <div className="enlaces mb-2 d-md-flex justify-content-between mt-3 p-sm-0 px-1">
@@ -54,7 +55,9 @@ export const ProductosAdministrador = () => {
                                             <th scope="col">Id Producto</th>
                                             <th scope="col">Nombre</th>
                                             <th scope="col">Precio</th>
-                                            <th scope="col">Tipo de producto</th>
+                                            {
+                                                (tipoProducto === '' && <th scope="col">Tipo de producto</th>)
+                                            }
                                             <th scope="col">Estado</th>
                                             {
                                                 (tipoProducto === 'platillo' && (
@@ -84,7 +87,7 @@ export const ProductosAdministrador = () => {
                                             (tipoProducto === '' && (productos?.map(producto => (
                                                 <tr key={producto.idproducto} className="align-middle">
                                                     <th scope='row'>{producto.idproducto}</th>
-                                                    <td>{producto.nombre}</td>
+                                                    <td>{capitalizarPrimeraLetra(producto.nombre)}</td>
                                                     <td>{producto.precio} Bs.</td>
                                                     <td>{producto.tipoProducto}</td>
                                                     <td>{producto.estado}</td>
@@ -95,9 +98,8 @@ export const ProductosAdministrador = () => {
                                             (tipoProducto === 'platillo' && (productos?.map(producto => (
                                                 <tr key={producto.idproducto} className="align-middle">
                                                     <th scope='row'>{producto.idproducto}</th>
-                                                    <td>{producto.nombre}</td>
+                                                    <td>{capitalizarPrimeraLetra(producto.nombre)}</td>
                                                     <td>{producto.precio} Bs.</td>
-                                                    <td>{producto.tipoProducto}</td>
                                                     <td>{producto.estado}</td>
                                                     <td>{producto.stock}</td>
                                                     <td className='d-flex gap-2 justify-content-center'>
@@ -112,9 +114,8 @@ export const ProductosAdministrador = () => {
                                             (tipoProducto === 'bebida' && (productos?.map(producto => (
                                                 <tr key={producto.idproducto} className="align-middle">
                                                     <th scope='row'>{producto.idproducto}</th>
-                                                    <td>{producto.nombre}</td>
+                                                    <td>{capitalizarPrimeraLetra(producto.nombre)}</td>
                                                     <td>{producto.precio} Bs.</td>
-                                                    <td>{producto.tipoProducto}</td>
                                                     <td>{producto.estado}</td>
                                                     <td>{producto.gradoAlcoholico}</td>
                                                     <td className='d-flex gap-2 justify-content-center'>

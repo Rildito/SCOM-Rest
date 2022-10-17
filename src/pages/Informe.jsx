@@ -13,7 +13,7 @@ import { formatearFecha } from '../helpers/formatearFecha';
 export const Informe = () => {
 
     const [fecha, setFecha] = useState('');
-    const { pedidos, cargando, setCargando, obtenerProductosPedido } = useContext(PedidoContext);
+    const { pedidos, cargando, setCargando, obtenerProductosPedido, obtenerPedidos } = useContext(PedidoContext);
     const { obtenerSalarios, usuarioEgresos, cargandoDatos } = useContext(UsuarioContext);
 
     // const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -30,13 +30,14 @@ export const Informe = () => {
         total2 = 0;
         total3 = 0;
         setPedidosBuscados([]);
-        const obtenerPedidos = async () => {
+        const obtenerPedidosInforme = async () => {
+            await obtenerPedidos();
             setCargando(true);
             pedidosInforme = await Promise.all(pedidos.map(async pedido => {
                 const year = pedido.fecha.substr(0, 4);
                 const month = pedido.fecha.substr(5, 2);
 
-                if (year === fecha.substring(0, 4) && month === fecha.substring(5)) {
+                if (year === fecha.substring(0, 4) && month === fecha.substring(5) && pedido.estado === 'vendido') {
                     const pedidoProductos = await obtenerProductosPedido(pedido.idpedido);
                     pedido.ingredientes = pedidoProductos;
                     return pedido;
@@ -46,7 +47,7 @@ export const Informe = () => {
             setPedidosBuscados(pedidosInforme.filter(pedidosInforme => pedidosInforme !== undefined));
             //console.log(pedidosBuscados);
         }
-        obtenerPedidos();
+        obtenerPedidosInforme();
         obtenerSalarios();
     }, [fecha])
 
@@ -69,31 +70,30 @@ export const Informe = () => {
                 <p className='fw-bold mb-0 fs-3'>INGRESOS</p>
                 {
                     pedidosBuscados?.map(pedidoState => {
-                        if (pedidoState.estado) {
-                            return (
-                                <>
-                                    <p key={pedidoState.idpedido} className='fs-5 fw-semibold mb-0 mt-2'>Fecha de pedido: {formatearFecha(pedidoState.fecha)}</p>
-                                    <p className='fs-5 mb-0'><span className='fw-semibold'>Id pedido:</span> {pedidoState.idpedido}</p>
-                                    <p className='fs-5 fw-semibold mb-0'>PRODUCTOS</p>
+                        return (
+                            <>
+                                <p key={pedidoState.idpedido} className='fs-5 fw-semibold mb-0 mt-2'>Fecha de pedido: {formatearFecha(pedidoState.fecha)}</p>
+                                <p className='fs-5 mb-0'><span className='fw-semibold'>Id pedido:</span> {pedidoState.idpedido}</p>
+                                <p className='fs-5 fw-semibold mb-0'>PRODUCTOS</p>
 
-                                    {
-                                        pedidoState?.ingredientes.map(ingrediente => {
-                                            total2 += ingrediente.precio * ingrediente.cantidad ?? 0
-                                            return (
-                                                <>
-                                                    <p className='fs-5 mb-0' key={ingrediente.nombre}>Producto: {capitalizarPrimeraLetra(ingrediente.nombre)} Costo: {ingrediente.precio} Cantidad: {ingrediente.cantidad}  Sub total: {ingrediente.precio * ingrediente.cantidad} Bs.</p>
-                                                </>
-                                            )
-                                        }
-
+                                {
+                                    pedidoState?.ingredientes.map(ingrediente => {
+                                        total2 += ingrediente.precio * ingrediente.cantidad ?? 0
+                                        return (
+                                            <>
+                                                <p className='fs-5 mb-0' key={ingrediente.idingrediente}>Producto: {capitalizarPrimeraLetra(ingrediente.nombre)} Costo: {ingrediente.precio} Bs. Cantidad: {ingrediente.cantidad}  Sub total: {ingrediente.precio * ingrediente.cantidad} Bs.</p>
+                                            </>
                                         )
                                     }
 
-                                </>
-                            )
-                        }
+                                    )
+                                }
 
-                    })
+                            </>
+                        )
+                    }
+
+                    )
                 }
 
                 <p className='fs-4 fw-bold' >INGRESOS TOTALES: {total2.toFixed(2)} Bs.</p>
@@ -135,29 +135,29 @@ export const Informe = () => {
                                 </thead>
                                 <tbody className='text-center'>
                                     {
-                                        pedidosBuscados.map(pedidoState => {
+                                        pedidosBuscados?.map(pedidoState => {
                                             subtotal = 0;
-                                            if (pedidoState.estado) {
-                                                return (
-                                                    <>
-                                                        <tr key={pedidoState.idpedido}>
-                                                            <td>{pedidoState.idpedido}</td>
-                                                            <td>{pedidoState.fecha}</td>
-                                                            <td>{pedidoState.ciCamarero}</td>
-                                                            <td>{pedidoState.codfactura}</td>
-                                                            {
-                                                                pedidoState.ingredientes.map(ingredienteState => {
-                                                                    subtotal += (ingredienteState.cantidad * ingredienteState.precio) ?? 0
 
-                                                                })
-                                                            }
-                                                            <td>{subtotal} Bs.</td>
-                                                        </tr>
-                                                    </>
-                                                )
-                                            }
+                                            return (
+                                                <>
+                                                    <tr key={pedidoState.idpedido}>
+                                                        <td>{pedidoState.idpedido}</td>
+                                                        <td>{pedidoState.fecha}</td>
+                                                        <td>{pedidoState.ciCamarero}</td>
+                                                        <td>{pedidoState.codfactura}</td>
+                                                        {
+                                                            pedidoState.ingredientes.map(ingredienteState => {
+                                                                subtotal += (ingredienteState.cantidad * ingredienteState.precio) ?? 0
 
-                                        })
+                                                            })
+                                                        }
+                                                        <td>{subtotal} Bs.</td>
+                                                    </tr>
+                                                </>
+                                            )
+                                        }
+
+                                        )
 
                                     }
                                     <tr>
@@ -170,7 +170,10 @@ export const Informe = () => {
                     }
                 </div>
             </div>
-            <button className='btn btn-primary mt-3 w-md-auto w-100 mb-md-0 mb-3 d-print-none' onClick={imprimirReporte} disabled={cargandoDatos ? true : false}>Imprimir Reporte</button>
+            {
+                pedidosBuscados.length > 0 && (<button className='btn btn-primary mt-3 w-md-auto w-100 mb-md-0 mb-3 d-print-none' onClick={imprimirReporte} disabled={cargandoDatos ? true : false}>Imprimir Reporte</button>)
+            }
+
         </>
     )
 }

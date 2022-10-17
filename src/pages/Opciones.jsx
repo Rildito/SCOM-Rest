@@ -20,6 +20,11 @@ export const Opciones = () => {
     e.preventDefault();
     navigate('solicitudes');
   };
+
+  const verOpiniones = (e) => {
+    e.preventDefault();
+    navigate('opiniones');
+  }
   return (
     <>
 
@@ -29,6 +34,7 @@ export const Opciones = () => {
       <div className='w-100 d-flex justify-content-between container mt-3 flex-md-row flex-column align-items-center gap-3'>
         <p className='fs-5 mb-0'>Bienvenido: {auth.nombre} {auth.apellidoPaterno}</p>
         <button className='btn btn-success w-md-auto w-100' onClick={verSolicitudes}>VER SOLICITUDES DE MATERIA PRIMA</button>
+        <button className='btn btn-success w-md-auto w-100' onClick={verOpiniones}>Ver opiniones</button>
         <button className='btn btn-outline-danger w-md-auto w-100' onClick={handleCerrarSesion}>Cerrar Sesion</button>
 
       </div>

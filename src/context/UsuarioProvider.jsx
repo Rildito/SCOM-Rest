@@ -26,6 +26,9 @@ export const UsuarioProvider = ({ children }) => {
 
     const [usuarioEgresos, setUsuarioEgresos] = useState([]);
     const [cargandoDatos, setCargandoDatos] = useState(false);
+
+    const [opiniones, setOpiniones] = useState([]);
+    
     useEffect(() => {
         if (auth.tipoUsuario === 'administrador') {
             if (tipoUsuario === 'cliente') {
@@ -145,6 +148,7 @@ export const UsuarioProvider = ({ children }) => {
                 responseEncodig: 'utf-8'
             });
             setUsuario(data)
+
         } catch (error) {
             console.log(error);
             navigate('/administrador/usuarios');
@@ -247,17 +251,6 @@ export const UsuarioProvider = ({ children }) => {
 
     const obtenerSalarios = async () => {
         setCargandoDatos(true);
-        // const { data: { data: data1, error: error1 } } = await axios.get("https://scom-rest.herokuapp.com/api/cajeros");
-        // setUsuarioEgresos(data1);
-
-        // const { data: { data: data2, error: error2 } } = await axios.get("https://scom-rest.herokuapp.com/api/chefs");
-        // setUsuarioEgresos([...usuarioEgresos, ...data2]);
-
-        // const { data: { data: data3, error: error3 } } = await axios.get("https://scom-rest.herokuapp.com/api/camareros")
-        // setUsuarioEgresos([...usuarioEgresos, ...data3]);
-
-        // const { data: { data: data4, error: error5 } } = await axios.get("https://scom-rest.herokuapp.com/api/administradores")
-        // setUsuarioEgresos([...usuarioEgresos, ...data4]);
 
         const urls = ["https://scom-rest.herokuapp.com/api/cajeros", "https://scom-rest.herokuapp.com/api/chefs", "https://scom-rest.herokuapp.com/api/camareros", "https://scom-rest.herokuapp.com/api/administradores"];
         const prueba = await Promise.all(urls.map(async url => {
@@ -269,9 +262,42 @@ export const UsuarioProvider = ({ children }) => {
         setUsuarioEgresos(usuarios)
         setCargandoDatos(false);
 
-        //console.log(usuarioEgresos)
+
     };
 
+    const obtenerUsuarioCobrar = async (ci) => {
+        try {
+            setCargando(true);
+            const { data: { data, error } } = await axios.get(`https://scom-rest.herokuapp.com/api/cliente/${ci}`, {
+                responseEncodig: 'utf-8'
+            });
+            setUsuario(data)
+            return data
+        } catch (error) {
+            console.log(error);
+            toast.error('Ocurrio un error inesperado');
+            return false
+        } finally {
+            setCargando(false);
+        }
+    };
+
+    const obtenerOpiniones = async () => {
+        try {
+            setCargando(true);
+            const { data: { data, error } } = await axios.get(`https://scom-rest.herokuapp.com/api/opiniones`, {
+                responseEncodig: 'utf-8'
+            });
+            setOpiniones(data);
+            return data
+        } catch (error) {
+            console.log(error);
+            toast.error('Ocurrio un error inesperado');
+            return false
+        } finally {
+            setCargando(false);
+        }
+    };
     return (
         <UsuarioContext.Provider value={{
             //Variables
@@ -285,6 +311,8 @@ export const UsuarioProvider = ({ children }) => {
             eliminarUsuario,
             submitUsuario,
             obtenerUsuario,
+            opiniones,
+            obtenerUsuarioCobrar,
             setTipoUsuario,
 
             setErrores,
@@ -294,6 +322,7 @@ export const UsuarioProvider = ({ children }) => {
             obtenerCajeros,
             obtenerChefs,
             obtenerSalarios,
+            obtenerOpiniones,
             usuarioEgresos
 
         }}>

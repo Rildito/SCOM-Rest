@@ -13,6 +13,7 @@ export const PedidoInformacion = () => {
     const { pedidosCobro, cargando, setPedidosBuscados, setValue } = useContext(PedidosContext);
 
     let total = 0;
+    let subtotal = 0;
 
     const handleCobrar = () => {
         modalCobro.show();
@@ -30,7 +31,7 @@ export const PedidoInformacion = () => {
     return (
         <>
             <div className='w-100 container d-flex align-items-center flex-column'>
-                <h2 className='text-primary fw-bold'>INFORMACION DE PEDIDO</h2>
+                <h2 className='text-primary fw-bold text-center'>INFORMACION DE PEDIDO</h2>
                 {/* <p className='text-muted'>Fecha de pedido: {formatearFecha(pedidoSeleccionado.data.fecha)}</p> */}
                 <div className='mt-3 table-wrapper-scroll-y my-custom-scrollbar-usuario w-100 border'>
                     <table className="table bg-white">
@@ -54,7 +55,7 @@ export const PedidoInformacion = () => {
                                                 <td>{capitalizarPrimeraLetra(producto.nombre)}</td>
                                                 <td>{producto.cantidad}</td>
                                                 <td>{(producto.precio).toFixed(2)} Bs.</td>
-                                                <td>{(producto.precio * producto.cantidad).toFixed(2)} Bs.</td>
+                                                <td>{(total).toFixed(2)} Bs.</td>
                                                 <td>{pedido.idpedido}</td>
                                             </tr>
 
@@ -68,17 +69,17 @@ export const PedidoInformacion = () => {
                         </tbody>
                     </table>
                 </div>
-                <div className='mt-3 w-100 d-flex justify-content-center gap-2'>
+                <div className='mt-3 w-100 d-flex justify-content-center gap-md-2 flex-md-row flex-column'>
                     <div>
                         <button onClick={handleCobrar} className='btn btn-primary mt-1 mb-3 w-sm-auto w-100 text-uppercase'>Realizar Cobro</button>
                     </div>
 
                     <div>
-                        <button onClick={handleAgregarOtroPedido} className='btn btn-primary mt-1 mb-3 w-sm-auto w-100 text-uppercase'>Adjuntar otro pedido</button>
+                        <button onClick={handleAgregarOtroPedido} className='btn btn-primary mt-md-1 mb-3 w-sm-auto w-100 text-uppercase'>Adjuntar otro pedido</button>
                     </div>
                 </div>
             </div>
-            <ModalCobro />
+            <ModalCobro total={total}/>
         </>
     )
 }

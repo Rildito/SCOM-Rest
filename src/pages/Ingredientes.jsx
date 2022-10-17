@@ -5,12 +5,13 @@ import IngredientesContext from '../context/IngredientesProvider';
 
 export const Ingredientes = () => {
 
-    const { ingredientes, eliminarIngrediente, cargando } = useContext(IngredientesContext);
+    const { ingredientes, eliminarIngrediente, cargando, setErrores } = useContext(IngredientesContext);
 
     const navigate = useNavigate();
 
     const registrarIngrediente = () => {
-        navigate('/administrador/ingredientes/registrar')
+        setErrores([]);
+        navigate('/administrador/ingredientes/registrar');
     };
 
     // if (cargando) return <Spinner />;

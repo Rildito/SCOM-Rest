@@ -8,7 +8,7 @@ import { Spinner } from '../components';
 export const PedidosCajero = () => {
 
     const navigate = useNavigate();
-    const { pedidosBuscados, pedidosCajero, setPedidoSeleccionado, obtenerPedidosCobro, pedidosCobro, cargando, setErrores } = useContext(PedidoContext);
+    const { pedidosBuscados, pedidos, setPedidoSeleccionado, obtenerPedidosCobro, pedidosCobro, cargando, setErrores } = useContext(PedidoContext);
 
     const handleagregarProducto = (idPedido) => {
         obtenerPedidosCobro(idPedido);
@@ -20,7 +20,14 @@ export const PedidosCajero = () => {
         setErrores([]);
     }, [])
 
-    if (cargando) return <Spinner />
+    if (cargando) return ( 
+    <>
+        <Spinner />
+        <p className='text-center'>Obteniendo pedidos...</p>
+    </>
+    )
+
+    let npedidos = 0;
     return (
         <>
             <h2 className='fs-1 mb-4 text-primary fw-bold text-center'>PEDIDOS</h2>
@@ -38,7 +45,7 @@ export const PedidosCajero = () => {
 
                                             <div>
                                                 <h4 className='text-danger fw-bold'>Codigo de pedido: {pedido.idpedido}</h4>
-                                                <p className='mb-0'>Cod factura: <span className='fw-bold'>{pedido.codfactura}</span></p>
+                                                {/* <p className='mb-0'>Cod factura: <span className='fw-bold'>{pedido.codfactura}</span></p> */}
 
                                                 <p className='mb-0'>Ci camarero: <span className='fw-bold'>{pedido.ciCamarero}</span></p>
 
@@ -54,9 +61,10 @@ export const PedidosCajero = () => {
                         })
 
                     ) : (
-                        pedidosCajero?.length > 0 ? 
-                        pedidosCajero?.map(pedido => {
+                        npedidos > 0 ? 
+                        pedidos?.map(pedido => {
                             if (!(pedidosCobro.some(pedidoState => pedidoState.idpedido === pedido.idpedido)) && pedido.estado === 'entregado') {
+                                npedidos+=1;
                                 return (
                                     <button onClick={() => handleagregarProducto(pedido.idpedido)} className='w-100 bg-warning-gradient p-4 justify-content-start btn text-start mb-3' key={pedido.idpedido}>
 
@@ -64,7 +72,7 @@ export const PedidosCajero = () => {
 
                                             <div>
                                                 <h4 className='text-danger fw-bold'>Codigo de pedido: {pedido.idpedido}</h4>
-                                                <p className='mb-0'>Cod factura: <span className='fw-bold'>{pedido.codfactura}</span></p>
+                                                {/* <p className='mb-0'>Cod factura: <span className='fw-bold'>{pedido.codfactura}</span></p> */}
 
                                                 <p className='mb-0'>Ci camarero: <span className='fw-bold'>{pedido.ciCamarero}</span></p>
 
@@ -77,7 +85,7 @@ export const PedidosCajero = () => {
                                     </button>
                                 )
                             }
-                        }) : (<p className='text-center'>No hay pedidos que mostrar</p>)
+                        }) : (<p className='text-center'>No hay pedidos que mostrar...</p>)
                         ))
                     }
                 </div >

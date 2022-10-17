@@ -25,21 +25,30 @@ export const ProductosProvider = ({ children }) => {
   const { auth } = useContext(AuthContext);
 
   useEffect(() => {
-    if (tipoProducto === 'platillo') {
-      obtenerPlatillos();
+    if (auth.tipoUsuario === 'administrador') {
+      if (tipoProducto === 'platillo') {
+        obtenerPlatillos();
+      }
+
+      if (tipoProducto === 'bebida') {
+        obtenerBebidas();
+      }
+
+      if (tipoProducto === '') {
+        obtenerProductos();
+      }
     }
 
-    if (tipoProducto === 'bebida') {
-      obtenerBebidas();
+    if (auth.tipoUsuario === 'chef') {
+      obtenerProductos();
     }
 
-    if (tipoProducto === '') {
+    if (auth.tipoUsuario === 'cliente') {
       obtenerProductos();
     }
 
     setProducto({});
     setErrores([]);
-    setProducto({});
 
   }, [tipoProducto, auth])
 
@@ -235,18 +244,29 @@ export const ProductosProvider = ({ children }) => {
     // }
   };
 
-  const editarEstadoProducto = async producto => {
+  const editarEstadoProducto = async (idProducto, estado) => {
     try {
-      setCargando(true);
-      const { data: { data, error } } = await axios.put(`https://scom-rest.herokuapp.com/api/producto/${producto.idproducto}`, producto);
+      let productosActualizados = [];
+      setCargando2(true);
+      if (estado === 'deshabilitar') {
+        const { data: { data, error } } = await axios.put(`https://scom-rest.herokuapp.com/api/productoDeshabilita/${idProducto}`);
+        if (error?.length > 0) {
+          setErrores(error);
+          setCargando2(false);
+          return false
+        }
 
-      if (error?.length > 0) {
-        setErrores(error);
-        setCargando(false);
-        return false
+        productosActualizados = productos.map(productoState => productoState.idproducto === idProducto ? data : productoState);
+
+      } else {
+        const { data: { data, error } } = await axios.put(`https://scom-rest.herokuapp.com/api/productoHabilita/${idProducto}`);
+        if (error?.length > 0) {
+          setErrores(error);
+          setCargando2(false);
+          return false
+        }
+        productosActualizados = productos.map(productoState => productoState.idproducto === idProducto ? data : productoState);
       }
-
-      const productosActualizados = productos.map(productoState => productoState.idproducto === producto.idproducto ? data : productoState);
 
       setProductos(productosActualizados);
       setErrores({});
@@ -254,7 +274,7 @@ export const ProductosProvider = ({ children }) => {
       console.log(error);
       toast.error('Ocurrio un error inesperado');
     } finally {
-      setCargando(false);
+      setCargando2(false);
       return true
     }
   };
@@ -286,7 +306,8 @@ export const ProductosProvider = ({ children }) => {
       obtenerProducto,
       submitProducto,
       eliminarProducto,
-      obtenerProductoBuscar
+      obtenerProductoBuscar,
+      obtenerProductos
 
     }}>
       {children}

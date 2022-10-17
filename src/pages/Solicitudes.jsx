@@ -1,10 +1,11 @@
-import { useContext } from 'react'
+import { useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Spinner } from '../components';
 import IngredientesContext from '../context/IngredientesProvider';
 
 export const Solicitudes = () => {
 
-    const { suministrar } = useContext(IngredientesContext);
+    const { suministrar, obtenerSolicitudes, solicitudes, cargando } = useContext(IngredientesContext);
 
     const navigate = useNavigate();
 
@@ -12,19 +13,32 @@ export const Solicitudes = () => {
         navigate('/administrador');
     };
 
+    // const suministrarIngrediente = (codIngrediente) => {
+    //     suministrar(codIngrediente);
+    // };
+
     const ingredientesSolicitados = [
         {
             codIngrediente: 1,
             nombre: 'Chuño'
         }
     ]
+
+    // useEffect(() => {
+    //     obtenerSolicitudes();
+    // }, [])
+
+    // if (cargando) return <>
+    //     <Spinner />
+    //     <p className='text-center'>Obteniendo solicitudes...</p>
+    // </>
     return (
         <>
             <h1 className="text-center w-100 bg-primary bg-dark text-white p-5 fw-bolder">
                 SOLICITUDES DE MATERIA PRIMA
             </h1>
             <button className='btn btn-success mt-2 w-md-auto w-100' onClick={volverPantalla}>Volver a pantalla principal</button>
-            <div className='mt-3 table-wrapper-scroll-y my-custom-scrollbar-usuario border w-100'>
+            <div className='mt-3 table-wrapper-scroll-y my-custom-scrollbar-usuario border w-md-75 w-100'>
                 <table className="table bg-white">
                     <thead className='text-center table-dark'>
                         <tr>
@@ -37,11 +51,11 @@ export const Solicitudes = () => {
                     <tbody className='text-center'>
 
                         {
-                            ingredientesSolicitados?.map(ingrediente => (
-                                <tr key={ingrediente.codIngrediente} className="align-middle">
-                                    <th scope='row'>{ingrediente.codIngrediente}</th>
+                            solicitudes?.map(ingrediente => (
+                                <tr key={ingrediente.codingrediente} className="align-middle">
+                                    <th scope='row'>{ingrediente.codingrediente}</th>
                                     <td>{ingrediente.nombre}</td>
-                                    <td><button className='btn btn-primary' onClick={()=>suministrar(ingrediente.codIngrediente)}>SUMINISTRAR</button></td>
+                                    <td><button className='btn btn-primary' onClick={() => suministrarIngrediente(ingrediente.codIngrediente)}>SUMINISTRAR</button></td>
                                 </tr>
                             ))
                         }
