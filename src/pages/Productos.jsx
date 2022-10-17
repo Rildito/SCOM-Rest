@@ -30,9 +30,6 @@ export const Productos = () => {
                     }
 
                     <div className="navbar-nav text-center d-flex gap-lg-5 gap-3 align-items-center">
-                        {
-                            (Object.entries(auth).length === 0 && <li className="nav-item active text-black pointer fw-bold mt-lg-0 mt-3" onClick={handleClick}>LOG IN</li>)
-                        }
 
                         {
                             (Object.entries(auth).length > 0 &&
