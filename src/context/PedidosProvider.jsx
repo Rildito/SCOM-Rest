@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import { createContext, useState } from "react"
 import { toast } from 'react-toastify';
 import axios from 'axios';
@@ -141,7 +141,7 @@ export const PedidosProvider = ({ children }) => {
     const [pedidoCliente, setPedidoCliente] = useState([]);
 
     const { auth } = useContext(AuthContext);
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (auth.tipoUsuario !== 'administrador' || auth.tipoUsuario !== 'cliente') {
             obtenerPedidos();
         }

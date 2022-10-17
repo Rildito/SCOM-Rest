@@ -1,4 +1,4 @@
-import { useContext, useRef, useEffect } from 'react';
+import { useContext, useRef, useLayoutEffect } from 'react';
 import { Header, PreguntasFrecuentes, ProductosPreview, Contactanos, SobreNosotrosPreview, ScrollToTop, Mapa } from '../components';
 import AuthContext from '../context/AuthProvider';
 import ProductosContext from '../context/ProductosProvider';
@@ -16,7 +16,7 @@ export const Restaurant = () => {
     const { salida } = useContext(AuthContext);
     const { obtenerProductos } = useContext(ProductosContext);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         window.scrollTo({
             top: 0
         })
@@ -29,7 +29,7 @@ export const Restaurant = () => {
         });
     };
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         obtenerProductos();
     }, [salida])
 
