@@ -251,7 +251,7 @@ export const PedidosProvider = ({ children }) => {
 
     const pedidoRealizado = async (idPedido) => {
         setCargando2(true);
-        const { data: { data, error } } = await axios.put(`https://scom-rest.herokuapp.com/api/pedidorealizado/${idPedido}`); //TODO: pedir datos
+        const { data: { data, error } } = await axios.put(`https://scom-rest.herokuapp.com/api/pedidorealizado/${idPedido}/${auth.ci}`); //TODO: pedir datos
 
         const pedidosActualizados = pedidos.filter(pedido => pedido.idpedido !== data.idpedido);
         setPedidos(pedidosActualizados);

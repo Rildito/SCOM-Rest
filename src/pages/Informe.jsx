@@ -77,7 +77,7 @@ export const Informe = () => {
                                 <p className='fs-5 fw-semibold mb-0'>PRODUCTOS</p>
 
                                 {
-                                    pedidoState?.ingredientes.map(ingrediente => {
+                                    pedidoState?.ingredientes?.map(ingrediente => {
                                         total2 += ingrediente.precio * ingrediente.cantidad ?? 0
                                         return (
                                             <>
@@ -100,7 +100,7 @@ export const Informe = () => {
                 <p className='fw-bold mt-2 mb-0 fs-3'>EGRESOS</p>
 
                 {
-                    usuarioEgresos.map(usuario => {
+                    usuarioEgresos?.map(usuario => {
                         total3 += usuario.salario ?? 0
                         return (
                             <>
@@ -170,9 +170,9 @@ export const Informe = () => {
                     }
                 </div>
             </div>
-            {
-                pedidosBuscados.length > 0 && (<button className='btn btn-primary mt-3 w-md-auto w-100 mb-md-0 mb-3 d-print-none' onClick={imprimirReporte} disabled={cargandoDatos ? true : false}>Imprimir Reporte</button>)
-            }
+
+            <button className='btn btn-primary mt-3 w-md-auto w-100 mb-md-0 mb-3 d-print-none' onClick={imprimirReporte} >Imprimir Reporte</button>
+
 
         </>
     )
