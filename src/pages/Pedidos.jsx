@@ -8,7 +8,7 @@ import { Spinner } from '../components';
 export const Pedidos = () => {
 
     const { pedidosBuscados, pedidos, setPedidoSeleccionado, cargando } = useContext(PedidoContext);
-
+   
     useEffect(() => {
         setPedidoSeleccionado({});
     }, [])
@@ -18,7 +18,7 @@ export const Pedidos = () => {
         <p className='text-center'>Obteniendo pedidos...</p>
     </>
 
-    let total = 0;
+
     return (
         <>
             <h2 className='fs-1 mb-4 text-primary fw-bold text-center'>PEDIDOS</h2>
@@ -51,10 +51,8 @@ export const Pedidos = () => {
                         })
 
                     ) : (
-                        pedidos?.length > 0 ? 
                         pedidos.map(pedido => {
                             if (pedido.estado === 'habilitado') {
-                                total+=1;
                                 return (
                                     <Link to={`${pedido.idpedido}`} className='w-100 bg-warning-gradient p-4 justify-content-start btn text-start mb-3' key={pedido.idpedido}>
 
@@ -75,10 +73,12 @@ export const Pedidos = () => {
                                     </Link >
                                 )
                             }
-                        }) : (<p className='text-center'>No hay pedidos que mostrar...</p>)
-                    ) 
+                        })
+                    )
                     )}
+
             </div >
+
         </>
     )
 }

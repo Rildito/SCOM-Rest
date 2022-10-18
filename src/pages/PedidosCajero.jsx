@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import PedidoContext from '../context/PedidosProvider';
 import { useEffect } from 'react';
 import { Spinner } from '../components';
+import { useState } from 'react';
 
 export const PedidosCajero = () => {
 
@@ -27,7 +28,7 @@ export const PedidosCajero = () => {
     </>
     )
 
-    let npedidos = 0;
+
     return (
         <>
             <h2 className='fs-1 mb-4 text-primary fw-bold text-center'>PEDIDOS</h2>
@@ -61,10 +62,8 @@ export const PedidosCajero = () => {
                         })
 
                     ) : (
-                        pedidos?.length > 0 ? 
                         pedidos?.map(pedido => {
                             if (!(pedidosCobro.some(pedidoState => pedidoState.idpedido === pedido.idpedido)) && pedido.estado === 'entregado') {
-                                npedidos+=1;
                                 return (
                                     <button onClick={() => handleagregarProducto(pedido.idpedido)} className='w-100 bg-warning-gradient p-4 justify-content-start btn text-start mb-3' key={pedido.idpedido}>
 
@@ -85,7 +84,8 @@ export const PedidosCajero = () => {
                                     </button>
                                 )
                             }
-                        }) : (<p className='text-center'>No hay pedidos que mostrar...</p>)
+                        })  
+                        
                         ))
                     }
                 </div >

@@ -47,6 +47,12 @@ export const ProductosProvider = ({ children }) => {
       obtenerProductos();
     }
 
+    if (Object.keys(auth).length > 0) {
+      obtenerProductos();
+    }
+
+
+
     setProducto({});
     setErrores([]);
 

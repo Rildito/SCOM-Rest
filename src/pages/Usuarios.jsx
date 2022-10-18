@@ -27,7 +27,7 @@ export const Usuarios = () => {
     return (
 
         <>
-            <h1 className='py-sm-5 py-3 text-center fw-bold text-white bg-dark w-100'>ADMINISTRA TUS USUARIOS</h1>
+            <h1 className='py-sm-5 p-3 py-3 text-center fw-bold text-white bg-dark w-100'>ADMINISTRA TUS USUARIOS</h1>
 
             <div className='w-100 container-md'>
                 <div className="enlaces mb-2 d-md-flex justify-content-between mt-3 p-sm-0 px-1">

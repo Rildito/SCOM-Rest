@@ -27,7 +27,7 @@ export const Ingredientes = () => {
 
     return (
         <>
-            <h1 className='py-5 text-center fw-bold text-white bg-dark w-100 '>ADMINISTRA TUS INGREDIENTES</h1>
+            <h1 className='py-5 text-center fw-bold text-white bg-dark w-100'>ADMINISTRA TUS INGREDIENTES</h1>
             {
                 (cargando ? <Spinner /> : (<>
                     <div className='w-100 container'>

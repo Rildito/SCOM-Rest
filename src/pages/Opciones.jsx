@@ -37,7 +37,7 @@ export const Opciones = () => {
       <h1 className="text-center w-100 bg-primary bg-dark text-white p-md-5 p-2 fw-bolder">
         VENTANA ADMINISTRADOR
       </h1>
-      <div className='w-100 d-flex justify-content-between container mt-3 flex-md-row flex-column align-items-center gap-3'>
+      <div className='w-100 d-flex justify-content-between container mt-3 flex-md-row flex-column align-items-center gap-3 flex-wrap'>
         <p className='fs-5 mb-0'>Bienvenido: {auth.nombre} {auth.apellidoPaterno}</p>
         <button className='btn btn-success w-md-auto w-100' onClick={verSolicitudes}>VER SOLICITUDES DE MATERIA PRIMA</button>
         <button className='btn btn-warning w-md-auto w-100' onClick={verOpiniones}>Ver opiniones</button>

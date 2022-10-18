@@ -255,6 +255,13 @@ export const PedidosProvider = ({ children }) => {
 
         const pedidosActualizados = pedidos.filter(pedido => pedido.idpedido !== data.idpedido);
         setPedidos(pedidosActualizados);
+        
+        // const idEliminarStock = await Promise.all(pedidoSeleccionado?.productos.map(async producto => {
+
+        //     const { data: { data, error } } = await axios.put(`https://scom-rest.herokuapp.com/api/pedidovendido/${idPedido}/${codFactura}`);
+        //     //console.log(...data)
+        //     return idPedido
+        // }));
         setCargando2(false);
     }
 

@@ -13,25 +13,18 @@ export const Solicitudes = () => {
         navigate('/administrador');
     };
 
-    // const suministrarIngrediente = (codIngrediente) => {
-    //     suministrar(codIngrediente);
-    // };
+    const suministrarIngrediente = (codIngrediente) => {
+        suministrar(codIngrediente);
+    };
 
-    const ingredientesSolicitados = [
-        {
-            codIngrediente: 1,
-            nombre: 'Chuño'
-        }
-    ]
+    useEffect(() => {
+        obtenerSolicitudes();
+    }, [])
 
-    // useEffect(() => {
-    //     obtenerSolicitudes();
-    // }, [])
-
-    // if (cargando) return <>
-    //     <Spinner />
-    //     <p className='text-center'>Obteniendo solicitudes...</p>
-    // </>
+    if (cargando) return <>
+        <Spinner />
+        <p className='text-center'>Obteniendo solicitudes...</p>
+    </>
     return (
         <>
             <h1 className="text-center w-100 bg-primary bg-dark text-white p-5 fw-bolder">
@@ -44,6 +37,7 @@ export const Solicitudes = () => {
                         <tr>
                             <th scope="col">Cod Ingrediente</th>
                             <th scope="col">Nombre de Ingrediente</th>
+                            <th scope="col">Tipo de ingrediente</th>
                             <th scope="col">SUMINISTRAR</th>
 
                         </tr>
@@ -55,7 +49,8 @@ export const Solicitudes = () => {
                                 <tr key={ingrediente.codingrediente} className="align-middle">
                                     <th scope='row'>{ingrediente.codingrediente}</th>
                                     <td>{ingrediente.nombre}</td>
-                                    <td><button className='btn btn-primary' onClick={() => suministrarIngrediente(ingrediente.codIngrediente)}>SUMINISTRAR</button></td>
+                                    <td>{ingrediente.tipo}</td>
+                                    <td><button className='btn btn-primary' onClick={() => suministrarIngrediente(ingrediente.codingrediente)}>SUMINISTRAR</button></td>
                                 </tr>
                             ))
                         }

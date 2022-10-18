@@ -287,6 +287,7 @@ export const IngredientesProvider = ({ children }) => {
 
         try {
             setCargando2(true);
+            console.log(`https://scom-rest.herokuapp.com/api/suministrar/${codIngrediente}`);
             const { data: { data, error } } = await axios.put(`https://scom-rest.herokuapp.com/api/suministrar/${codIngrediente}`);
 
             if (error?.length > 0) {
@@ -313,7 +314,7 @@ export const IngredientesProvider = ({ children }) => {
     const obtenerSolicitudes = async () => {
         try {
             setCargando(true);
-            const { data: { data, error } } = await axios.get(`https://scom-rest.herokuapp.com/api/solicitudes`);
+            const { data: { data, error } } = await axios.get(`https://scom-rest.herokuapp.com/api/mostrarSolicita`);
 
             if (error?.length > 0) {
                 setErrores(error);
@@ -322,7 +323,7 @@ export const IngredientesProvider = ({ children }) => {
             }
 
             setSolicitudes(data);
-            toast.success('Se solicito suministro el ingrediente correctamente');
+            //toast.success('Se solicito suministro el ingrediente correctamente');
 
         } catch (error) {
             console.log(error);

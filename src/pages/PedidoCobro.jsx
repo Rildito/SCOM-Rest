@@ -39,15 +39,15 @@ export const PedidoCobro = () => {
 
     <>
       <div className='w-100 container d-flex align-items-center flex-column container-print'>
-        <h2 className='text-primary fw-bold hide-on-print'>VISUALIZACION DE PEDIDO</h2>
+        <h2 className='text-primary fw-bold hide-on-print text-center'>VISUALIZACION DE PEDIDO</h2>
         <div className='d-flex flex-sm-row align-items-center justify-content-around w-100 column flex-column'>
           <img src={Imagen} alt="Imagen logo" className='mb-4 d-none d-print-block' style={{
             maxWidth: "10rem"
           }} />
 
-          <p className=''>Nombre Establecimiento: <span className='fw-bold'>Scom Rest</span></p>
-          <p>NIT Local: <span className='fw-bold'>1235123</span></p>
-          <p>Factura Electronica: <span className='fw-bold'>{factura.codfactura}</span></p>
+          <p className='text-center'>Nombre Establecimiento: <span className='fw-bold'>Scom Rest</span></p>
+          <p className='text-center'>NIT Local: <span className='fw-bold'>1235123</span></p>
+          <p className='text-center'>Factura Electronica: <span className='fw-bold'>{factura.codfactura}</span></p>
         </div>
 
         <div className='d-flex flex-sm-row align-items-center justify-content-around w-100 column flex-column'>
@@ -90,7 +90,7 @@ export const PedidoCobro = () => {
             </tbody>
           </table>
         </div>
-        <div className='mt-3 w-100 d-flex justify-content-between'>
+        <div className='mt-3 w-100 d-flex justify-content-between flex-md-row flex-column'>
           <button onClick={handleCobrar} className='btn btn-primary mt-1 mb-3 w-sm-auto w-100 text-uppercase hide-on-print'>Imprimir</button>
           <button onClick={handleVolver} className='btn btn-primary mt-1 mb-3 w-sm-auto w-100 text-uppercase hide-on-print'>Volver a Pedidos</button>
         </div>

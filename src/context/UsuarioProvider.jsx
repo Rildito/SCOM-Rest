@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react"
+import { createContext, useState, useLayoutEffect } from "react"
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -30,7 +30,7 @@ export const UsuarioProvider = ({ children }) => {
 
     const [opiniones, setOpiniones] = useState([]);
     
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (auth.tipoUsuario === 'administrador') {
             if (tipoUsuario === 'cliente') {
                 obtenerClientes();
@@ -181,7 +181,7 @@ export const UsuarioProvider = ({ children }) => {
 
             setUsuarios([...usuarios, data]);
             setErrores([]);
-            if (auth.tipoUsuario === 'adminitrador') {
+            if (auth.tipoUsuario === 'administrador') {
                 navigate('/administrador/usuarios');
                 toast.success('Se creo el usuario correctamente');
             } else {
