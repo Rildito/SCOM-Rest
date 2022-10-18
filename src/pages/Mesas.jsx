@@ -9,13 +9,16 @@ export const Mesas = () => {
     const navigate = useNavigate();
     const { mesas, cargando, eliminarMesa, obtenerMesas } = useContext(IngredientesContext);
 
+
     const registrarMesa = () => {
         navigate('/administrador/mesas/registrar')
     };
 
-    // useEffect(()=>{
-    //     obtenerMesas();
-    // },[])
+    // useEffect(() => {
+    //     if (mesas.length === 0) {
+    //         obtenerMesas();
+    //     }
+    // }, [])
 
     // if (cargando) return <>
     //     <Spinner />;
@@ -25,17 +28,15 @@ export const Mesas = () => {
         <>
 
             <h1 className='py-5 text-center fw-bold text-white bg-dark w-100 '>ADMINISTRA TUS MESAS</h1>
-            <div className='w-100 container d-flex justify-content-center flex-column align-items-center'>
+            <div className='w-md-50 w-100 container d-flex justify-content-center flex-column align-items-center'>
                 {
-                    cargando ? <Spinner /> : (
+                    cargando ? <> <Spinner /> <p className='text-center'>Obteniendo mesas...</p></> : (
                         <div className='mt-3 table-wrapper-scroll-y my-custom-scrollbar-usuario w-100'>
                             <table className="table bg-white border">
                                 <thead className='text-center table-dark'>
                                     <tr>
                                         <th scope="col">NroMesa</th>
                                         <th scope="col">Estado</th>
-                                        <th scope="col">Ci Camarero</th>
-                                        <th scope="col">Id Pedido</th>
                                         <th scope="col">Operaciones</th>
                                     </tr>
                                 </thead>
@@ -45,8 +46,6 @@ export const Mesas = () => {
                                             <tr key={mesa.nroMesa} className="align-middle">
                                                 <td>{mesa.nroMesa}</td>
                                                 <td>{mesa.estado}</td>
-                                                <td>{mesa.ciCamarero}</td>
-                                                <td>{mesa.idpedido}</td>
                                                 <td className='d-flex gap-1 justify-content-center'>
                                                     <Link className="btn btn-warning" to={`editar/${mesa.nroMesa}`}>Editar</Link>
                                                     <input type="button" value="Eliminar" className='btn btn-danger' onClick={() => eliminarMesa(mesa.nroMesa)} />

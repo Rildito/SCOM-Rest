@@ -45,14 +45,16 @@ export const Solicitudes = () => {
                     <tbody className='text-center'>
 
                         {
-                            solicitudes?.map(ingrediente => (
-                                <tr key={ingrediente.codingrediente} className="align-middle">
-                                    <th scope='row'>{ingrediente.codingrediente}</th>
-                                    <td>{ingrediente.nombre}</td>
-                                    <td>{ingrediente.tipo}</td>
-                                    <td><button className='btn btn-primary' onClick={() => suministrarIngrediente(ingrediente.codingrediente)}>SUMINISTRAR</button></td>
-                                </tr>
-                            ))
+                            solicitudes?.map(ingrediente => {
+                                if (ingrediente.cantidad < 50) return (
+                                    <tr key={ingrediente.codingrediente} className="align-middle">
+                                        <th scope='row'>{ingrediente.codingrediente}</th>
+                                        <td>{ingrediente.nombre}</td>
+                                        <td>{ingrediente.tipo}</td>
+                                        <td><button className='btn btn-primary' onClick={() => suministrarIngrediente(ingrediente.codingrediente)}>SUMINISTRAR</button></td>
+                                    </tr>
+                                )
+                            })
                         }
 
                     </tbody>

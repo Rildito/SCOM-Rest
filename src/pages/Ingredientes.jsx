@@ -14,16 +14,18 @@ export const Ingredientes = () => {
         navigate('/administrador/ingredientes/registrar');
     };
 
-    // useEffect(()=>{
-    //     obtenerIngredientes();
-    // },[])
+    // useEffect(() => {
+    //     if (ingredientes.length === 0) {
+    //         obtenerIngredientes();
+    //     }
+    // }, [])
 
     // if (cargando) return <>
     //     <Spinner />;
     //     <p className='text-center'>Obteniendo ingredientes...</p>
     // </>
 
-    
+
 
     return (
         <>

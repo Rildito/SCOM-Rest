@@ -41,7 +41,7 @@ export const SolicitarMateria = () => {
                         <tbody className='text-center'>
                             {
                                 ingredientes?.map(ingre => {
-                                    if (ingre.cantidad < 20) {
+                                    if (ingre.cantidad <= 20) {
                                         return (
                                             <tr key={ingre.codingrediente} className="align-middle">
                                                 <td>{ingre.codingrediente}</td>

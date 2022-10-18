@@ -47,11 +47,9 @@ export const ProductosProvider = ({ children }) => {
       obtenerProductos();
     }
 
-    if (Object.keys(auth).length > 0) {
+    if (Object.keys(auth).length === 0) {
       obtenerProductos();
     }
-
-
 
     setProducto({});
     setErrores([]);
@@ -179,11 +177,9 @@ export const ProductosProvider = ({ children }) => {
   };
 
   const eliminarProducto = async idProducto => {
-    console.log(idProducto);
-    console.log(`https://scom-rest.herokuapp.com/api/${tipoProducto}/${idProducto}`)
     try {
       setCargando(true);
-      const { data: { data, error } } = await axios.delete(`https://scom-rest.herokuapp.com/api/${tipoProducto}/${idProducto}`);
+      const { data: { data, error } } = await axios.put(`https://scom-rest.herokuapp.com/api/productoDeshabilita/${idProducto}`);
 
       if (error?.length > 0) {
         setErrores(error);

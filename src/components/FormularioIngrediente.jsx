@@ -10,7 +10,7 @@ export const FormularioIngrediente = () => {
     const [tipo, setTipo] = useState('fruta');
 
     const { codIngrediente } = useParams();
-    const { submitIngrediente, ingrediente, errores, cargando } = useContext(IngredientesContext);
+    const { submitIngrediente, ingrediente, errores, cargando, setErrores } = useContext(IngredientesContext);
 
     useEffect(() => {
         if (codIngrediente) {
@@ -18,7 +18,7 @@ export const FormularioIngrediente = () => {
             setCantidad(ingrediente?.cantidad);
             setTipo(ingrediente?.tipo);
         }
-
+        setErrores([]);
     }, []);
 
     const handleSubmit = async e => {

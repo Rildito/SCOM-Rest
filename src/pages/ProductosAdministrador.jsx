@@ -22,6 +22,8 @@ export const ProductosAdministrador = () => {
         setProducto({});
     }, []);
 
+
+
     return (
 
         <>
@@ -38,7 +40,7 @@ export const ProductosAdministrador = () => {
 
                     </div>
 
-                    
+
                     {/* <Link className='btn btn-primary mt-md-0 mt-2 w-md-auto w-100' to="imagenes" >Administrar Imagenes</Link> */}
                     <div className=''>
                         <input type="button" name="" className={`btn ${tipoProducto === '' ? 'btn-info' : 'btn-outline-info'} w-100 mt-md-0 mt-2`} value="TODOS LOS PRODUCTOS" onClick={() => setTipoProducto('')} />
@@ -92,39 +94,45 @@ export const ProductosAdministrador = () => {
                                                     <td>{producto.tipoProducto}</td>
                                                     <td>{producto.estado}</td>
                                                 </tr>
-                                            ))))
+                                            )
+                                            )))
                                         }
                                         {
-                                            (tipoProducto === 'platillo' && (productos?.map(producto => (
-                                                <tr key={producto.idproducto} className="align-middle">
-                                                    <th scope='row'>{producto.idproducto}</th>
-                                                    <td>{capitalizarPrimeraLetra(producto.nombre)}</td>
-                                                    <td>{producto.precio} Bs.</td>
-                                                    <td>{producto.estado}</td>
-                                                    <td>{producto.stock}</td>
-                                                    <td className='d-flex gap-2 justify-content-center'>
-                                                        <Link to={`/administrador/productos/editar/${producto.idproducto}&platillo`} className='btn btn-warning' onClick={() => setErrores([])}>Editar</Link>
-                                                        <input type="button" name="eliminar" value="Eliminar" className='btn btn-danger' onClick={() => eliminarProducto(producto.idproducto, 'platillo')} />
+                                            (tipoProducto === 'platillo' && (productos?.map(producto => {
 
-                                                    </td>
-                                                </tr>
-                                            ))))
+                                                if (producto.estado === 'habilitado') return (
+                                                    <tr key={producto.idproducto} className="align-middle">
+                                                        <th scope='row'>{producto.idproducto}</th>
+                                                        <td>{capitalizarPrimeraLetra(producto.nombre)}</td>
+                                                        <td>{producto.precio} Bs.</td>
+                                                        <td>{producto.estado}</td>
+                                                        <td>{producto.stock}</td>
+                                                        <td className='d-flex gap-2 justify-content-center'>
+                                                            <Link to={`/administrador/productos/editar/${producto.idproducto}&platillo`} className='btn btn-warning' onClick={() => setErrores([])}>Editar</Link>
+                                                            <input type="button" name="eliminar" value="Eliminar" className='btn btn-danger' onClick={() => eliminarProducto(producto.idproducto, 'platillo')} />
+
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            })))
                                         }
                                         {
-                                            (tipoProducto === 'bebida' && (productos?.map(producto => (
-                                                <tr key={producto.idproducto} className="align-middle">
-                                                    <th scope='row'>{producto.idproducto}</th>
-                                                    <td>{capitalizarPrimeraLetra(producto.nombre)}</td>
-                                                    <td>{producto.precio} Bs.</td>
-                                                    <td>{producto.estado}</td>
-                                                    <td>{producto.gradoAlcoholico}</td>
-                                                    <td className='d-flex gap-2 justify-content-center'>
-                                                        <Link to={`/administrador/productos/editar/${producto.idproducto}&bebida`} className='btn btn-warning' onClick={() => setErrores([])}>Editar</Link>
-                                                        <input type="button" name="eliminar" value="Eliminar" className='btn btn-danger' onClick={() => eliminarProducto(producto.idproducto, 'bebida')} />
+                                            (tipoProducto === 'bebida' && (productos?.map(producto => {
+                                                if (producto.estado === 'habilitado') return (
+                                                    <tr key={producto.idproducto} className="align-middle">
+                                                        <th scope='row'>{producto.idproducto}</th>
+                                                        <td>{capitalizarPrimeraLetra(producto.nombre)}</td>
+                                                        <td>{producto.precio} Bs.</td>
+                                                        <td>{producto.estado}</td>
+                                                        <td>{producto.gradoAlcoholico}</td>
+                                                        <td className='d-flex gap-2 justify-content-center'>
+                                                            <Link to={`/administrador/productos/editar/${producto.idproducto}&bebida`} className='btn btn-warning' onClick={() => setErrores([])}>Editar</Link>
+                                                            <input type="button" name="eliminar" value="Eliminar" className='btn btn-danger' onClick={() => eliminarProducto(producto.idproducto, 'bebida')} />
 
-                                                    </td>
-                                                </tr>
-                                            ))))
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            })))
                                         }
 
 

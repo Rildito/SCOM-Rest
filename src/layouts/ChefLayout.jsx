@@ -42,6 +42,9 @@ export const ChefLayout = () => {
 
     }, [window.location.href])
 
+    const handleActualizar = () => {
+        window.location.reload();
+    };
     return (
         <div className='d-flex align-items-center flex-column min-vh-100'>
             <nav className="navbar w-100 px-md-5 px-0 border-bottom shadow-sm hide-on-print">
@@ -73,6 +76,7 @@ export const ChefLayout = () => {
                                 <li><Link className="dropdown-item" to="pedir">Pedir materia prima</Link></li>
                                 <li><Link className="dropdown-item" to="estado">Deshabilitar productos</Link></li>
                                 <li><Link className="dropdown-item" to="/chef">Volver Pedidos</Link></li>
+                                <button className="dropdown-item" onClick={handleActualizar}>Cerrar Sesion</button>
                                 <button className="dropdown-item" onClick={handleCerrarSesion}>Cerrar Sesion</button>
                             </ul>
                         </div>

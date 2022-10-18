@@ -26,18 +26,18 @@ export const IngredientesProvider = ({ children }) => {
     const { auth } = useContext(AuthContext);
 
     useLayoutEffect(() => {
-        const obtenerIngreMes = async () => {
-            await obtenerIngredientes();
-            await obtenerMesas();
-        };
+        // const obtenerIngreMes = async () => {
+        //     await obtenerIngredientes();
+        //     await obtenerMesas();
+        // };
 
-        // if (auth.tipoUsuario === 'administrador') {
-        //     obtenerIngredientes();
-        //     obtenerMesas();
-        // }
         if (auth.tipoUsuario === 'administrador') {
-            obtenerIngreMes();
+            obtenerIngredientes();
+            obtenerMesas();
         }
+        // if (auth.tipoUsuario === 'administrador') {
+        //     obtenerIngreMes();
+        // }
 
         if (auth.tipoUsuario === 'chef') {
             obtenerIngredientes();
@@ -267,7 +267,6 @@ export const IngredientesProvider = ({ children }) => {
                 return
             }
             console.log(data);
-
             const ingredientesActualizados = ingredientes.filter(ingrediente => data[1].codIngrediente !== ingrediente.codingrediente);
             setIngredientes(ingredientesActualizados);
 
@@ -287,8 +286,8 @@ export const IngredientesProvider = ({ children }) => {
 
         try {
             setCargando2(true);
-            console.log(`https://scom-rest.herokuapp.com/api/suministrar/${codIngrediente}`);
-            const { data: { data, error } } = await axios.put(`https://scom-rest.herokuapp.com/api/suministrar/${codIngrediente}`);
+            
+            const { data: { data, error } } = await axios.put(`https://scom-rest.herokuapp.com/api/ingredienteAumentar/${codIngrediente}`);
 
             if (error?.length > 0) {
                 setErrores(error);
@@ -300,7 +299,11 @@ export const IngredientesProvider = ({ children }) => {
             const solicitudesActualizadas = solicitudes.filter(solicitud => solicitud.codIngrediente !== codIngrediente);
             setSolicitudes(solicitudesActualizadas);
 
+            const ingredientesActualizados = ingredientes.map(ingre => ingre.codingrediente === data.codingrediente ? data : ingre);
+            setIngredientes(ingredientesActualizados)
+
             setErrores([]);
+            navigate('/administrador');
             toast.success('Se suministro el ingrediente correctamente');
 
         } catch (error) {

@@ -44,6 +44,9 @@ export const CajeroLayout = () => {
         }
     }, [window.location.href])
 
+    const handleActualizar = () => {
+        window.location.reload();
+    };
     return (
         <div className='d-flex align-items-center flex-column min-vh-100'>
             <nav className="navbar w-100 px-md-5 px-0 border-bottom shadow-sm hide-on-print ">
@@ -74,6 +77,7 @@ export const CajeroLayout = () => {
                                 <li><Link className="dropdown-item" to="informe">Informe Egresos e ingresos</Link></li>
                                 <li><Link className="dropdown-item" to="/cajero">Volver Pedidos</Link></li>
                                 <li><Link className="dropdown-item" to={pedidosCobro.length > 0 ? "pedidos" : "/cajero"}>Volver Cobro</Link></li>
+                                <button className="dropdown-item" onClick={handleActualizar}>Actualizar</button>
                                 <button className="dropdown-item" onClick={handleCerrarSesion}>Cerrar Sesion</button>
                             </ul>
                         </div>

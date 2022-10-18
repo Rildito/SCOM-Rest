@@ -8,26 +8,24 @@ export const FormularioMesa = () => {
 
     const [nroMesa, setNroMesa] = useState('');
     const [estado, setEstado] = useState('habilitado');
-    const [ciCamarero, setCiCamarero] = useState('');
-    const [idPedido, setIdPedido] = useState('');
 
     const { id } = useParams();
-    const { submitMesa, mesa, errores, cargando } = useContext(IngredientesContext);
+    const { submitMesa, mesa, errores, cargando, setErrores } = useContext(IngredientesContext);
 
     useEffect(() => {
         if (id) {
             setNroMesa(mesa.nroMesa);
             setEstado(mesa.estado);
-            setCiCamarero(mesa.ciCamarero);
-            setIdPedido(mesa.idpedido);
         }
+
+        setErrores([]);
     }, []);
 
     const handleSubmit = async e => {
         e.preventDefault();
 
         //crearingrediente
-        await submitMesa({ id, nroMesa, estado, ciCamarero, idpedido: idPedido });
+        await submitMesa({ id, nroMesa, estado, ciCamarero: 1000013 });
 
     };
     return (
@@ -65,29 +63,7 @@ export const FormularioMesa = () => {
                                     <option value="deshabilitado">Deshabilitado</option>
                                 </select>
 
-                                <label htmlFor="ciCamarero" className='form-label mb-0 fw-bold'>Ci Camarero:</label>
-                                <input
-                                    type="text"
-                                    id="ciCamarero"
-                                    name="ciCamarero"
-                                    className='form-control'
-                                    value={ciCamarero}
-                                    placeholder="Ci Camarero"
-                                    onChange={e => setCiCamarero(e.target.value)}
-                                />
-
-                                <label htmlFor="idPedido" className='form-label mb-0 fw-bold'>Id pedido:</label>
-                                <input
-                                    type="text"
-                                    id="idPedido"
-                                    name="idPedido"
-                                    className='form-control'
-                                    value={idPedido}
-                                    placeholder="rojo"
-                                    onChange={e => setIdPedido(e.target.value)}
-                                />
-
-                                <input type="submit" value={`${id ? 'Editar mesa' : 'Registrar mesa'}`} className='btn btn-warning text-black mt-3 text-uppercase fw-bolder mx-md-auto' disabled={cargando ? true : false}/>
+                                <input type="submit" value={`${id ? 'Editar mesa' : 'Registrar mesa'}`} className='btn btn-warning text-black mt-3 text-uppercase fw-bolder mx-md-auto' disabled={cargando ? true : false} />
                             </form>
                         </div>
                     </div>

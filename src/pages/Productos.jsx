@@ -5,6 +5,7 @@ import Imagen from '../assets/img/logo.png'
 import AuthContext from '../context/AuthProvider';
 import PedidoContext from '../context/PedidosProvider';
 import ProductosContext from '../context/ProductosProvider';
+import { useEffect } from 'react';
 
 export const Productos = () => {
 
@@ -12,12 +13,17 @@ export const Productos = () => {
 
     const { pedido } = useContext(PedidoContext);
     const { auth, handleCerrarSesion } = useContext(AuthContext);
-    const { productos, cargando } = useContext(ProductosContext);
+    const { productos, cargando, obtenerProductos } = useContext(ProductosContext);
 
     const handleClick = () => {
         navigate('/');
     };
 
+    useEffect(()=>{
+        if(Object.keys(auth).length === 0 && productos.length === 0) {
+            obtenerProductos();
+        }
+    },[])
     return (
         <div className='d-flex flex-column justify-content-center align-items-center'>
             <nav className="navbar navbar-expand-lg shadow w-100 mb-4 px-md-5 px-0">
